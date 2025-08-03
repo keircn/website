@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import { SocialLinks } from "./social-links";
 
 export function HeaderCard() {
   return (
@@ -12,7 +13,7 @@ export function HeaderCard() {
         duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
-      className="bg-card/50 p-6 rounded shadow border border-border max-w-4xl w-full"
+      className="bg-card/50 p-8 rounded shadow border border-border max-w-4xl w-full"
     >
       <div className="flex flex-row items-center justify-between">
         <div className="flex-1">
@@ -32,6 +33,7 @@ export function HeaderCard() {
           >
             I write code sometimes
           </motion.p>
+          <SocialLinks />
         </div>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -42,8 +44,8 @@ export function HeaderCard() {
           <Image
             src="https://github.com/keircn.png"
             alt="avatar"
-            height={80}
-            width={80}
+            height={110}
+            width={110}
             className="rounded"
           />
         </motion.div>
