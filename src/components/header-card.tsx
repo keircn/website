@@ -12,7 +12,7 @@ export function HeaderCard() {
         duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
-      className="bg-card/50 p-6 rounded shadow border border-border max-w-xl w-full"
+      className="bg-card/50 p-6 rounded shadow border border-border max-w-4xl w-full"
     >
       <div className="flex flex-row items-center justify-between">
         <div className="flex-1">
