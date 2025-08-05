@@ -90,7 +90,9 @@ export function SocialLinks() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 + index * 0.1, duration: 0.4 }}
-              className={`text-muted-foreground ${link.color} hover:scale-105 transition-all duration-200 relative group`}
+              className={`text-muted-foreground ${link.color} relative group`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               aria-label={`Copy ${link.name}`}
             >
               <div className="relative cursor-pointer">
@@ -123,7 +125,9 @@ export function SocialLinks() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 + index * 0.1, duration: 0.4 }}
-            className={`text-muted-foreground ${link.color} hover:scale-105 transition-all duration-200`}
+            className={`text-muted-foreground ${link.color}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             aria-label={link.name}
           >
             <IconComponent className="w-5 h-5" />

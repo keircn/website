@@ -137,18 +137,28 @@ function AnimeEntryItem({ entry, rank }: { entry: AnimeEntry; rank: number }) {
 
 function LoadingSkeleton() {
   return (
-    <div className="space-y-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-4"
+    >
       {[...Array(5)].map((_, i) => (
-        <div key={i} className="flex items-center space-x-4">
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.1, duration: 0.3 }}
+          className="flex items-center space-x-4"
+        >
           <Skeleton className="h-8 w-8 rounded-full" />
           <Skeleton className="h-18 w-12 rounded" />
           <div className="flex-1 space-y-2">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-3 w-3/4" />
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
@@ -184,14 +194,9 @@ export function AnimeCard() {
           ) : (
             <div className="space-y-4">
               {topAnime.map((entry, index) => (
-                <motion.div
-                  key={entry.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                >
+                <div key={entry.id}>
                   <AnimeEntryItem entry={entry} rank={index + 1} />
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
