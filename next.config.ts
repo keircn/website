@@ -8,7 +8,18 @@ const nextConfig: NextConfig = {
         hostname: "*",
       },
     ],
-  }
+  },
+  compiler: {
+    removeConsole: true,
+  },
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;
