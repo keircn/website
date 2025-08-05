@@ -16,20 +16,20 @@ export async function POST(request: NextRequest) {
     });
 
     const data = await response.json();
-    
+
     if (!response.ok) {
       console.error("AniList API error:", response.status, data);
       return NextResponse.json(
         { error: `AniList API error: ${response.status}`, details: data },
-        { status: response.status }
+        { status: response.status },
       );
     }
-    
+
     if (data.errors) {
       console.error("AniList GraphQL errors:", data.errors);
       return NextResponse.json(
         { error: "GraphQL errors", details: data.errors },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     console.error("API route error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

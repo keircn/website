@@ -120,11 +120,10 @@ function AnimeEntryItem({ entry, rank }: { entry: AnimeEntry; rank: number }) {
         </h3>
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            {entry.media.episodes} episodes • {entry.media.startDate?.year || 'N/A'}
+            {entry.media.episodes} episodes •{" "}
+            {entry.media.startDate?.year || "N/A"}
           </p>
-          <p className="text-sm font-bold text-primary">
-            {entry.score}/100
-          </p>
+          <p className="text-sm font-bold text-primary">{entry.score}/100</p>
         </div>
         {entry.media.genres.length > 0 && (
           <p className="text-xs text-muted-foreground truncate">

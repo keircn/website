@@ -45,7 +45,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="text-foreground bg-background p-2 min-h-screen">{children}</body>
+      <body className="text-foreground bg-background p-2 min-h-screen">
+        {children}
+      </body>
     </html>
   );
 }

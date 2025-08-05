@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "motion/react";
-import { LuGithub, LuMail, LuTwitter, LuBitcoin, LuCheck } from "react-icons/lu";
+import {
+  LuGithub,
+  LuMail,
+  LuTwitter,
+  LuBitcoin,
+  LuCheck,
+} from "react-icons/lu";
 import { FaDiscord, FaPaypal } from "react-icons/fa";
 import { useState } from "react";
 
