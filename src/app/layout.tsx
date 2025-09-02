@@ -14,7 +14,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "tuxbkt",
+  title: "keiran.html",
+  description: "<empty>",
+  icons: {
+    icon: "/code-xml.svg",
+  },
+  openGraph: {
+    title: "keiran.html",
+    description: "<empty>",
+    url: "https://keircn.com",
+    siteName: "keiran.html",
+    /* images: [
+      {
+        url: "https://keircn.com/og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ], */
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "keiran.html",
+    description: "<empty>",
+    /* images: [
+      {
+        url: "https://keircn.com/og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ], */
+  },
 };
 
 export default function RootLayout({
