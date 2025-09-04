@@ -20,7 +20,7 @@ export default function Home() {
 ⠹⣿⡇⢹⠄⠄⠐⠄⠄⠄⠄⠈⠣⠉⡻⣟⢿⣝⢿⣝⠿⡿⣷⣝⣷⣝⣿⣿⣿⣿⣿⣿⣿⣧⢹⣿⣿⣿⣿⣿⣿⣿⣿⡟⣠⠄⠄⠄⠄⠈
 ⠄⠘⠇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⣌⠈⢳⢝⣮⣻⣿⣿⣮⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⢀
 ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣷⣤⣝⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠄⠄⠄⠄⣼
-⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⢿⣿⣿⣿⣿⣿⣿⣿⠏⠄⠄⠄⠄⣰⢩
+⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⢿⣿⣿⣿⣿⣿⣿⣿⠏⠄⠄⠄⠄⣰⢩
 ⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⠋⠉⠉⠉⠄⠄⠄⠄⣸⣿⣿⣿⣿⡿⠃⠄⠄⠄⠄⣰⣿⣧
 ⣷⡀⠄⠈⢦⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣯⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣤⣤⣶⣶⣶⣶⣾⣿⣿⣿⣿⡿⠋⠄⠄⠄⠄⠄⣰⣿⣿⣿
 ⣿⣿⣦⡱⣌⢻⣦⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⠄⠄⠄⠄⢰⣿⣿⣿⣿
@@ -32,22 +32,24 @@ export default function Home() {
 
   return (
     <main className="flex-1 pt-2">
-      <div className="text-md text-muted-foreground max-w-3xl pl-4 space-y-8">
+      <div className="text-md text-muted-foreground max-w-4xl pl-4 space-y-8">
         <section>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold font-mono">
             # Hey, I&apos;m{" "}
             <span className="text-foreground bg-muted/30 p-0.5 px-1.5 rounded">
               keiran
             </span>
           </h1>
-          <pre className="mb-4 text-xs text-muted-foreground font-mono whitespace-pre">
+          <pre className="mb-4 text-xs text-pink-400 hover:text-pink-500 transition-all font-sans whitespace-pre">
             {asciiArt}
           </pre>
         </section>
 
         <section id="about">
-          <h2 className="text-xl font-semibold mt-4 mb-2">## who am i</h2>
-          <p>
+          <h2 className="text-xl font-semibold font-mono mt-4 mb-2">
+            ## who am i
+          </h2>
+          <p className="mb-4">
             I&apos;m a {age} year old developer and Linux sysadmin from the UK.
             I&apos;ve been using Linux for about 2 years and{" "}
             <code className="font-mono text-foreground bg-muted/30 p-0.5 px-1.5">
@@ -64,10 +66,85 @@ export default function Home() {
             </Link>
             .
           </p>
+          <p>
+            My main hobbies are coding, breaking linux and watching anime.
+            Here&apos;s my{" "}
+            <Link
+              className="text-foreground hover:text-foreground/80 transition-all underline"
+              href="https://anilist.co/user/keiran"
+            >
+              AniList
+            </Link>{" "}
+            if you wanna see how much I love isekai trash. I also have a blog I
+            rarely write for at{" "}
+            <Link
+              href="https://blog.keircn.com"
+              className="text-foreground underline hover:text-foreground/80 transition-all"
+            >
+              blog.keircn.com
+            </Link>{" "}
+            if you're interested. I also like to poke around in small open
+            source projects and hunt for bugs since it can be quite fun to do.
+            Other than that, I occasionally play games but not as much as I used
+            to.
+          </p>
+
+          <div className="mt-6 border border-border rounded bg-muted/10 max-w-sm">
+            <div className="py-3 border-b border-border flex items-center justify-between mx-4">
+              <h3 className="text-lg font-medium text-foreground">
+                ThinkPad X240
+              </h3>
+              <span className="text-lg font-medium text-muted-foreground">
+                Specs
+              </span>
+            </div>
+            <div className="p-4">
+              <div className="divide-y divide-border">
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">CPU</div>
+                  <div className="text-sm text-foreground text-right">
+                    Intel Core i5-4200U
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">RAM</div>
+                  <div className="text-sm text-foreground text-right">
+                    8 GB DDR3L 1600 MHz
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">Storage</div>
+                  <div className="text-sm text-foreground text-right">
+                    160 GB SATA SSD
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">Display</div>
+                  <div className="text-sm text-foreground text-right">
+                    12.5" IPS 1366x768
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">Graphics</div>
+                  <div className="text-sm text-foreground text-right">
+                    Intel HD Graphics 4400
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">OS</div>
+                  <div className="text-sm text-foreground text-right">
+                    Arch Linux
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="projects" className="pt-8">
-          <h2 className="text-xl font-semibold mb-4">## my projects</h2>
+        <section id="projects">
+          <h2 className="text-xl font-semibold font-mono mb-4">
+            ## my projects
+          </h2>
           <div className="space-y-4">
             <div className="border border-border rounded p-4 bg-muted/10">
               <h3 className="text-lg font-medium text-foreground mb-2">

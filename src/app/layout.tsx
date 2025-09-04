@@ -54,10 +54,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-mono min-h-screen flex text-foreground bg-background`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen overflow-hidden text-foreground bg-background`}
       >
         <Sidebar />
-        {children}
+        <div className="ml-48 h-screen overflow-y-auto scroll-smooth">
+          {children}
+        </div>
       </body>
     </html>
   );
