@@ -31,8 +31,8 @@ export default function Home() {
   const age = new Date().getFullYear() - 2009;
 
   return (
-    <main className="flex-1 pt-2">
-      <div className="text-md text-muted-foreground max-w-4xl pl-4 space-y-8">
+    <main className="flex-1 pt-12 md:pt-2">
+      <div className="text-md text-muted-foreground max-w-4xl px-3 md:pl-4 space-y-8">
         <section>
           <h1 className="text-2xl font-bold font-mono">
             # Hey, I&apos;m{" "}
@@ -40,12 +40,12 @@ export default function Home() {
               keiran
             </span>
           </h1>
-          <pre className="mb-4 text-xs text-pink-400 hover:text-pink-500 transition-all font-sans whitespace-pre">
+          <pre className="hidden sm:block mb-4 text-xs text-pink-400 hover:text-pink-500 transition-all font-sans whitespace-pre overflow-x-auto">
             {asciiArt}
           </pre>
         </section>
 
-        <section id="about">
+        <section id="about" className="scroll-mt-16">
           <h2 className="text-xl font-semibold font-mono mt-4 mb-2">
             ## who am i
           </h2>
@@ -89,7 +89,7 @@ export default function Home() {
             to.
           </p>
 
-          <div className="mt-6 border border-border rounded bg-muted/10 max-w-sm">
+          <div className="mt-6 border border-border rounded bg-muted/10 max-w-sm sm:max-w-md">
             <div className="py-3 border-b border-border flex items-center justify-between mx-4">
               <h3 className="text-lg font-medium text-foreground">
                 ThinkPad X240
@@ -141,7 +141,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projects">
+        <section id="projects" className="scroll-mt-16">
           <h2 className="text-xl font-semibold font-mono mb-4">
             ## my projects
           </h2>
@@ -166,10 +166,10 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="bottom-8 fixed right-4">
+        <div className="fixed right-4 bottom-4 md:bottom-8">
           <Link
             href="/contact"
-            className="text-foreground bg-muted/30 p-4 rounded hover:bg-muted/20 transition-all"
+            className="text-foreground bg-muted/30 px-4 py-2 rounded hover:bg-muted/20 transition-all shadow-sm"
           >
             Contact
           </Link>

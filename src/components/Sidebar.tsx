@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   return (
-    <div className="fixed inset-y-0 left-0 w-48 border-r border-border bg-background">
+    <div className="hidden md:block fixed inset-y-0 left-0 w-48 border-r border-border bg-background">
       <div className="flex items-center border-b border-border pb-1.5 p-2">
         <Link href="/" className="text-2xl font-medium font-mono">
           keiran

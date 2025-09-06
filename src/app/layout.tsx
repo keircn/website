@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import Sidebar from "~/components/Sidebar";
 import "./globals.css";
 
@@ -57,7 +58,34 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen overflow-hidden text-foreground bg-background`}
       >
         <Sidebar />
-        <div className="ml-48 h-screen overflow-y-auto scroll-smooth">
+        <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
+          <div className="flex items-center justify-between px-3 py-2">
+            <Link href="/" className="text-xl font-medium font-mono">
+              keiran
+            </Link>
+            <nav className="flex gap-1 overflow-x-auto">
+              <Link
+                href="/#about"
+                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+              >
+                ~/about
+              </Link>
+              <Link
+                href="/#projects"
+                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+              >
+                ~/projects
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+              >
+                ~/contact
+              </Link>
+            </nav>
+          </div>
+        </div>
+        <div className="ml-0 md:ml-48 min-h-screen md:h-screen overflow-y-auto scroll-smooth">
           {children}
         </div>
       </body>
