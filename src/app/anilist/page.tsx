@@ -98,7 +98,7 @@ export default function AniListPage() {
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold font-mono">
-                keiran {/* AniList */}
+                keiran {"//"} AniList
               </h1>
             </div>
             <button
