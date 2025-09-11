@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "next": "15.5.2"
+    "next": "15.5.3"
   },
   "devDependencies": {
     "typescript": "^5.9.2",
@@ -21,7 +21,7 @@
     "@types/react-dom": "^19.1.9",
     "@tailwindcss/postcss": "^4.1.13",
     "tailwindcss": "^4.1.13",
-    "@biomejs/biome": "2.2.3"
+    "@biomejs/biome": "2.2.4"
   },
   "trustedDependencies": [
     "@tailwindcss/oxide"
