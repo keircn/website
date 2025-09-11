@@ -221,6 +221,10 @@ export async function GET(request: NextRequest) {
         listsByStatus[key] = { name: list.name || key, entries: [] };
 
       for (const e of list.entries || []) {
+        if (e.media?.status === "NOT_YET_RELEASED") {
+          continue;
+        }
+
         listsByStatus[key].entries.push({
           id: e.id,
           status: e.status,
