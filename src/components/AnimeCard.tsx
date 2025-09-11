@@ -34,7 +34,7 @@ export default function AnimeCard({ media }: { media: any }) {
         </div>
 
         <div className="flex-1 flex flex-col justify-between min-h-0">
-          <div className="mb-2">
+          <div className="h-8 mb-2 flex items-start">
             <div className="flex flex-wrap gap-1 max-h-8 overflow-hidden">
               {media.genres && media.genres.length > 0 ? (
                 media.genres.slice(0, 3).map((g: string) => (
