@@ -60,27 +60,33 @@ export default function RootLayout({
         <Sidebar />
         <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
           <div className="flex items-center justify-between px-3 py-2">
-            <Link href="/" className="text-xl font-medium font-mono">
-              keiran
+            <Link href="/" className="text-xl font-medium tracking-wide">
+              Keiran
             </Link>
             <nav className="flex gap-1 overflow-x-auto">
               <Link
                 href="/#about"
                 className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
               >
-                ~/about
+                about
               </Link>
               <Link
                 href="/#projects"
                 className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
               >
-                ~/projects
+                projects
+              </Link>
+              <Link
+                href="/anilist"
+                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+              >
+                anilist
               </Link>
               <Link
                 href="/contact"
                 className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
               >
-                ~/contact
+                contact
               </Link>
             </nav>
           </div>
