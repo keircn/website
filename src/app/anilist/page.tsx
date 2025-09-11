@@ -3,28 +3,24 @@
 import { useEffect, useState } from "react";
 import AnimeCard from "~/components/AnimeCard";
 
-type Media = {
-  id: number;
-  title: { romaji?: string; english?: string; native?: string };
-  coverImage?: { large?: string; medium?: string };
-  episodes?: number;
-  format?: string;
-  status?: string;
-  averageScore?: number;
-  genres?: string[];
-};
-
 export default function AniListPage() {
-  const [username, setUsername] = useState("keiran");
+  const [username] = useState("keiran");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [grouped, setGrouped] = useState<Record<string, { name: string; entries: any[] }> | null>(null);
+  const [grouped, setGrouped] = useState<Record<
+    string,
+    { name: string; entries: any[] }
+  > | null>(null);
   const [total, setTotal] = useState<number | null>(null);
+  const [perChunk, setPerChunk] = useState(50);
 
   useEffect(() => {
     fetchList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    fetchList();
+  }, [perChunk]);
 
   async function fetchList() {
     setLoading(true);
@@ -32,7 +28,9 @@ export default function AniListPage() {
     setGrouped(null);
     setTotal(null);
     try {
-      const res = await fetch(`/api/anilist?username=${encodeURIComponent(username)}&type=ANIME`);
+      const res = await fetch(
+        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=${perChunk}`,
+      );
       if (!res.ok) throw new Error((await res.json()).error || res.statusText);
       const data = await res.json();
       setGrouped(data.listsByStatus || null);
@@ -51,11 +49,23 @@ export default function AniListPage() {
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold font-mono">keiran — AniList</h1>
-              <p className="text-sm text-muted-foreground mt-1">A curated view of keiran's public AniList — lists are grouped to match AniList categories.</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                A curated view of keiran's public AniList — lists are grouped to
+                match AniList categories.
+              </p>
             </div>
             <div className="flex gap-2 items-center">
-              <span className="text-sm text-muted-foreground">Viewing only keiran</span>
+              <select
+                value={perChunk}
+                onChange={(e) => setPerChunk(Number(e.target.value))}
+                className="text-sm bg-background border border-border rounded px-2 py-1"
+              >
+                <option value={25}>25 per list</option>
+                <option value={50}>50 per list</option>
+                <option value={100}>100 per list</option>
+              </select>
               <button
+                type="button"
                 onClick={fetchList}
                 className="px-3 py-1 bg-foreground text-background rounded hover:opacity-90 transition text-sm"
               >
@@ -65,24 +75,28 @@ export default function AniListPage() {
           </div>
 
           <div className="mt-4">
-            {error && (
-              <div className="text-sm text-red-400 mb-4">{error}</div>
-            )}
+            {error && <div className="text-sm text-red-400 mb-4">{error}</div>}
 
             {!loading && !grouped && !error && (
-              <div className="text-sm text-muted-foreground">Enter a username and press Fetch to see their public anime lists.</div>
+              <div className="text-sm text-muted-foreground">
+                Enter a username and press Fetch to see their public anime
+                lists.
+              </div>
             )}
 
             {grouped && (
               <div className="mt-4 space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="text-sm text-muted-foreground">Total</div>
-                  <div className="px-2 py-1 bg-foreground text-background rounded text-sm font-medium">{total}</div>
+                  <div className="px-2 py-1 bg-foreground text-background rounded text-sm font-medium">
+                    {total}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    ({perChunk} per list max)
+                  </div>
                 </div>
 
                 {(() => {
-                  // Order: CURRENT (Watching) first, then PLANNING, COMPLETED, others,
-                  // then PAUSED and DROPPED at the bottom, and finally any unflowed/other lists.
                   const priority = (s: string) => {
                     if (!s || s === "OTHER") return 50;
                     if (s === "CURRENT") return 0;
@@ -112,17 +126,24 @@ export default function AniListPage() {
                       return a[1].name.localeCompare(b[1].name);
                     })
                     .map(([status, group]) => {
-                      const isMuted = status === "PAUSED" || status === "DROPPED";
+                      const isMuted =
+                        status === "PAUSED" || status === "DROPPED";
                       const label = statusLabel(status, group.name);
                       return (
                         <section key={status} className="">
                           <div className="flex items-center justify-between mb-3">
-                            <h3 className={`text-lg font-semibold font-mono ${isMuted ? "text-muted-foreground" : "text-foreground"}`}>
+                            <h3
+                              className={`text-lg font-semibold font-mono ${isMuted ? "text-muted-foreground" : "text-foreground"}`}
+                            >
                               {label}
                             </h3>
-                            <div className="text-sm text-muted-foreground">{group.entries.length} items</div>
+                            <div className="text-sm text-muted-foreground">
+                              {group.entries.length} items
+                            </div>
                           </div>
-                          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${isMuted ? "opacity-70" : ""}`}>
+                          <div
+                            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${isMuted ? "opacity-70" : ""}`}
+                          >
                             {group.entries.map((e: any) => (
                               <AnimeCard key={e.media.id} media={e.media} />
                             ))}
