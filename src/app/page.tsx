@@ -84,7 +84,7 @@ export default function Home() {
             to.
           </p>
 
-          <div className="mt-6 border border-border rounded bg-muted/10 max-w-sm sm:max-w-md">
+          <div className="mt-6 border border-border bg-muted/10 max-w-sm sm:max-w-md">
             <div className="py-3 border-b border-border flex items-center justify-between mx-4">
               <h3 className="text-lg font-medium text-foreground">
                 ThinkPad X240

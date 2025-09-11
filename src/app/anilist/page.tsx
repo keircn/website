@@ -92,9 +92,9 @@ export default function AniListPage() {
   }
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 pt-2">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-muted/10 border border-border rounded-lg p-6 shadow-sm">
+        <div className="bg-muted/10">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold font-mono">
