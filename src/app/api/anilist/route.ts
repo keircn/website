@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 const ANILIST_API = "https://graphql.anilist.co";
 
 const USER_ANIME_LIST_QUERY = `
-query ($username: String, $type: MediaType, $perChunk: Int, $page: Int) {
-  MediaListCollection(userName: $username, type: $type, perChunk: $perChunk, chunk: $page) {
+query ($username: String, $type: MediaType, $perChunk: Int) {
+  MediaListCollection(userName: $username, type: $type, perChunk: $perChunk) {
     user {
       id
       name
@@ -31,7 +31,6 @@ query ($username: String, $type: MediaType, $perChunk: Int, $page: Int) {
         }
       }
     }
-    hasNextChunk
   }
 }`;
 
@@ -73,8 +72,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const username = (searchParams.get("username") || "").trim();
     const mediaType = searchParams.get("type") || "ANIME";
-    const perChunk = parseInt(searchParams.get("perChunk") || "50", 10);
-    const page = parseInt(searchParams.get("page") || "1", 10);
+    const perChunk = parseInt(searchParams.get("perChunk") || "500", 10);
 
     if (!username) {
       return NextResponse.json(
@@ -83,7 +81,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}::${page}`;
+    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
     const now = Date.now();
     const cached = cache.get(cacheKey);
     if (cached && now - cached.ts < CACHE_TTL) {
@@ -94,7 +92,6 @@ export async function GET(request: NextRequest) {
       username,
       type: mediaType,
       perChunk,
-      page,
     });
 
     if (!data?.MediaListCollection) {
@@ -132,8 +129,6 @@ export async function GET(request: NextRequest) {
       listsByStatus,
       totalEntries,
       perChunk,
-      hasNextChunk: data.MediaListCollection.hasNextChunk || false,
-      currentPage: page,
     };
 
     cache.set(cacheKey, { ts: now, value: result });

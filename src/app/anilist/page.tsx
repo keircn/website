@@ -12,58 +12,36 @@ export default function AniListPage() {
     { name: string; entries: any[] }
   > | null>(null);
   const [total, setTotal] = useState<number | null>(null);
-  const [perChunk, setPerChunk] = useState(50);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasNextChunk, setHasNextChunk] = useState(false);
+  const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>(
+    {},
+  );
 
   useEffect(() => {
     fetchList();
   }, []);
 
-  useEffect(() => {
-    setCurrentPage(1);
-    fetchList();
-  }, [perChunk]);
-
-  async function fetchList(page = 1) {
+  async function fetchList() {
     setLoading(true);
     setError(null);
-    if (page === 1) {
-      setGrouped(null);
-      setTotal(null);
-    }
+    setGrouped(null);
+    setTotal(null);
+    setVisibleCounts({});
     try {
       const res = await fetch(
-        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=${perChunk}&page=${page}`,
+        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=500`,
       );
       if (!res.ok) throw new Error((await res.json()).error || res.statusText);
       const data = await res.json();
+      setGrouped(data.listsByStatus || null);
+      setTotal(data.totalEntries || 0);
 
-      if (page === 1) {
-        setGrouped(data.listsByStatus || null);
-      } else {
-        setGrouped((prev) => {
-          if (!prev || !data.listsByStatus) return prev;
-          const newGrouped = { ...prev };
-          Object.entries(data.listsByStatus).forEach(
-            ([status, group]: [string, any]) => {
-              if (newGrouped[status]) {
-                newGrouped[status].entries = [
-                  ...newGrouped[status].entries,
-                  ...group.entries,
-                ];
-              } else {
-                newGrouped[status] = group;
-              }
-            },
-          );
-          return newGrouped;
+      const initialCounts: Record<string, number> = {};
+      if (data.listsByStatus) {
+        Object.keys(data.listsByStatus).forEach((status) => {
+          initialCounts[status] = 25;
         });
       }
-
-      setTotal(data.totalEntries || 0);
-      setHasNextChunk(data.hasNextChunk || false);
-      setCurrentPage(page);
+      setVisibleCounts(initialCounts);
     } catch (err: any) {
       setError(err?.message || String(err));
     } finally {
@@ -71,42 +49,28 @@ export default function AniListPage() {
     }
   }
 
-  function loadMore() {
-    if (!loading && hasNextChunk) {
-      fetchList(currentPage + 1);
-    }
+  function loadMoreForStatus(status: string) {
+    setVisibleCounts((prev) => ({
+      ...prev,
+      [status]: (prev[status] || 25) + 25,
+    }));
   }
 
   return (
-    <main className="flex-1 pt-12 md:pt-6">
+    <main className="flex-1">
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-muted/10 border border-border rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
-              <h1 className="text-2xl font-bold font-mono">keiran — AniList</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                A curated view of keiran's public AniList — lists are grouped to
-                match AniList categories.
-              </p>
+              <h1 className="text-2xl font-bold font-mono">keiran // AniList</h1>
             </div>
-            <div className="flex gap-2 items-center">
-              <select
-                value={perChunk}
-                onChange={(e) => setPerChunk(Number(e.target.value))}
-                className="text-sm bg-background border border-border rounded px-2 py-1"
-              >
-                <option value={25}>25 per list</option>
-                <option value={50}>50 per list</option>
-                <option value={100}>100 per list</option>
-              </select>
               <button
                 type="button"
                 onClick={() => fetchList()}
-                className="px-3 py-1 bg-foreground text-background rounded hover:opacity-90 transition text-sm"
+                className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
               >
                 {loading ? "Refreshing…" : "Refresh"}
               </button>
-            </div>
           </div>
 
           <div className="mt-4">
@@ -123,11 +87,8 @@ export default function AniListPage() {
               <div className="mt-4 space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="text-sm text-muted-foreground">Total</div>
-                  <div className="px-2 py-1 bg-foreground text-background rounded text-sm font-medium">
+                  <div className="px-2 py-1 bg-muted text-foreground rounded text-sm font-medium">
                     {total}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    ({perChunk} per list max)
                   </div>
                 </div>
 
@@ -164,6 +125,13 @@ export default function AniListPage() {
                       const isMuted =
                         status === "PAUSED" || status === "DROPPED";
                       const label = statusLabel(status, group.name);
+                      const visibleCount = visibleCounts[status] || 25;
+                      const visibleEntries = group.entries.slice(
+                        0,
+                        visibleCount,
+                      );
+                      const hasMore = group.entries.length > visibleCount;
+
                       return (
                         <section key={status} className="">
                           <div className="flex items-center justify-between mb-3">
@@ -173,33 +141,33 @@ export default function AniListPage() {
                               {label}
                             </h3>
                             <div className="text-sm text-muted-foreground">
-                              {group.entries.length} items
+                              {visibleEntries.length} of {group.entries.length}{" "}
+                              items
                             </div>
                           </div>
                           <div
                             className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${isMuted ? "opacity-70" : ""}`}
                           >
-                            {group.entries.map((e: any) => (
+                            {visibleEntries.map((e: any) => (
                               <AnimeCard key={e.media.id} media={e.media} />
                             ))}
                           </div>
+                          {hasMore && (
+                            <div className="text-center mt-4">
+                              <button
+                                type="button"
+                                onClick={() => loadMoreForStatus(status)}
+                                className="px-3 py-1 bg-muted/20 text-foreground rounded hover:bg-muted/30 transition text-sm"
+                              >
+                                Load More ({group.entries.length - visibleCount}{" "}
+                                remaining)
+                              </button>
+                            </div>
+                          )}
                         </section>
                       );
                     });
                 })()}
-
-                {hasNextChunk && (
-                  <div className="text-center pt-6">
-                    <button
-                      type="button"
-                      onClick={loadMore}
-                      disabled={loading}
-                      className="px-4 py-2 bg-foreground text-background rounded hover:opacity-90 transition disabled:opacity-50"
-                    >
-                      {loading ? "Loading..." : "Load More"}
-                    </button>
-                  </div>
-                )}
               </div>
             )}
           </div>
