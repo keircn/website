@@ -35,8 +35,8 @@ export default function Sidebar() {
   return (
     <div className="hidden md:block fixed inset-y-0 left-0 w-48 border-r border-t border-l border-border bg-background rounded px-1">
       <div className="flex items-center border-b border-border pb-1.5 p-2">
-        <Link href="/" className="text-2xl font-medium font-mono">
-          keiran
+        <Link href="/" className="text-2xl font-medium tracking-wide">
+          Keiran
         </Link>
       </div>
       <nav
