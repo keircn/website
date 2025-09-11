@@ -42,6 +42,9 @@ interface ListGroup {
 export default function AniListPage() {
   const [username] = useState("keiran");
   const [loading, setLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState<Record<string, boolean>>(
+    {},
+  );
   const [error, setError] = useState<string | null>(null);
   const [grouped, setGrouped] = useState<Record<string, ListGroup> | null>(
     null,
@@ -50,46 +53,141 @@ export default function AniListPage() {
   const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>(
     {},
   );
+  const [statusTotals, setStatusTotals] = useState<Record<string, number>>({});
+  const [lastRefresh, setLastRefresh] = useState<number>(0);
 
-  const fetchList = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    setGrouped(null);
-    setTotal(null);
-    setVisibleCounts({});
-    try {
-      const res = await fetch(
-        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=500`,
-      );
-      if (!res.ok) throw new Error((await res.json()).error || res.statusText);
-      const data = await res.json();
-      setGrouped(data.listsByStatus || null);
-      setTotal(data.totalEntries || 0);
-
-      const initialCounts: Record<string, number> = {};
-      if (data.listsByStatus) {
-        Object.keys(data.listsByStatus).forEach((status) => {
-          initialCounts[status] = 25;
-        });
+  const fetchInitialList = useCallback(
+    async (backgroundRefresh = false) => {
+      if (!backgroundRefresh) {
+        setLoading(true);
+        setError(null);
+        setGrouped(null);
+        setTotal(null);
+        setVisibleCounts({});
+        setStatusTotals({});
       }
-      setVisibleCounts(initialCounts);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : String(err));
-    } finally {
-      setLoading(false);
-    }
-  }, [username]);
+
+      try {
+        // First, fetch with limit to get just 25 items per status initially
+        const res = await fetch(
+          `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=500&offset=0&limit=25`,
+        );
+        if (!res.ok)
+          throw new Error((await res.json()).error || res.statusText);
+        const data = await res.json();
+
+        // If it's a limited request, we need to also get the full counts
+        if (data.pagination) {
+          // Fetch full data to get total counts per status
+          const fullRes = await fetch(
+            `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=500`,
+          );
+          if (fullRes.ok) {
+            const fullData = await fullRes.json();
+            const totals: Record<string, number> = {};
+            if (fullData.listsByStatus) {
+              Object.entries(fullData.listsByStatus).forEach(
+                ([status, group]: [string, ListGroup]) => {
+                  totals[status] = group.entries.length;
+                },
+              );
+            }
+            setStatusTotals(totals);
+            setTotal(fullData.totalEntries || 0);
+          }
+        }
+
+        setGrouped(data.listsByStatus || null);
+        if (!data.pagination) {
+          setTotal(data.totalEntries || 0);
+        }
+
+        const initialCounts: Record<string, number> = {};
+        if (data.listsByStatus) {
+          Object.entries(data.listsByStatus).forEach(
+            ([status, group]: [string, ListGroup]) => {
+              initialCounts[status] = group.entries.length;
+            },
+          );
+        }
+        setVisibleCounts(initialCounts);
+        setLastRefresh(Date.now());
+      } catch (err: unknown) {
+        if (!backgroundRefresh) {
+          setError(err instanceof Error ? err.message : String(err));
+        }
+      } finally {
+        if (!backgroundRefresh) {
+          setLoading(false);
+        }
+      }
+    },
+    [username],
+  );
+
+  // Background refresh every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Date.now() - lastRefresh > 5 * 60 * 1000) {
+        // 5 minutes
+        fetchInitialList(true);
+      }
+    }, 60 * 1000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, [fetchInitialList, lastRefresh]);
+
+  const loadMoreForStatus = useCallback(
+    async (status: string, retryCount = 0) => {
+      if (loadingStatus[status]) return; // Already loading
+
+      setLoadingStatus((prev) => ({ ...prev, [status]: true }));
+      try {
+        const currentCount = visibleCounts[status] || 0;
+        const res = await fetch(
+          `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=500&offset=${currentCount}&limit=25`,
+        );
+        if (!res.ok)
+          throw new Error((await res.json()).error || res.statusText);
+        const data = await res.json();
+
+        if (data.listsByStatus?.[status]?.entries) {
+          setGrouped((prev) => {
+            if (!prev || !prev[status]) return prev;
+            return {
+              ...prev,
+              [status]: {
+                ...prev[status],
+                entries: [
+                  ...prev[status].entries,
+                  ...data.listsByStatus[status].entries,
+                ],
+              },
+            };
+          });
+
+          setVisibleCounts((prev) => ({
+            ...prev,
+            [status]: currentCount + data.listsByStatus[status].entries.length,
+          }));
+        }
+      } catch (err: unknown) {
+        // Retry once on failure
+        if (retryCount < 1) {
+          setTimeout(() => loadMoreForStatus(status, retryCount + 1), 2000);
+          return;
+        }
+        setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setLoadingStatus((prev) => ({ ...prev, [status]: false }));
+      }
+    },
+    [username, visibleCounts, loadingStatus],
+  );
 
   useEffect(() => {
-    fetchList();
-  }, [fetchList]);
-
-  function loadMoreForStatus(status: string) {
-    setVisibleCounts((prev) => ({
-      ...prev,
-      [status]: (prev[status] || 25) + 25,
-    }));
-  }
+    fetchInitialList();
+  }, [fetchInitialList]);
 
   return (
     <main className="flex-1">
@@ -102,7 +200,7 @@ export default function AniListPage() {
           </div>
           <button
             type="button"
-            onClick={fetchList}
+            onClick={() => fetchInitialList(false)}
             className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
           >
             {loading ? "Refreshing…" : "Refresh"}
@@ -159,9 +257,12 @@ export default function AniListPage() {
                   .map(([status, group]) => {
                     const isMuted = status === "PAUSED" || status === "DROPPED";
                     const label = statusLabel(status, group.name);
-                    const visibleCount = visibleCounts[status] || 25;
-                    const visibleEntries = group.entries.slice(0, visibleCount);
-                    const hasMore = group.entries.length > visibleCount;
+                    const visibleCount = visibleCounts[status] || 0;
+                    const totalForStatus =
+                      statusTotals[status] || group.entries.length;
+                    const visibleEntries = group.entries;
+                    const hasMore = visibleCount < totalForStatus;
+                    const isLoadingMore = loadingStatus[status] || false;
 
                     return (
                       <section key={status} className="">
@@ -172,8 +273,7 @@ export default function AniListPage() {
                             {label}
                           </h3>
                           <div className="text-sm text-muted-foreground">
-                            {visibleEntries.length} of {group.entries.length}{" "}
-                            items
+                            {visibleCount} of {totalForStatus} items
                           </div>
                         </div>
                         <div
@@ -188,10 +288,12 @@ export default function AniListPage() {
                             <button
                               type="button"
                               onClick={() => loadMoreForStatus(status)}
-                              className="px-3 py-1 bg-muted/20 text-foreground rounded hover:bg-muted/30 transition text-sm"
+                              disabled={isLoadingMore}
+                              className="px-3 py-1 bg-muted/20 text-foreground rounded hover:bg-muted/30 transition text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              Load More ({group.entries.length - visibleCount}{" "}
-                              remaining)
+                              {isLoadingMore
+                                ? "Loading..."
+                                : `Load More (${totalForStatus - visibleCount} remaining)`}
                             </button>
                           </div>
                         )}

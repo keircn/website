@@ -6,6 +6,8 @@ interface AniListVariables {
   username?: string;
   type?: string;
   perChunk?: number;
+  offset?: number;
+  limit?: number;
 }
 
 interface AniListData {
@@ -98,7 +100,7 @@ query ($username: String, $type: MediaType, $perChunk: Int) {
 }`;
 
 const cache = new Map<string, CacheEntry>();
-const CACHE_TTL = 60 * 1000;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 async function makeAniListRequest(
   query: string,
@@ -179,6 +181,8 @@ export async function GET(request: NextRequest) {
     const username = (searchParams.get("username") || "").trim();
     const mediaType = searchParams.get("type") || "ANIME";
     const perChunk = parseInt(searchParams.get("perChunk") || "500", 10);
+    const offset = parseInt(searchParams.get("offset") || "0", 10);
+    const limit = parseInt(searchParams.get("limit") || "0", 10); // 0 means no limit
 
     if (!username) {
       return NextResponse.json(
@@ -187,11 +191,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
+    // For pagination requests, use a different cache key
+    const baseCacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
+    const cacheKey =
+      limit > 0 ? `${baseCacheKey}::${offset}::${limit}` : baseCacheKey;
     const now = Date.now();
     const cached = cache.get(cacheKey);
     if (cached && now - cached.ts < CACHE_TTL) {
-      return NextResponse.json(cached.value);
+      return NextResponse.json(cached.value, {
+        headers: {
+          "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+          ETag: `"${cacheKey}-${cached.ts}"`,
+        },
+      });
     }
 
     const data = await makeAniListRequest(USER_ANIME_LIST_QUERY, {
@@ -237,15 +249,62 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Apply pagination if requested
+    if (limit > 0) {
+      const paginatedListsByStatus: Record<
+        string,
+        { name: string; entries: ListEntry[] }
+      > = {};
+      Object.keys(listsByStatus).forEach((status) => {
+        const entries = listsByStatus[status].entries;
+        paginatedListsByStatus[status] = {
+          name: listsByStatus[status].name,
+          entries: entries.slice(offset, offset + limit),
+        };
+      });
+      const result = {
+        user: data.MediaListCollection.user || null,
+        listsByStatus: paginatedListsByStatus,
+        totalEntries,
+        perChunk,
+        pagination: {
+          offset,
+          limit,
+          totalPerStatus: Object.fromEntries(
+            Object.entries(listsByStatus).map(([k, v]) => [
+              k,
+              v.entries.length,
+            ]),
+          ),
+        },
+      };
+      cache.set(cacheKey, { ts: now, value: result });
+      return NextResponse.json(result, {
+        headers: {
+          "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+          ETag: `"${cacheKey}-${now}"`,
+        },
+      });
+    }
+
     const result = {
       user: data.MediaListCollection.user || null,
       listsByStatus,
       totalEntries,
       perChunk,
+      pagination:
+        limit > 0
+          ? { offset, limit, hasMore: totalEntries > offset + limit }
+          : null,
     };
 
     cache.set(cacheKey, { ts: now, value: result });
-    return NextResponse.json(result);
+    return NextResponse.json(result, {
+      headers: {
+        "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+        ETag: `"${cacheKey}-${now}"`,
+      },
+    });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("/api/anilist error:", message);

@@ -33,10 +33,6 @@ export default function AnimeCard({ media }: { media: Media }) {
   const img =
     media.coverImage?.large || media.coverImage?.medium || "/code-xml.svg";
 
-  console.log(
-    `AnimeCard for ${title}: coverImage=${JSON.stringify(media.coverImage)}, using=${img}`,
-  );
-
   return (
     <article className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition">
       <div className="aspect-[2/3] w-full bg-muted/5 relative">
@@ -48,7 +44,6 @@ export default function AnimeCard({ media }: { media: Media }) {
           className="w-full h-full object-cover"
           unoptimized={img !== "/code-xml.svg"}
           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            console.log(`Image failed to load: ${img}`);
             e.currentTarget.src = "/code-xml.svg";
           }}
         />
