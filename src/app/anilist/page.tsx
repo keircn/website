@@ -92,9 +92,8 @@ export default function AniListPage() {
   }
 
   return (
-    <main className="flex-1 pt-2">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-muted/10">
+    <main className="flex-1">
+      <div className="max-w-6xl mx-auto px-4 border border-border rounded-lg p-4 ml-4 mr-2">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold font-mono">
@@ -208,7 +207,6 @@ export default function AniListPage() {
               </div>
             )}
           </div>
-        </div>
       </div>
     </main>
   );
