@@ -100,7 +100,8 @@ query ($username: String, $type: MediaType, $perChunk: Int) {
 }`;
 
 const cache = new Map<string, CacheEntry>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const fullDataCache = new Map<string, CacheEntry>(); // Separate cache for full data
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutes - increased for better performance
 
 async function makeAniListRequest(
   query: string,
@@ -153,11 +154,6 @@ function compactMedia(m: AniListMedia | null | undefined): CompactMedia {
   if (!m) {
     return {
       id: 0,
-      title: undefined,
-      format: undefined,
-      status: undefined,
-      episodes: undefined,
-      averageScore: undefined,
       genres: [],
       coverImage: null,
     };
@@ -191,16 +187,63 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // For pagination requests, use a different cache key
+    // Use separate cache keys for full data vs paginated
     const baseCacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
-    const cacheKey =
-      limit > 0 ? `${baseCacheKey}::${offset}::${limit}` : baseCacheKey;
+    const fullDataCacheKey = `${baseCacheKey}::full`;
+    const cacheKey = limit > 0 ? `${baseCacheKey}::${offset}::${limit}` : baseCacheKey;
     const now = Date.now();
+
+    // For paginated requests, try to serve from full data cache first
+    if (limit > 0) {
+      const fullCached = fullDataCache.get(fullDataCacheKey);
+      if (fullCached && now - fullCached.ts < CACHE_TTL) {
+        const fullData = fullCached.value as {
+          listsByStatus: Record<string, { name: string; entries: ListEntry[] }>;
+          totalEntries: number;
+        };
+
+        // Slice the data for pagination
+        const paginatedListsByStatus: Record<string, { name: string; entries: ListEntry[] }> = {};
+        Object.keys(fullData.listsByStatus).forEach((status) => {
+          const entries = fullData.listsByStatus[status].entries;
+          paginatedListsByStatus[status] = {
+            name: fullData.listsByStatus[status].name,
+            entries: entries.slice(offset, offset + limit),
+          };
+        });
+
+        const result = {
+          listsByStatus: paginatedListsByStatus,
+          totalEntries: fullData.totalEntries,
+          perChunk,
+          pagination: {
+            offset,
+            limit,
+            totalPerStatus: Object.fromEntries(
+              Object.entries(fullData.listsByStatus).map(([k, v]) => [
+                k,
+                v.entries.length,
+              ]),
+            ),
+          },
+        };
+
+        cache.set(cacheKey, { ts: now, value: result });
+        return NextResponse.json(result, {
+          headers: {
+            "Cache-Control": "public, max-age=600, s-maxage=600", // 10 minutes
+            ETag: `"${cacheKey}-${fullCached.ts}"`,
+          },
+        });
+      }
+    }
+
+    // Check regular cache for non-paginated or if full data cache miss
     const cached = cache.get(cacheKey);
     if (cached && now - cached.ts < CACHE_TTL) {
       return NextResponse.json(cached.value, {
         headers: {
-          "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+          "Cache-Control": "public, max-age=600, s-maxage=600", // 10 minutes
           ETag: `"${cacheKey}-${cached.ts}"`,
         },
       });
@@ -249,6 +292,13 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Store full data in separate cache for future pagination requests
+    const fullData = {
+      listsByStatus,
+      totalEntries,
+    };
+    fullDataCache.set(fullDataCacheKey, { ts: now, value: fullData });
+
     // Apply pagination if requested
     if (limit > 0) {
       const paginatedListsByStatus: Record<
@@ -281,7 +331,7 @@ export async function GET(request: NextRequest) {
       cache.set(cacheKey, { ts: now, value: result });
       return NextResponse.json(result, {
         headers: {
-          "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+          "Cache-Control": "public, max-age=600, s-maxage=600", // 10 minutes
           ETag: `"${cacheKey}-${now}"`,
         },
       });
@@ -301,7 +351,7 @@ export async function GET(request: NextRequest) {
     cache.set(cacheKey, { ts: now, value: result });
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, max-age=300, s-maxage=300", // 5 minutes
+        "Cache-Control": "public, max-age=600, s-maxage=600", // 10 minutes
         ETag: `"${cacheKey}-${now}"`,
       },
     });

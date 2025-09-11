@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -15,19 +15,25 @@ export default function Sidebar() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
-  const isActive = (href: string) => {
-    if (href.startsWith("/#")) {
-      return pathname === "/" && hash === href.slice(1);
-    }
-    return pathname === href;
-  };
+  const isActive = useCallback(
+    (href: string) => {
+      if (href.startsWith("/#")) {
+        return pathname === "/" && hash === href.slice(1);
+      }
+      return pathname === href;
+    },
+    [pathname, hash],
+  );
 
-  const items = [
-    { href: "/#about", label: "about" },
-    { href: "/#projects", label: "projects" },
-    { href: "/anilist", label: "anilist" },
-    { href: "/contact", label: "contact" },
-  ];
+  const items = useMemo(
+    () => [
+      { href: "/#about", label: "about" },
+      { href: "/#projects", label: "projects" },
+      { href: "/anilist", label: "anilist" },
+      { href: "/contact", label: "contact" },
+    ],
+    [],
+  );
 
   const linkBase =
     "text-sm px-3 py-2 rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";

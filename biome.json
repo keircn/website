@@ -18,8 +18,23 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "performance": {
+        "noDelete": "error",
+        "noReExportAll": "warn"
+      },
       "suspicious": {
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "warn",
         "noUnknownAtRules": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useConst": "error",
+        "useImportType": "error"
       }
     },
     "domains": {

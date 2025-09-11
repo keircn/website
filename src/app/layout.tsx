@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import Sidebar from "~/components/Sidebar";
+import dynamic from "next/dynamic";
 import "./globals.css";
+
+const Sidebar = dynamic(() => import("~/components/Sidebar"));
+
+const ServiceWorkerRegistration = dynamic(() => import("~/components/ServiceWorkerRegistration"));
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +62,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen overflow-hidden text-foreground bg-background`}
       >
         <Sidebar />
+        <ServiceWorkerRegistration />
         <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
           <div className="flex items-center justify-between px-3 py-2">
             <Link href="/" className="text-xl font-medium tracking-wide">

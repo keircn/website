@@ -1,7 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import AnimeCard from "~/components/AnimeCard";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import AnimeCard for better code splitting
+const AnimeCard = dynamic(() => import("~/components/AnimeCard"), {
+  loading: () => (
+    <div className="bg-background border border-border rounded-lg overflow-hidden shadow-sm animate-pulse">
+      <div className="aspect-[2/3] w-full bg-muted/5"></div>
+      <div className="p-3 space-y-2">
+        <div className="h-4 bg-muted/20 rounded"></div>
+        <div className="h-3 bg-muted/20 rounded w-3/4"></div>
+        <div className="h-3 bg-muted/20 rounded w-1/2"></div>
+      </div>
+    </div>
+  ),
+});
 
 interface MediaTitle {
   english?: string;
@@ -87,7 +101,7 @@ export default function AniListPage() {
             const totals: Record<string, number> = {};
             if (fullData.listsByStatus) {
               Object.entries(fullData.listsByStatus).forEach(
-                ([status, group]: [string, ListGroup]) => {
+                ([status, group]: [string, any]) => {
                   totals[status] = group.entries.length;
                 },
               );
@@ -105,7 +119,7 @@ export default function AniListPage() {
         const initialCounts: Record<string, number> = {};
         if (data.listsByStatus) {
           Object.entries(data.listsByStatus).forEach(
-            ([status, group]: [string, ListGroup]) => {
+            ([status, group]: [string, any]) => {
               initialCounts[status] = group.entries.length;
             },
           );
@@ -226,7 +240,7 @@ export default function AniListPage() {
               </div>
 
               {(() => {
-                const priority = (s: string) => {
+                const priority = useCallback((s: string) => {
                   if (!s || s === "OTHER") return 50;
                   if (s === "CURRENT") return 0;
                   if (s === "PLANNING") return 10;
@@ -235,9 +249,9 @@ export default function AniListPage() {
                   if (s === "PAUSED") return 90;
                   if (s === "DROPPED") return 100;
                   return 30;
-                };
+                }, []);
 
-                const statusLabel = (s: string, name: string) => {
+                const statusLabel = useCallback((s: string, name: string) => {
                   if (!s || s === "OTHER") return "Unflowed";
                   if (s === "CURRENT") return "Watching";
                   if (s === "PLANNING") return "Plan to Watch";
@@ -245,16 +259,20 @@ export default function AniListPage() {
                   if (s === "PAUSED") return "Paused";
                   if (s === "DROPPED") return "Dropped";
                   return name || s;
-                };
+                }, []);
 
-                return Object.entries(grouped)
-                  .sort((a, b) => {
-                    const pa = priority(a[0]);
-                    const pb = priority(b[0]);
-                    if (pa !== pb) return pa - pb;
-                    return a[1].name.localeCompare(b[1].name);
-                  })
-                  .map(([status, group]) => {
+                const sortedGroups = useMemo(() => {
+                  if (!grouped) return [];
+                  return Object.entries(grouped)
+                    .sort((a, b) => {
+                      const pa = priority(a[0]);
+                      const pb = priority(b[0]);
+                      if (pa !== pb) return pa - pb;
+                      return a[1].name.localeCompare(b[1].name);
+                    });
+                }, [grouped, priority]);
+
+                return sortedGroups.map(([status, group]) => {
                     const isMuted = status === "PAUSED" || status === "DROPPED";
                     const label = statusLabel(status, group.name);
                     const visibleCount = visibleCounts[status] || 0;

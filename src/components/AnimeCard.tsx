@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { memo } from "react";
 
 interface MediaTitle {
   english?: string;
@@ -24,7 +25,7 @@ interface Media {
   coverImage: CoverImage | null;
 }
 
-export default function AnimeCard({ media }: { media: Media }) {
+const AnimeCard = ({ media }: { media: Media }) => {
   const title =
     media.title?.english ||
     media.title?.romaji ||
@@ -41,11 +42,13 @@ export default function AnimeCard({ media }: { media: Media }) {
           alt={title}
           width={300}
           height={450}
-          className="w-full h-full object-cover"
-          unoptimized={img !== "/code-xml.svg"}
-          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-            e.currentTarget.src = "/code-xml.svg";
-          }}
+          className="w-full h-full object-cover transition-transform hover:scale-105"
+          unoptimized={img === "/code-xml.svg"}
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         <div className="absolute left-2 top-2 px-2 py-1 bg-foreground/90 text-background text-xs rounded">
           {media.format || "—"}
@@ -92,4 +95,6 @@ export default function AnimeCard({ media }: { media: Media }) {
       </div>
     </article>
   );
-}
+};
+
+export default memo(AnimeCard);
