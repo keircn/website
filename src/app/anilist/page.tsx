@@ -62,15 +62,17 @@ export default function AniListPage() {
         <div className="bg-muted/10 border border-border rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
-              <h1 className="text-2xl font-bold font-mono">keiran // AniList</h1>
+              <h1 className="text-2xl font-bold font-mono">
+                keiran // AniList
+              </h1>
             </div>
-              <button
-                type="button"
-                onClick={() => fetchList()}
-                className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
-              >
-                {loading ? "Refreshing…" : "Refresh"}
-              </button>
+            <button
+              type="button"
+              onClick={() => fetchList()}
+              className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
+            >
+              {loading ? "Refreshing…" : "Refresh"}
+            </button>
           </div>
 
           <div className="mt-4">
