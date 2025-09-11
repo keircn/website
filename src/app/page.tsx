@@ -50,43 +50,10 @@ export default function Home() {
             ## who am i
           </h2>
           <p className="mb-4">
-            I&apos;m a {age} year old developer and Linux sysadmin from the UK.
-            I&apos;ve been using Linux for about 2 years and{" "}
-            <code className="font-mono text-foreground bg-muted/30 p-0.5 px-1.5">
-              i use arch btw
-            </code>
-            . I enjoy learning about new technologies and have contributed to
-            many open source projects. You can find my work on my{" "}
-            <Link
-              href="https://github.com/keircn"
-              target="_blank"
-              className="text-foreground underline hover:text-foreground/80 transition-all"
-            >
-              GitHub
-            </Link>
-            .
+            I'm a 16 year old developer and Linux sysadmin from the UK. I've been using Linux for about 2 years and i use arch btw. I enjoy learning about new technologies and have contributed to many open source projects. You can find my work on my <Link href="https://github.com/keircn" target="_blank" className="text-foreground underline hover:text-foreground/80 transition-all">GitHub</Link>.
           </p>
           <p>
-            My main hobbies are coding, breaking linux and watching anime.
-            Here&apos;s my{" "}
-            <Link
-              className="text-foreground hover:text-foreground/80 transition-all underline"
-              href="https://anilist.co/user/keiran"
-            >
-              AniList
-            </Link>{" "}
-            if you wanna see how much I love isekai trash. I also have a blog I
-            rarely write for at{" "}
-            <Link
-              href="https://blog.keircn.com"
-              className="text-foreground underline hover:text-foreground/80 transition-all"
-            >
-              blog.keircn.com
-            </Link>{" "}
-            if you're interested. I also like to poke around in small open
-            source projects and hunt for bugs since it can be quite fun to do.
-            Other than that, I occasionally play games but not as much as I used
-            to.
+            My main hobbies are coding, breaking linux and watching anime. Here's my <Link className="text-foreground hover:text-foreground/80 transition-all underline" href="/anilist">AniList</Link> if you wanna see how much I love isekai trash. I also have a blog I rarely write for at <Link href="https://blog.keircn.com" className="text-foreground underline hover:text-foreground/80 transition-all">blog.keircn.com</Link> if you're interested. I also like to poke around in small open source projects and hunt for bugs since it can be quite fun to do. Other than that, I occasionally play games but not as much as I used to.
           </p>
 
           <div className="mt-6 border border-border rounded bg-muted/10 max-w-sm sm:max-w-md">
