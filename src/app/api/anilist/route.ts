@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
     const username = (searchParams.get("username") || "").trim();
     const mediaType = searchParams.get("type") || "ANIME";
     const perChunk = parseInt(searchParams.get("perChunk") || "50", 10);
+    const page = parseInt(searchParams.get("page") || "1", 10);
 
     if (!username) {
       return NextResponse.json(
@@ -82,7 +83,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
+    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}::${page}`;
     const now = Date.now();
     const cached = cache.get(cacheKey);
     if (cached && now - cached.ts < CACHE_TTL) {
@@ -93,6 +94,7 @@ export async function GET(request: NextRequest) {
       username,
       type: mediaType,
       perChunk,
+      page,
     });
 
     if (!data?.MediaListCollection) {
@@ -130,6 +132,8 @@ export async function GET(request: NextRequest) {
       listsByStatus,
       totalEntries,
       perChunk,
+      hasNextChunk: data.MediaListCollection.hasNextChunk || false,
+      currentPage: page,
     };
 
     cache.set(cacheKey, { ts: now, value: result });

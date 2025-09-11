@@ -13,32 +13,67 @@ export default function AniListPage() {
   > | null>(null);
   const [total, setTotal] = useState<number | null>(null);
   const [perChunk, setPerChunk] = useState(50);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasNextChunk, setHasNextChunk] = useState(false);
 
   useEffect(() => {
     fetchList();
   }, []);
 
   useEffect(() => {
+    setCurrentPage(1);
     fetchList();
   }, [perChunk]);
 
-  async function fetchList() {
+  async function fetchList(page = 1) {
     setLoading(true);
     setError(null);
-    setGrouped(null);
-    setTotal(null);
+    if (page === 1) {
+      setGrouped(null);
+      setTotal(null);
+    }
     try {
       const res = await fetch(
-        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=${perChunk}`,
+        `/api/anilist?username=${encodeURIComponent(username)}&type=ANIME&perChunk=${perChunk}&page=${page}`,
       );
       if (!res.ok) throw new Error((await res.json()).error || res.statusText);
       const data = await res.json();
-      setGrouped(data.listsByStatus || null);
+
+      if (page === 1) {
+        setGrouped(data.listsByStatus || null);
+      } else {
+        setGrouped((prev) => {
+          if (!prev || !data.listsByStatus) return prev;
+          const newGrouped = { ...prev };
+          Object.entries(data.listsByStatus).forEach(
+            ([status, group]: [string, any]) => {
+              if (newGrouped[status]) {
+                newGrouped[status].entries = [
+                  ...newGrouped[status].entries,
+                  ...group.entries,
+                ];
+              } else {
+                newGrouped[status] = group;
+              }
+            },
+          );
+          return newGrouped;
+        });
+      }
+
       setTotal(data.totalEntries || 0);
+      setHasNextChunk(data.hasNextChunk || false);
+      setCurrentPage(page);
     } catch (err: any) {
       setError(err?.message || String(err));
     } finally {
       setLoading(false);
+    }
+  }
+
+  function loadMore() {
+    if (!loading && hasNextChunk) {
+      fetchList(currentPage + 1);
     }
   }
 
@@ -66,7 +101,7 @@ export default function AniListPage() {
               </select>
               <button
                 type="button"
-                onClick={fetchList}
+                onClick={() => fetchList()}
                 className="px-3 py-1 bg-foreground text-background rounded hover:opacity-90 transition text-sm"
               >
                 {loading ? "Refreshing…" : "Refresh"}
@@ -152,6 +187,19 @@ export default function AniListPage() {
                       );
                     });
                 })()}
+
+                {hasNextChunk && (
+                  <div className="text-center pt-6">
+                    <button
+                      type="button"
+                      onClick={loadMore}
+                      disabled={loading}
+                      className="px-4 py-2 bg-foreground text-background rounded hover:opacity-90 transition disabled:opacity-50"
+                    >
+                      {loading ? "Loading..." : "Load More"}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
