@@ -1,6 +1,69 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const ANILIST_API = "https://graphql.anilist.co";
+
+interface AniListVariables {
+  username?: string;
+  type?: string;
+  perChunk?: number;
+}
+
+interface AniListData {
+  MediaListCollection?: {
+    user?: unknown;
+    lists?: Array<{
+      name?: string;
+      status?: string;
+      entries?: Array<{
+        id: number;
+        status?: string;
+        score?: number;
+        progress?: number;
+        updatedAt?: number;
+        media?: {
+          id: number;
+          title?: {
+            romaji?: string;
+            english?: string;
+            native?: string;
+          };
+          format?: string;
+          status?: string;
+          episodes?: number;
+          averageScore?: number;
+          genres?: string[];
+          coverImage?: {
+            large?: string;
+            medium?: string;
+          };
+        };
+      }>;
+    }>;
+  };
+}
+
+interface CompactMedia {
+  id: number;
+  title?: {
+    romaji?: string;
+    english?: string;
+    native?: string;
+  };
+  format?: string;
+  status?: string;
+  episodes?: number;
+  averageScore?: number;
+  genres: string[];
+  coverImage: {
+    large?: string;
+    medium?: string;
+  } | null;
+}
+
+interface CacheEntry {
+  ts: number;
+  value: unknown;
+}
 
 const USER_ANIME_LIST_QUERY = `
 query ($username: String, $type: MediaType, $perChunk: Int) {
@@ -34,10 +97,13 @@ query ($username: String, $type: MediaType, $perChunk: Int) {
   }
 }`;
 
-const cache = new Map<string, { ts: number; value: any }>();
+const cache = new Map<string, CacheEntry>();
 const CACHE_TTL = 60 * 1000;
 
-async function makeAniListRequest(query: string, variables: any) {
+async function makeAniListRequest(
+  query: string,
+  variables: AniListVariables,
+): Promise<AniListData> {
   const res = await fetch(ANILIST_API, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -54,9 +120,49 @@ async function makeAniListRequest(query: string, variables: any) {
   return data.data;
 }
 
-function compactMedia(m: any) {
+interface ListEntry {
+  id: number;
+  status?: string;
+  score?: number;
+  progress?: number;
+  updatedAt?: number;
+  media: CompactMedia;
+}
+
+interface AniListMedia {
+  id?: number;
+  title?: {
+    romaji?: string;
+    english?: string;
+    native?: string;
+  };
+  format?: string;
+  status?: string;
+  episodes?: number;
+  averageScore?: number;
+  genres?: string[];
+  coverImage?: {
+    large?: string;
+    medium?: string;
+  };
+}
+
+function compactMedia(m: AniListMedia | null | undefined): CompactMedia {
+  if (!m) {
+    return {
+      id: 0,
+      title: undefined,
+      format: undefined,
+      status: undefined,
+      episodes: undefined,
+      averageScore: undefined,
+      genres: [],
+      coverImage: null,
+    };
+  }
+
   return {
-    id: m.id,
+    id: m.id || 0,
     title: m.title,
     format: m.format,
     status: m.status,
@@ -103,7 +209,10 @@ export async function GET(request: NextRequest) {
 
     const rawLists = data.MediaListCollection.lists || [];
 
-    const listsByStatus: Record<string, { name: string; entries: any[] }> = {};
+    const listsByStatus: Record<
+      string,
+      { name: string; entries: ListEntry[] }
+    > = {};
     let totalEntries = 0;
 
     for (const list of rawLists) {
@@ -133,10 +242,11 @@ export async function GET(request: NextRequest) {
 
     cache.set(cacheKey, { ts: now, value: result });
     return NextResponse.json(result);
-  } catch (err: any) {
-    console.error("/api/anilist error:", err?.message || err);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("/api/anilist error:", message);
     return NextResponse.json(
-      { error: "internal_server_error", message: err?.message || String(err) },
+      { error: "internal_server_error", message },
       { status: 500 },
     );
   }

@@ -1,6 +1,30 @@
 "use client";
 
-export default function AnimeCard({ media }: { media: any }) {
+import Image from "next/image";
+
+interface MediaTitle {
+  english?: string;
+  romaji?: string;
+  native?: string;
+}
+
+interface CoverImage {
+  large?: string;
+  medium?: string;
+}
+
+interface Media {
+  id: number;
+  title: MediaTitle;
+  format?: string;
+  status?: string;
+  episodes?: number;
+  averageScore?: number;
+  genres: string[];
+  coverImage: CoverImage | null;
+}
+
+export default function AnimeCard({ media }: { media: Media }) {
   const title =
     media.title?.english ||
     media.title?.romaji ||
@@ -12,11 +36,13 @@ export default function AnimeCard({ media }: { media: any }) {
   return (
     <article className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition">
       <div className="aspect-[2/3] w-full bg-muted/5 relative">
-        <img
+        <Image
           src={img}
           alt={title}
+          width={300}
+          height={450}
           className="w-full h-full object-cover"
-          onError={(e: any) => {
+          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
             e.currentTarget.src = "/code-xml.svg";
           }}
         />

@@ -1,26 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AnimeCard from "~/components/AnimeCard";
+
+interface MediaTitle {
+  english?: string;
+  romaji?: string;
+  native?: string;
+}
+
+interface CoverImage {
+  large?: string;
+  medium?: string;
+}
+
+interface Media {
+  id: number;
+  title: MediaTitle;
+  format?: string;
+  status?: string;
+  episodes?: number;
+  averageScore?: number;
+  genres: string[];
+  coverImage: CoverImage | null;
+}
+
+interface ListEntry {
+  id: number;
+  status?: string;
+  score?: number;
+  progress?: number;
+  updatedAt?: number;
+  media: Media;
+}
+
+interface ListGroup {
+  name: string;
+  entries: ListEntry[];
+}
 
 export default function AniListPage() {
   const [username] = useState("keiran");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [grouped, setGrouped] = useState<Record<
-    string,
-    { name: string; entries: any[] }
-  > | null>(null);
+  const [grouped, setGrouped] = useState<Record<string, ListGroup> | null>(
+    null,
+  );
   const [total, setTotal] = useState<number | null>(null);
   const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>(
     {},
   );
 
-  useEffect(() => {
-    fetchList();
-  }, []);
-
-  async function fetchList() {
+  const fetchList = useCallback(async () => {
     setLoading(true);
     setError(null);
     setGrouped(null);
@@ -42,12 +73,16 @@ export default function AniListPage() {
         });
       }
       setVisibleCounts(initialCounts);
-    } catch (err: any) {
-      setError(err?.message || String(err));
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }
-  }
+  }, [username]);
+
+  useEffect(() => {
+    fetchList();
+  }, [fetchList]);
 
   function loadMoreForStatus(status: string) {
     setVisibleCounts((prev) => ({
@@ -63,12 +98,12 @@ export default function AniListPage() {
           <div className="flex items-center justify-between gap-4 mb-4">
             <div>
               <h1 className="text-2xl font-bold font-mono">
-                keiran // AniList
+                keiran {/* AniList */}
               </h1>
             </div>
             <button
               type="button"
-              onClick={() => fetchList()}
+              onClick={fetchList}
               className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
             >
               {loading ? "Refreshing…" : "Refresh"}
@@ -150,7 +185,7 @@ export default function AniListPage() {
                           <div
                             className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${isMuted ? "opacity-70" : ""}`}
                           >
-                            {visibleEntries.map((e: any) => (
+                            {visibleEntries.map((e: ListEntry) => (
                               <AnimeCard key={e.media.id} media={e.media} />
                             ))}
                           </div>
