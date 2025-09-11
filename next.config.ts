@@ -5,9 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*",
-        port: "",
-        pathname: "*/**",
+        hostname: "s4.anilist.co",
       },
     ],
   },
