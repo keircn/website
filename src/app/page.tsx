@@ -1,4 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "keiran | home",
+  openGraph: {
+    title: "keiran | home",
+  },
+  twitter: {
+    title: "keiran | home",
+  },
+};
 
 export default function Home() {
   const asciiArt = `
