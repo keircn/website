@@ -17,7 +17,7 @@ export default function Contact() {
       <div className="text-md text-muted-foreground max-w-4xl px-3 md:pl-4 space-y-4">
         <section>
           <h1 className="text-2xl text-foreground font-bold font-mono">
-            keiran // Contact
+            keiran {"//"} Contact
           </h1>
         </section>
 
