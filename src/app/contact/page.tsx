@@ -16,7 +16,9 @@ export default function Contact() {
     <main className="flex-1 pt-12 md:pt-2">
       <div className="text-md text-muted-foreground max-w-4xl px-3 md:pl-4 space-y-4">
         <section>
-          <h1 className="text-2xl text-foreground font-bold font-mono">keiran // Contact</h1>
+          <h1 className="text-2xl text-foreground font-bold font-mono">
+            keiran // Contact
+          </h1>
         </section>
 
         <section id="contact" className="scroll-mt-16">
