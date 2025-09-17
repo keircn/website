@@ -1,4 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "keiran | contact",
+  openGraph: {
+    title: "keiran | contact",
+  },
+  twitter: {
+    title: "keiran | contact",
+  },
+};
 
 export default function Contact() {
   return (
