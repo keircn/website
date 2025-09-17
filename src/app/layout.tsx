@@ -15,16 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "keiran.html",
-  description: "<empty>",
+  title: "keiran",
+  description: "Whose eyes are those?",
   icons: {
     icon: "/code-xml.svg",
   },
   openGraph: {
-    title: "keiran.html",
-    description: "<empty>",
+    title: "keiran",
+    description: "Whose eyes are those?",
     url: "https://keircn.com",
-    siteName: "keiran.html",
+    siteName: "keircn.com",
     /* images: [
       {
         url: "https://keircn.com/og-image.png",
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "keiran.html",
-    description: "<empty>",
+    title: "keiran",
+    description: "Whose eyes are those?",
     /* images: [
       {
         url: "https://keircn.com/og-image.png",
