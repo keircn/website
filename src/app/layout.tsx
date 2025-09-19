@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen overflow-hidden text-foreground bg-background`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen md:overflow-hidden text-foreground bg-background`}
       >
         <Sidebar />
         <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">

@@ -33,7 +33,7 @@ export default function Sidebar() {
     "text-sm px-3 py-2 rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
   return (
-    <div className="hidden md:block fixed inset-y-0 left-0 w-48 border-t rounded-lg border-b border-r border-l border-border bg-background">
+    <div className="hidden md:block fixed inset-y-0 top-2 left-2 w-48 border-t rounded-lg border-b border-r border-l border-border bg-background">
       <div className="flex items-center border-b border-border p-2 pb-2 px-4">
         <Link href="/" className="text-2xl font-medium tracking-wide">
           Keiran

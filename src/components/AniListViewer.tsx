@@ -92,7 +92,7 @@ export default function AniListViewer() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 border border-border rounded-lg p-4 ml-4 mr-2">
+    <div className="max-w-6xl mx-auto px-4 border border-border rounded-lg p-4 ml-6 mr-2 mt-12 md:mt-2">
       <div className="flex items-center justify-between gap-4 mb-4">
         <div>
           <h1 className="text-2xl font-bold font-mono">
