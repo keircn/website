@@ -141,15 +141,18 @@ export default function AniListViewer() {
             </div>
 
             <div className="space-y-6">
-              {[1, 2, 3].map((section) => (
+              {["watching", "planning", "completed"].map((section) => (
                 <section key={section}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="h-6 bg-muted/30 rounded w-32 animate-pulse" />
                     <div className="h-4 bg-muted/20 rounded w-20 animate-pulse" />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {Array.from({ length: 8 }).map((_, i) => (
-                      <AnimeCardSkeleton key={i} />
+                    {Array.from(
+                      { length: 8 },
+                      (_, i) => `${section}-skeleton-${i}`,
+                    ).map((skeletonId) => (
+                      <AnimeCardSkeleton key={skeletonId} />
                     ))}
                   </div>
                 </section>
