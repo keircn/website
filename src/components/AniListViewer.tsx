@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import AnimeCard from "~/components/AnimeCard";
+import AnimeCardSkeleton from "~/components/AnimeCardSkeleton";
 
 interface MediaTitle {
   english?: string;
@@ -109,7 +110,53 @@ export default function AniListViewer() {
       </div>
 
       <div className="mt-4">
-        {error && <div className="text-sm text-red-400 mb-4">{error}</div>}
+        {error && (
+          <div className="border border-red-200 bg-red-50/10 rounded-lg p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <div className="text-red-400 text-lg">⚠️</div>
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-red-400 mb-1">
+                  Failed to load anime list
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">{error}</p>
+                <button
+                  type="button"
+                  onClick={fetchList}
+                  className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
+                >
+                  Try again
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {loading && (
+          <div className="mt-4 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="text-sm text-muted-foreground">
+                Loading anime list...
+              </div>
+              <div className="w-4 h-4 border-2 border-muted border-t-foreground rounded-full animate-spin" />
+            </div>
+
+            <div className="space-y-6">
+              {[1, 2, 3].map((section) => (
+                <section key={section}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="h-6 bg-muted/30 rounded w-32 animate-pulse" />
+                    <div className="h-4 bg-muted/20 rounded w-20 animate-pulse" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <AnimeCardSkeleton key={i} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </div>
+        )}
 
         {!loading && !grouped && !error && (
           <div className="text-sm text-muted-foreground">

@@ -25,25 +25,25 @@ export const metadata: Metadata = {
     description: "Whose eyes are those?",
     url: "https://keircn.com",
     siteName: "keircn.com",
-    /* images: [
+    images: [
       {
-        url: "https://keircn.com/og-image.png",
+        url: "https://dbus.uk/gif/kurisu-petpet.gif",
         width: 1200,
         height: 630,
       },
-    ], */
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "keiran",
     description: "Whose eyes are those?",
-    /* images: [
+    images: [
       {
-        url: "https://keircn.com/og-image.png",
+        url: "https://dbus.uk/gif/kurisu-petpet.gif",
         width: 1200,
         height: 630,
       },
-    ], */
+    ],
   },
 };
 
