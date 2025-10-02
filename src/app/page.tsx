@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "keiran | home",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="flex-1 pt-12 md:pt-2">
-      <div className="max-w-6xl mx-auto pl-2 pr-4 border border-border rounded-lg p-4 ml-6 mr-3">
+      <div className="max-w-6xl mx-auto pl-2 pr-4 border border-border rounded-lg p-4 ml-0 md:ml-6 mr-3">
         <div className="text-md text-muted-foreground max-w-4xl px-2 space-y-8">
           <section>
             <h1 className="text-2xl font-bold font-mono">
