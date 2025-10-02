@@ -16,13 +16,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "keiran",
-  description: "Whose eyes are those?",
+  description: "I love you kenashite, ubatte, waratte kure my honey",
   icons: {
     icon: "/code-xml.svg",
   },
   openGraph: {
     title: "keiran",
-    description: "Whose eyes are those?",
+    description: "I love you kenashite, ubatte, waratte kure my honey",
     url: "https://keircn.com",
     siteName: "keircn.com",
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "keiran",
-    description: "Whose eyes are those?",
+    description: "I love you kenashite, ubatte, waratte kure my honey",
     images: [
       {
         url: "https://dbus.uk/gif/kurisu-petpet.gif",
