@@ -18,19 +18,19 @@ export default function Home() {
       <div className="max-w-6xl mx-auto pl-2 pr-4 border border-border rounded-lg p-4 ml-0 md:ml-6 mr-3">
         <div className="text-md text-muted-foreground max-w-4xl px-2 space-y-8">
           <section>
-            <h1 className="text-2xl font-bold font-mono">
-              # Hey, I&apos;m{" "}
+            <h1 className="text-2xl font-bold text-foreground/90">
+              Hey, I&apos;m{" "}
               <span className="text-foreground bg-muted/30 p-0.5 px-1.5 rounded">
                 keiran
               </span>
             </h1>
             <div className="hidden sm:block mt-6">
               <Image
-                src="/avatar.webp"
+                src="/avatar-roxy.webp"
                 alt="avatar"
                 width={200}
                 height={200}
-                className="rounded-lg"
+                className="rounded-lg shadow-glow"
                 priority
               />
             </div>
@@ -41,10 +41,11 @@ export default function Home() {
               ## who am i
             </h2>
             <p className="mb-4">
-              I'm a 16 year old developer and tech enthusiast from the UK. I've
-              been running Linux for about 2 years and i use arch btw. I enjoy
-              learning about new technologies and have contributed to many open
-              source projects. You can find my work on my{" "}
+              I'm a 16 y/o developer and weeb from the UK. I've been running
+              Linux for about two years now -- and yes, I use{" "}
+              <span className="text-blue-300">Arch</span>, btw. I enjoy diving
+              into new technologies and love contributing to the OSS community.
+              You can find my projects and contributions on my{" "}
               <Link
                 href="https://github.com/keircn"
                 target="_blank"
@@ -52,32 +53,29 @@ export default function Home() {
               >
                 GitHub
               </Link>
-              .
             </p>
             <p>
-              My main hobbies are coding, breaking linux and watching anime.
-              Here's my{" "}
+              When I'm not coding, my main hobbies include breaking Linux and
+              watching anime. If you want to see just how much I love shitty
+              isekais, you can peek at my{" "}
               <Link
                 className="text-foreground hover:text-foreground/80 transition-all underline"
                 href="/anilist"
               >
                 AniList
               </Link>{" "}
-              if you wanna see how much I love isekai trash. I also have a blog
-              I rarely write for at{" "}
+              . I also occasionally hunt for bugs in small open-source projects
+              -- it's quite fun! If you're interested, I also have a blog I
+              rarely write for at{" "}
               <Link
                 href="https://blog.keircn.com"
                 className="text-foreground underline hover:text-foreground/80 transition-all"
               >
                 blog.keircn.com
-              </Link>{" "}
-              if you're interested. I also like to poke around in small open
-              source projects and hunt for bugs since it can be quite fun to do.
-              Other than that, I occasionally play games but not as much as I
-              used to.
+              </Link>
             </p>
 
-            <div className="mt-6 border border-border bg-muted/10 max-w-sm sm:max-w-md">
+            <div className="mt-6 border border-border bg-muted/10 max-w-sm sm:max-w-md rounded">
               <div className="py-3 border-b border-border flex items-center justify-between mx-4">
                 <h3 className="text-lg font-medium text-foreground">
                   ThinkPad X240
