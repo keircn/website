@@ -26,11 +26,11 @@ export default function Home() {
             </h1>
             <div className="hidden sm:block mt-6">
               <Image
-                src="/avatar.webp"
+                src="/avatar-roxy.webp"
                 alt="avatar"
                 width={200}
                 height={200}
-                className="rounded-lg"
+                className="rounded-lg shadow-glow"
                 priority
               />
             </div>
