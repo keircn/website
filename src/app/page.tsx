@@ -41,7 +41,11 @@ export default function Home() {
               ## who am i
             </h2>
             <p className="mb-4">
-              I'm a 16 y/o developer and weeb from the UK. I've been running Linux for about two years now -- and yes, I use <span className="text-blue-300">Arch</span>, btw. I enjoy diving into new technologies and love contributing to the OSS community. You can find my projects and contributions on my{" "}
+              I'm a 16 y/o developer and weeb from the UK. I've been running
+              Linux for about two years now -- and yes, I use{" "}
+              <span className="text-blue-300">Arch</span>, btw. I enjoy diving
+              into new technologies and love contributing to the OSS community.
+              You can find my projects and contributions on my{" "}
               <Link
                 href="https://github.com/keircn"
                 target="_blank"
@@ -51,14 +55,18 @@ export default function Home() {
               </Link>
             </p>
             <p>
-              When I'm not coding, my main hobbies include breaking Linux and watching anime. If you want to see just how much I love shitty isekais, you can peek at my{" "}
+              When I'm not coding, my main hobbies include breaking Linux and
+              watching anime. If you want to see just how much I love shitty
+              isekais, you can peek at my{" "}
               <Link
                 className="text-foreground hover:text-foreground/80 transition-all underline"
                 href="/anilist"
               >
                 AniList
               </Link>{" "}
-              . I also occasionally hunt for bugs in small open-source projects -- it's quite fun! If you're interested, I also have a blog I rarely write for at{" "}
+              . I also occasionally hunt for bugs in small open-source projects
+              -- it's quite fun! If you're interested, I also have a blog I
+              rarely write for at{" "}
               <Link
                 href="https://blog.keircn.com"
                 className="text-foreground underline hover:text-foreground/80 transition-all"
