@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
     },
   },
 
+  experimental: {
+    reactCompiler: true,
+  },
+
   images: {
     remotePatterns: [
       {
