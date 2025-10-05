@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AniListViewer from "~/components/AniListViewer";
 import ErrorBoundary from "~/components/ErrorBoundary";
+import PageContainer from "~/components/PageContainer";
 
 export const metadata: Metadata = {
   title: "keiran | anilist",
@@ -14,10 +15,10 @@ export const metadata: Metadata = {
 
 export default function AniListPage() {
   return (
-    <main className="flex-1">
+    <PageContainer>
       <ErrorBoundary>
         <AniListViewer />
       </ErrorBoundary>
-    </main>
+    </PageContainer>
   );
 }

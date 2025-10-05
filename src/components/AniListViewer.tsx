@@ -93,18 +93,14 @@ export default function AniListViewer() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 border border-border rounded-lg p-4 ml-6 mr-2 mt-12 md:mt-2">
+    <div className="space-y-4">
       <div className="flex items-center justify-between gap-4 mb-4">
         <div>
           <h1 className="text-2xl font-bold font-mono">
             keiran {"//"} AniList
           </h1>
         </div>
-        <button
-          type="button"
-          onClick={fetchList}
-          className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
-        >
+        <button type="button" onClick={fetchList} className="btn-muted text-sm">
           {loading ? "Refreshing…" : "Refresh"}
         </button>
       </div>
@@ -122,7 +118,7 @@ export default function AniListViewer() {
                 <button
                   type="button"
                   onClick={fetchList}
-                  className="px-3 py-1 bg-muted text-foreground rounded hover:opacity-90 transition text-sm"
+                  className="btn-muted text-sm"
                 >
                   Try again
                 </button>
@@ -237,7 +233,7 @@ export default function AniListViewer() {
                           <button
                             type="button"
                             onClick={() => loadMoreForStatus(status)}
-                            className="px-3 py-1 bg-muted/20 text-foreground rounded hover:bg-muted/30 transition text-sm"
+                            className="px-4 py-2 bg-muted/20 text-foreground rounded-md hover:bg-muted/30 transition-colors text-sm"
                           >
                             Load More ({group.entries.length - visibleCount}{" "}
                             remaining)

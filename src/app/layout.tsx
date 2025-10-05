@@ -91,7 +91,7 @@ export default function RootLayout({
             </nav>
           </div>
         </div>
-        <div className="ml-0 md:ml-48 min-h-screen md:h-screen overflow-y-auto scroll-smooth">
+        <div className="ml-0 md:ml-52 min-h-screen md:h-screen overflow-y-auto scroll-smooth">
           {children}
         </div>
       </body>
