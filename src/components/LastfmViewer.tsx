@@ -17,9 +17,6 @@ interface LastfmData {
   user: string;
 }
 
-let recentTracksCache: Track[] = [];
-const CACHE_SIZE = 3;
-
 export default function LastfmViewer() {
   const [data, setData] = useState<LastfmData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -35,25 +32,6 @@ export default function LastfmViewer() {
       }
 
       const result: LastfmData = await response.json();
-
-      if (result.tracks && result.tracks.length > 0) {
-        const newTracks = result.tracks.filter((track) => !track.isNowPlaying);
-
-        for (const track of newTracks) {
-          const existingIndex = recentTracksCache.findIndex(
-            (cached) =>
-              cached.name === track.name && cached.artist === track.artist,
-          );
-
-          if (existingIndex === -1) {
-            recentTracksCache.unshift(track);
-            if (recentTracksCache.length > CACHE_SIZE) {
-              recentTracksCache = recentTracksCache.slice(0, CACHE_SIZE);
-            }
-          }
-        }
-      }
-
       setData(result);
     } catch (err) {
       setError(
@@ -71,9 +49,8 @@ export default function LastfmViewer() {
   }, [fetchLastfmData]);
 
   const currentTrack = data?.tracks?.find((track) => track.isNowPlaying);
-  const tracksToShow = currentTrack
-    ? [currentTrack]
-    : recentTracksCache.slice(0, 3);
+  const recentTracks =
+    data?.tracks?.filter((track) => !track.isNowPlaying).slice(0, 3) || [];
 
   if (loading) {
     return (
@@ -135,7 +112,10 @@ export default function LastfmViewer() {
     );
   }
 
-  if (!tracksToShow || tracksToShow.length === 0) {
+  const mainTrack =
+    currentTrack || (recentTracks.length > 0 ? recentTracks[0] : null);
+
+  if (!mainTrack) {
     return (
       <div className="border border-border bg-muted/10 max-w-sm sm:max-w-md rounded">
         <div className="py-3 border-b border-border flex items-center justify-between mx-4">
@@ -162,9 +142,6 @@ export default function LastfmViewer() {
       </div>
     );
   }
-
-  const mainTrack = tracksToShow[0];
-  if (!mainTrack) return null;
 
   return (
     <div className="border border-border bg-muted/10 max-w-sm sm:max-w-md rounded">
@@ -233,13 +210,13 @@ export default function LastfmViewer() {
           </div>
         </div>
 
-        {!mainTrack.isNowPlaying && recentTracksCache.length > 1 && (
+        {!mainTrack.isNowPlaying && recentTracks.length > 1 && (
           <div className="mt-3 pt-3 border-t border-border">
             <div className="text-xs text-muted-foreground mb-2">
               Recently played
             </div>
             <div className="space-y-1">
-              {recentTracksCache.slice(1, 3).map((track, index) => (
+              {recentTracks.slice(1, 3).map((track, index) => (
                 <div
                   key={`${track.name}-${track.artist}-${index}`}
                   className="text-xs text-muted-foreground/80 truncate"

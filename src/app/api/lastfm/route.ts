@@ -53,7 +53,7 @@ interface ProcessedTrack {
 }
 
 const cache = new Map<string, CacheEntry>();
-const CACHE_TTL = 60 * 60 * 1000;
+const CACHE_TTL = 30 * 1000;
 
 export async function GET(request: NextRequest) {
   try {
