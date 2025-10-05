@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import LastfmViewer from "~/components/LastfmViewer";
 import PageContainer from "~/components/PageContainer";
 
 export const metadata: Metadata = {
@@ -35,6 +36,8 @@ export default function Home() {
             />
           </div>
         </section>
+
+        <LastfmViewer />
 
         <section id="about" className="scroll-mt-16">
           <h2 className="text-xl font-semibold font-mono mt-4 mb-2">

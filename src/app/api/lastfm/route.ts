@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         album: track.album?.["#text"],
         image: largeImage,
         isNowPlaying: !!track["@attr"]?.nowplaying,
-        timestamp: track.date ? parseInt(track.date.uts) * 1000 : undefined,
+        timestamp: track.date ? parseInt(track.date.uts, 10) * 1000 : undefined,
       };
     });
 
