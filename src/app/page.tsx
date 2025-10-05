@@ -151,12 +151,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <div className="fixed right-6 bottom-6 md:bottom-8 hidden sm:block">
-          <Link href="/contact" className="btn-secondary shadow-sm">
-            Contact
-          </Link>
-        </div>
       </div>
     </PageContainer>
   );
