@@ -35,6 +35,14 @@ interface ListEntry {
   media: Media;
 }
 
+interface User {
+  id: number;
+  name: string;
+  avatar: {
+    large?: string;
+  };
+}
+
 interface ListGroup {
   name: string;
   entries: ListEntry[];
@@ -48,6 +56,10 @@ export default function AniListViewer() {
     null,
   );
   const [total, setTotal] = useState<number | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [episodeCounts, setEpisodeCounts] = useState<Record<string, number>>(
+    {},
+  );
   const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>(
     {},
   );
@@ -57,6 +69,8 @@ export default function AniListViewer() {
     setError(null);
     setGrouped(null);
     setTotal(null);
+    setUser(null);
+    setEpisodeCounts({});
     setVisibleCounts({});
     try {
       const res = await fetch(
@@ -66,6 +80,8 @@ export default function AniListViewer() {
       const data = await res.json();
       setGrouped(data.listsByStatus || null);
       setTotal(data.totalEntries || 0);
+      setUser(data.user || null);
+      setEpisodeCounts(data.episodeCounts || {});
 
       const initialCounts: Record<string, number> = {};
       if (data.listsByStatus) {
@@ -99,6 +115,18 @@ export default function AniListViewer() {
           <h1 className="text-2xl font-bold font-mono">
             keiran {"//"} AniList
           </h1>
+          {user && (
+            <div className="mt-2 flex items-center gap-2">
+              <a
+                href={`https://anilist.co/user/${user.name}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-primary hover:text-primary/80 transition-colors"
+              >
+                View Profile →
+              </a>
+            </div>
+          )}
         </div>
         <button type="button" onClick={fetchList} className="btn-muted text-sm">
           {loading ? "Refreshing…" : "Refresh"}
@@ -165,10 +193,12 @@ export default function AniListViewer() {
 
         {grouped && (
           <div className="mt-4 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="text-sm text-muted-foreground">Total</div>
-              <div className="px-2 py-1 bg-muted text-foreground rounded text-sm font-medium">
-                {total}
+            <div className="flex items-center gap-6 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="text-sm text-muted-foreground">Total</div>
+                <div className="px-2 py-1 bg-muted text-foreground rounded text-sm font-medium">
+                  {total}
+                </div>
               </div>
             </div>
 
@@ -225,7 +255,11 @@ export default function AniListViewer() {
                         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ${isMuted ? "opacity-70" : ""}`}
                       >
                         {visibleEntries.map((e: ListEntry) => (
-                          <AnimeCard key={e.media.id} media={e.media} />
+                          <AnimeCard
+                            key={e.media.id}
+                            media={e.media}
+                            progress={e.progress}
+                          />
                         ))}
                       </div>
                       {hasMore && (

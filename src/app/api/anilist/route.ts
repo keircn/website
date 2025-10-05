@@ -237,11 +237,24 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    const episodeCounts: Record<string, number> = {};
+    const statusesToCount = ["CURRENT", "PAUSED", "DROPPED"];
+
+    for (const status of statusesToCount) {
+      const list = listsByStatus[status];
+      if (list) {
+        episodeCounts[status] = list.entries.reduce((total, entry) => {
+          return total + (entry.progress || 0);
+        }, 0);
+      }
+    }
+
     const result = {
       user: data.MediaListCollection.user || null,
       listsByStatus,
       totalEntries,
       perChunk,
+      episodeCounts,
     };
 
     cache.set(cacheKey, { ts: now, value: result });

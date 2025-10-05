@@ -24,7 +24,13 @@ interface Media {
   coverImage: CoverImage | null;
 }
 
-export default function AnimeCard({ media }: { media: Media }) {
+export default function AnimeCard({
+  media,
+  progress,
+}: {
+  media: Media;
+  progress?: number;
+}) {
   const title =
     media.title?.english ||
     media.title?.romaji ||
@@ -56,7 +62,15 @@ export default function AnimeCard({ media }: { media: Media }) {
           <span>{title}</span>
         </h3>
         <div className="text-xs text-muted-foreground flex items-center justify-between mb-2">
-          <span>{media.episodes ? `${media.episodes} ep` : "—"}</span>
+          <span>
+            {progress !== undefined
+              ? media.episodes
+                ? `${progress}/${media.episodes} ep`
+                : `${progress} ep`
+              : media.episodes
+                ? `${media.episodes} ep`
+                : "—"}
+          </span>
           <span className="italic">{media.status || "—"}</span>
         </div>
 
