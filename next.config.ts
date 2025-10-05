@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
         hostname: "s4.anilist.co",
         pathname: "/file/**",
       },
+      {
+        protocol: "https",
+        hostname: "lastfm.freetls.fastly.net",
+      },
     ],
     minimumCacheTTL: 60 * 60 * 24 * 7,
   },
