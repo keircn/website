@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     siteName: "keircn.com",
     images: [
       {
-        url: "/roxy-migurdia.gif",
-        width: 498,
-        height: 498,
+        url: "/avatar-roxy.webp",
+        width: 736,
+        height: 736,
       },
     ],
   },
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     description: "fuck",
     images: [
       {
-        url: "/roxy-migurdia.gif",
-        width: 498,
-        height: 498,
+        url: "/avatar-roxy.webp",
+        width: 736,
+        height: 736,
       },
     ],
   },
