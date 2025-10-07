@@ -26,11 +26,14 @@ export const metadata: Metadata = {
     description: "fuck",
     url: "https://keircn.com",
     siteName: "keircn.com",
+    type: "website",
     images: [
       {
         url: "/avatar-roxy.jpg",
         width: 736,
         height: 736,
+        alt: "keiran avatar",
+        type: "image/jpeg",
       },
     ],
   },
@@ -38,13 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "keiran",
     description: "fuck",
-    images: [
-      {
-        url: "/avatar-roxy.jpg",
-        width: 736,
-        height: 736,
-      },
-    ],
+    images: ["/avatar-roxy.jpg"],
   },
 };
 
