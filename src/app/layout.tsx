@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "keircn.com",
     images: [
       {
-        url: "/avatar-roxy.webp",
+        url: "https://keircn.com/avatar-roxy.webp",
         width: 736,
         height: 736,
       },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: "fuck",
     images: [
       {
-        url: "/avatar-roxy.webp",
+        url: "https://keircn.com/avatar-roxy.webp",
         width: 736,
         height: 736,
       },
