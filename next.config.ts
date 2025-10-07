@@ -37,6 +37,31 @@ const nextConfig: NextConfig = {
 
   compress: true,
 
+  async redirects() {
+    return [
+      {
+        source: "/mushoku-tensei",
+        destination: "https://anilist.co/review/28685",
+        permanent: true,
+      },
+      {
+        source: "/discord",
+        destination: "https://discord.com/users/1230319937155760131",
+        permanent: true,
+      },
+      {
+        source: "/gh",
+        destination: "https://github.com/keircn",
+        permanent: true,
+      },
+      {
+        source: "/al",
+        destination: "https://anilist.co/user/keiran",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
