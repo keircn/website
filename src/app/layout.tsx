@@ -16,32 +16,32 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "keiran",
-  description: "I love you kenashite, ubatte, waratte kure my honey",
+  description: "fuck",
   icons: {
     icon: "/code-xml.svg",
   },
   openGraph: {
     title: "keiran",
-    description: "I love you kenashite, ubatte, waratte kure my honey",
+    description: "fuck",
     url: "https://keircn.com",
     siteName: "keircn.com",
     images: [
       {
-        url: "https://dbus.uk/gif/kurisu-petpet.gif",
-        width: 1200,
-        height: 630,
+        url: "/roxy-migurdia.gif",
+        width: 498,
+        height: 498,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "keiran",
-    description: "I love you kenashite, ubatte, waratte kure my honey",
+    description: "fuck",
     images: [
       {
-        url: "https://dbus.uk/gif/kurisu-petpet.gif",
-        width: 1200,
-        height: 630,
+        url: "/roxy-migurdia.gif",
+        width: 498,
+        height: 498,
       },
     ],
   },
