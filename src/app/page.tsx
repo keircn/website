@@ -8,9 +8,19 @@ export const metadata: Metadata = {
   title: "keiran | home",
   openGraph: {
     title: "keiran | home",
+    images: [
+      {
+        url: "/avatar-roxy.jpg",
+        width: 736,
+        height: 736,
+        alt: "keiran avatar",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     title: "keiran | home",
+    images: ["/avatar-roxy.jpg"],
   },
 };
 
