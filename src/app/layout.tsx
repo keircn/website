@@ -16,32 +16,32 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "keiran",
-  description: "I love you kenashite, ubatte, waratte kure my honey",
+  description: "fuck",
   icons: {
     icon: "/code-xml.svg",
   },
   openGraph: {
     title: "keiran",
-    description: "I love you kenashite, ubatte, waratte kure my honey",
+    description: "fuck",
     url: "https://keircn.com",
     siteName: "keircn.com",
     images: [
       {
-        url: "https://dbus.uk/gif/kurisu-petpet.gif",
-        width: 1200,
-        height: 630,
+        url: "/roxy-migurdia.gif",
+        width: 498,
+        height: 498,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "keiran",
-    description: "I love you kenashite, ubatte, waratte kure my honey",
+    description: "fuck",
     images: [
       {
-        url: "https://dbus.uk/gif/kurisu-petpet.gif",
-        width: 1200,
-        height: 630,
+        url: "/roxy-migurdia.gif",
+        width: 498,
+        height: 498,
       },
     ],
   },
@@ -58,33 +58,36 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen md:overflow-hidden text-foreground bg-background`}
       >
         <Sidebar />
-        <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
-          <div className="flex items-center justify-between px-3 py-2">
-            <Link href="/" className="text-xl font-medium tracking-wide">
+        <div className="md:hidden sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur-md">
+          <div className="flex items-center justify-between px-4 py-3">
+            <Link
+              href="/"
+              className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent"
+            >
               Keiran
             </Link>
             <nav className="flex gap-1 overflow-x-auto">
               <Link
                 href="/#about"
-                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-all font-medium whitespace-nowrap"
               >
                 about
               </Link>
               <Link
                 href="/#projects"
-                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-all font-medium whitespace-nowrap"
               >
                 projects
               </Link>
               <Link
                 href="/anilist"
-                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-all font-medium whitespace-nowrap"
               >
                 anilist
               </Link>
               <Link
                 href="/contact"
-                className="text-sm text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted/30 transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/40 transition-all font-medium whitespace-nowrap"
               >
                 contact
               </Link>
