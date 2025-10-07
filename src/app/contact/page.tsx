@@ -22,8 +22,8 @@ export default function Contact() {
               Get in Touch
             </h1>
             <p className="text-md text-muted-foreground max-w-2xl">
-              Feel free to reach out through any of these methods.
-              I'm usually pretty responsive, especially on Discord.
+              Feel free to reach out through any of these methods. I'm usually
+              pretty responsive, especially on Discord.
             </p>
           </div>
         </section>

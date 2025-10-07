@@ -22,9 +22,7 @@ export default function Home() {
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
             Hey, I&apos;m{" "}
             <span className="relative inline-block">
-              <span className="font-extrabold">
-                Keiran
-              </span>
+              <span className="font-extrabold">Keiran</span>
             </span>
           </h1>
           <div className="hidden sm:block mt-5">
