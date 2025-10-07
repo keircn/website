@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://keircn.com"),
   title: "keiran",
   description: "fuck",
   icons: {
