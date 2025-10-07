@@ -57,9 +57,6 @@ export default function AniListViewer() {
   );
   const [total, setTotal] = useState<number | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [episodeCounts, setEpisodeCounts] = useState<Record<string, number>>(
-    {},
-  );
   const [visibleCounts, setVisibleCounts] = useState<Record<string, number>>(
     {},
   );
@@ -70,7 +67,6 @@ export default function AniListViewer() {
     setGrouped(null);
     setTotal(null);
     setUser(null);
-    setEpisodeCounts({});
     setVisibleCounts({});
     try {
       const res = await fetch(
@@ -81,7 +77,6 @@ export default function AniListViewer() {
       setGrouped(data.listsByStatus || null);
       setTotal(data.totalEntries || 0);
       setUser(data.user || null);
-      setEpisodeCounts(data.episodeCounts || {});
 
       const initialCounts: Record<string, number> = {};
       if (data.listsByStatus) {
