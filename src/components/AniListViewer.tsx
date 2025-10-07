@@ -110,25 +110,29 @@ export default function AniListViewer() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <div>
-          <h1 className="text-2xl font-bold font-mono">
-            keiran {"//"} AniList
+      <div className="flex items-center justify-between gap-4 mb-8">
+        <div className="space-y-4">
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+            My AniList
           </h1>
           {user && (
-            <div className="mt-2 flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <a
                 href={`https://anilist.co/user/${user.name}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-primary hover:text-primary/80 transition-colors"
+                className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
               >
-                View Profile →
+                View Profile on AniList -&gt;
               </a>
             </div>
           )}
         </div>
-        <button type="button" onClick={fetchList} className="btn-muted text-sm">
+        <button
+          type="button"
+          onClick={fetchList}
+          className="btn-muted text-sm shrink-0"
+        >
           {loading ? "Refreshing…" : "Refresh"}
         </button>
       </div>

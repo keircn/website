@@ -16,21 +16,19 @@ export default function Contact() {
   return (
     <PageContainer>
       <div className="text-md text-muted-foreground space-y-4">
-        <section>
-          <h1 className="text-2xl text-foreground font-bold font-mono">
-            keiran {"//"} Contact
-          </h1>
+        <section className="relative mb-8">
+          <div className="space-y-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+              Get in Touch
+            </h1>
+            <p className="text-md text-muted-foreground max-w-2xl">
+              Feel free to reach out through any of these methods.
+              I'm usually pretty responsive, especially on Discord.
+            </p>
+          </div>
         </section>
 
         <section id="contact" className="scroll-mt-16">
-          <h2 className="text-xl font-semibold font-mono mb-4">
-            ## get in touch
-          </h2>
-          <p className="mb-6">
-            Feel free to reach out to me through any of these methods. I'm
-            usually pretty responsive, especially on Discord.
-          </p>
-
           <div className="space-y-6">
             <div className="border border-border bg-muted/10 rounded p-4">
               <h3 className="text-lg font-medium text-foreground mb-3">
