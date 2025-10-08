@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import type { Media as SharedMedia } from "~/types/anilist";
 
 const ANILIST_API = "https://graphql.anilist.co";
 
@@ -40,24 +41,6 @@ interface AniListData {
       }>;
     }>;
   };
-}
-
-interface CompactMedia {
-  id: number;
-  title?: {
-    romaji?: string;
-    english?: string;
-    native?: string;
-  };
-  format?: string;
-  status?: string;
-  episodes?: number;
-  averageScore?: number;
-  genres: string[];
-  coverImage: {
-    large?: string;
-    medium?: string;
-  } | null;
 }
 
 interface CacheEntry {
@@ -126,7 +109,7 @@ interface ListEntry {
   score?: number;
   progress?: number;
   updatedAt?: number;
-  media: CompactMedia;
+  media: SharedMedia;
 }
 
 interface AniListMedia {
@@ -147,11 +130,11 @@ interface AniListMedia {
   };
 }
 
-function compactMedia(m: AniListMedia | null | undefined): CompactMedia {
+function compactMedia(m: AniListMedia | null | undefined): SharedMedia {
   if (!m) {
     return {
       id: 0,
-      title: undefined,
+      title: { romaji: undefined, english: undefined, native: undefined },
       format: undefined,
       status: undefined,
       episodes: undefined,
@@ -163,7 +146,11 @@ function compactMedia(m: AniListMedia | null | undefined): CompactMedia {
 
   return {
     id: m.id || 0,
-    title: m.title,
+    title: m.title || {
+      romaji: undefined,
+      english: undefined,
+      native: undefined,
+    },
     format: m.format,
     status: m.status,
     episodes: m.episodes,
