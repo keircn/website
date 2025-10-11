@@ -6,18 +6,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "s4.anilist.co",
-        pathname: "/file/**",
-      },
-      {
-        protocol: "https",
-        hostname: "lastfm.freetls.fastly.net",
-      },
-    ],
-    minimumCacheTTL: 60 * 60 * 24 * 7,
+    unoptimized: true,
   },
 
   compiler: {
