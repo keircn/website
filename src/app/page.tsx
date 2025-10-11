@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import CurrentlyReading from "~/components/CurrentlyReading";
 import LastfmViewer from "~/components/LastfmViewer";
 import PageContainer from "~/components/PageContainer";
 
@@ -142,6 +143,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <CurrentlyReading />
 
         <section id="projects" className="scroll-mt-16">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
