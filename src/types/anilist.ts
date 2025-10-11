@@ -15,9 +15,12 @@ export interface Media {
   format?: string;
   status?: string;
   episodes?: number;
+  chapters?: number;
+  volumes?: number;
   averageScore?: number;
   genres: string[];
   coverImage: CoverImage | null;
+  description?: string;
 }
 
 export interface ListEntry {
@@ -25,6 +28,7 @@ export interface ListEntry {
   status?: string;
   score?: number;
   progress?: number;
+  progressVolumes?: number;
   updatedAt?: number;
   media: Media;
 }
@@ -58,3 +62,16 @@ export type AniListStatus =
   | "PAUSED"
   | "DROPPED"
   | "OTHER";
+
+export interface UserProgress {
+  status?: string;
+  score?: number;
+  progress?: number;
+  progressVolumes?: number;
+  updatedAt?: number;
+}
+
+export interface ReadingResponse {
+  media: Media;
+  userProgress: UserProgress | null;
+}
