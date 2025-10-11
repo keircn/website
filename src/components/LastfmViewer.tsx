@@ -84,12 +84,20 @@ export default function LastfmViewer() {
             width={48}
             height={48}
             className="rounded object-cover flex-shrink-0"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = "none";
+              const fallback = target.nextElementSibling as HTMLElement;
+              if (fallback) fallback.style.display = "flex";
+            }}
           />
-        ) : (
-          <div className="w-12 h-12 bg-muted rounded flex items-center justify-center flex-shrink-0">
-            <MusicIcon className="w-5 h-5 text-muted-foreground" />
-          </div>
-        )}
+        ) : null}
+        <div
+          className="w-12 h-12 bg-muted rounded flex items-center justify-center flex-shrink-0"
+          style={{ display: mainTrack.image ? "none" : "flex" }}
+        >
+          <MusicIcon className="w-5 h-5 text-muted-foreground" />
+        </div>
         <div className="min-w-0 flex-1">
           <div className="text-sm font-medium text-foreground truncate">
             {mainTrack.name}
