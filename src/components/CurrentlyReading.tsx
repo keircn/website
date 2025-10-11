@@ -3,7 +3,30 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import ReadingCard from "~/components/ReadingCard";
-import type { ReadingResponse } from "~/types/anilist";
+
+interface Media {
+  id: number;
+  title: {
+    romaji?: string;
+    english?: string;
+    native?: string;
+  };
+  format?: string;
+  status?: string;
+  chapters?: number;
+  volumes?: number;
+  averageScore?: number;
+  genres?: string[];
+  coverImage?: {
+    large?: string;
+    medium?: string;
+  };
+  description?: string;
+}
+
+interface ReadingResponse {
+  media: Media;
+}
 
 export default function CurrentlyReading() {
   const [data, setData] = useState<ReadingResponse | null>(null);
@@ -15,18 +38,12 @@ export default function CurrentlyReading() {
       setError(null);
 
       const mediaId = process.env.NEXT_PUBLIC_ANILIST_READING_ID;
-      const username = process.env.NEXT_PUBLIC_ANILIST_USERNAME;
 
       if (!mediaId) {
         throw new Error("ANILIST_READING_ID not configured");
       }
 
-      const params = new URLSearchParams({ id: mediaId });
-      if (username) {
-        params.append("username", username);
-      }
-
-      const response = await fetch(`/api/anilist/reading?${params}`);
+      const response = await fetch(`/api/anilist/reading?id=${mediaId}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`);
@@ -63,46 +80,19 @@ export default function CurrentlyReading() {
     );
   }
 
-  const { media, userProgress } = data;
+  const { media } = data;
   const title =
     media.title.english ||
     media.title.romaji ||
     media.title.native ||
     "Unknown Title";
 
-  const getProgressText = () => {
-    if (!userProgress) return null;
-
-    const parts = [];
-    if (userProgress.progress && media.chapters) {
-      parts.push(`Ch. ${userProgress.progress}/${media.chapters}`);
-    } else if (userProgress.progress) {
-      parts.push(`Ch. ${userProgress.progress}`);
-    }
-
-    if (userProgress.progressVolumes && media.volumes) {
-      parts.push(`Vol. ${userProgress.progressVolumes}/${media.volumes}`);
-    } else if (userProgress.progressVolumes) {
-      parts.push(`Vol. ${userProgress.progressVolumes}`);
-    }
-
-    return parts.join(" • ");
-  };
-
-  const getScoreText = () => {
-    if (!userProgress?.score) return null;
-    return `★ ${userProgress.score}/10`;
-  };
-
-  const isCurrentlyReading = userProgress?.status === "CURRENT";
+  const capitalizedFormat = media.format
+    ? media.format.charAt(0).toUpperCase() + media.format.slice(1).toLowerCase()
+    : null;
 
   return (
-    <ReadingCard title={isCurrentlyReading ? "Currently Reading" : "Reading"}>
-      {isCurrentlyReading && (
-        <div className="flex items-center gap-1.5 mb-3">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-        </div>
-      )}
+    <ReadingCard title="Currently Reading">
       <div className="flex items-center gap-3">
         {media.coverImage?.large ? (
           <Image
@@ -133,17 +123,19 @@ export default function CurrentlyReading() {
           <div className="text-sm font-medium text-foreground truncate">
             {title}
           </div>
-          <div className="text-sm text-muted-foreground truncate">
-            {media.format || "Manga"}
-          </div>
-          {getProgressText() && (
-            <div className="text-xs text-muted-foreground truncate mt-1">
-              {getProgressText()}
+          {capitalizedFormat && (
+            <div className="text-sm text-muted-foreground truncate">
+              {capitalizedFormat}
             </div>
           )}
-          {getScoreText() && (
+          {media.chapters && (
             <div className="text-xs text-muted-foreground truncate mt-1">
-              {getScoreText()}
+              {media.chapters} chapters
+            </div>
+          )}
+          {media.averageScore && (
+            <div className="text-xs text-muted-foreground truncate mt-1">
+              {media.averageScore}/100 avg
             </div>
           )}
         </div>

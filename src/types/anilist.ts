@@ -74,4 +74,5 @@ export interface UserProgress {
 export interface ReadingResponse {
   media: Media;
   userProgress: UserProgress | null;
+  message?: string;
 }
