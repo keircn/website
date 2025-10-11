@@ -71,11 +71,6 @@ export default function LastfmViewer() {
 
   return (
     <MusicCard title={mainTrack.isNowPlaying ? "Now Playing" : "Last Played"}>
-      {mainTrack.isNowPlaying && (
-        <div className="flex items-center gap-1.5 mb-3">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-        </div>
-      )}
       <div className="flex items-center gap-3">
         {mainTrack.image ? (
           <Image
