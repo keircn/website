@@ -6,6 +6,9 @@ my personal website
 
 ```bash
 bun i
+
+cp .env.example .env # and fill in the environment variables
+
 bun run dev
 ```
 
