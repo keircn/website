@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <PageContainer>
-      <div className="text-md text-muted-foreground max-w-4xl px-2 space-y-8">
+  <div className="text-md text-muted-foreground max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-screen-2xl px-2 space-y-8">
         <section className="relative">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
             Hey, I&apos;m{" "}
@@ -92,7 +92,7 @@ export default function Home() {
             </Link>
           </p>
 
-          <div className="mt-8 border border-border bg-muted/10 max-w-sm sm:max-w-md rounded">
+          <div className="mt-8 border border-border bg-muted/10 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded">
             <div className="py-3 border-b border-border flex items-center justify-between mx-4">
               <h3 className="text-lg font-medium text-foreground">
                 ThinkPad X240
