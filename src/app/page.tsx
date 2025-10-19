@@ -29,31 +29,34 @@ export default function Home() {
   return (
     <PageContainer>
       <div className="text-md text-muted-foreground max-w-4xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-screen-2xl px-2 space-y-8">
-        <section className="relative">
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
-            Hey, I&apos;m{" "}
-            <span className="relative inline-block">
-              <span className="font-extrabold">Keiran</span>
-            </span>
-          </h1>
-          <div className="hidden sm:block mt-5">
-            <div className="relative w-fit">
-              <Image
-                src="/avatar-roxy.webp"
-                alt="avatar"
-                width={200}
-                height={200}
-                className="rounded-xl shadow-2xl"
-                priority
-              />
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20 rounded-xl blur-sm -z-10"></div>
+        <section className="flex flex-col sm:flex-row gap-8 items-start">
+          <div className="flex-1 min-w-[220px]">
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
+              Hey, I&apos;m{" "}
+              <span className="relative inline-block">
+                <span className="font-extrabold">Keiran</span>
+              </span>
+            </h1>
+            <div className="hidden sm:block mt-6">
+              <div className="relative w-fit">
+                <Image
+                  src="/avatar-roxy.webp"
+                  alt="avatar"
+                  width={200}
+                  height={200}
+                  className="rounded-xl shadow-2xl"
+                  priority
+                />
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20 rounded-xl blur-sm -z-10"></div>
+              </div>
             </div>
+          </div>
+          <div className="hidden sm:block -right-22 relative w-96">
+            <LastfmViewer />
           </div>
         </section>
 
-        <LastfmViewer />
-
-        <section id="about" className="scroll-mt-16">
+        <section id="about" className="scroll-mt-16 max-w-2xl">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent mb-4">
             About Me
           </h2>
