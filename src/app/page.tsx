@@ -51,9 +51,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="hidden sm:block -right-22 relative w-96">
-            <LastfmViewer />
-          </div>
         </section>
 
         <section id="about" className="scroll-mt-16 max-w-2xl">
@@ -147,13 +144,15 @@ export default function Home() {
           </div>
         </section>
 
-        <CurrentlyReading />
+        <LastfmViewer />
+
+        { /* <CurrentlyReading /> */ }
 
         <section id="projects" className="scroll-mt-16">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             My Projects
           </h2>
-          <div className="space-y-4 mt-6">
+          <div className="space-y-4 mt-6 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
             <div className="border border-border rounded p-4 bg-muted/10">
               <h3 className="text-lg font-medium text-foreground mb-2">
                 Coming Soon
