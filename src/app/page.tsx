@@ -95,7 +95,7 @@ export default function Home() {
           <div className="mt-8 border border-border bg-muted/10 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded">
             <div className="py-3 border-b border-border flex items-center justify-between mx-4">
               <h3 className="text-lg font-medium text-foreground">
-                ThinkPad X240
+                Desktop
               </h3>
               <span className="text-lg font-medium text-muted-foreground">
                 Specs
@@ -106,37 +106,43 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">CPU</div>
                   <div className="text-sm text-foreground text-right">
-                    Intel Core i5-4200U
+                    Intel Core i5-2500K (4) @ 3.70 GHz
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">RAM</div>
                   <div className="text-sm text-foreground text-right">
-                    8 GB DDR3L 1600 MHz
+                    8GB + 4GB (12GB swap)
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">Storage</div>
                   <div className="text-sm text-foreground text-right">
-                    160 GB SATA SSD
+                    120GB (system, btrfs) + 500GB (home, ext4)
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">Display</div>
                   <div className="text-sm text-foreground text-right">
-                    12.5" IPS 1366x768
+                    3840x2160, 43" @ 60 Hz
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">Graphics</div>
                   <div className="text-sm text-foreground text-right">
-                    Intel HD Graphics 4400
+                    AMD Radeon RX 560 Series (4GB)
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 py-2">
                   <div className="text-sm text-muted-foreground">OS</div>
                   <div className="text-sm text-foreground text-right">
-                    Arch Linux
+                    CachyOS
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 py-2">
+                  <div className="text-sm text-muted-foreground">WM</div>
+                  <div className="text-sm text-foreground text-right">
+                    NiriWM
                   </div>
                 </div>
               </div>
