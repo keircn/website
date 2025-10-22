@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import CurrentlyReading from "~/components/CurrentlyReading";
 import LastfmViewer from "~/components/LastfmViewer";
 import PageContainer from "~/components/PageContainer";
 
@@ -94,9 +93,7 @@ export default function Home() {
 
           <div className="mt-8 border border-border bg-muted/10 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded">
             <div className="py-3 border-b border-border flex items-center justify-between mx-4">
-              <h3 className="text-lg font-medium text-foreground">
-                Desktop
-              </h3>
+              <h3 className="text-lg font-medium text-foreground">Desktop</h3>
               <span className="text-lg font-medium text-muted-foreground">
                 Specs
               </span>
@@ -152,7 +149,7 @@ export default function Home() {
 
         <LastfmViewer />
 
-        { /* <CurrentlyReading /> */ }
+        {/* <CurrentlyReading /> */}
 
         <section id="projects" className="scroll-mt-16">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
