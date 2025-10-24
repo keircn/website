@@ -30,30 +30,23 @@ const projects: Project[] = [
   {
     id: "1",
     title: "Personal Website",
-    description:
-      "A modern, responsive personal website built with Next.js and TypeScript. Features dark/light theme support, anime tracking integration, and music listening data.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
+    description: "My personal site written in Typescript via NextJS (React meta-framework)",
     githubUrl: "https://github.com/keircn/website",
     liveUrl: "https://keircn.com",
-    status: "completed",
   },
   {
     id: "2",
     title: "Linux Dotfiles",
     description:
-      "My personal Linux configuration files and setup scripts for a complete desktop environment. Includes window manager configs, shell customizations, and system tweaks.",
-    technologies: ["Shell", "NiriWM", "Linux", "Git"],
+      "My personal dotfiles managed by GNU stow. Includes Niri, Waybar, Helix, etc.",
     githubUrl: "https://github.com/keircn/dotfiles",
-    status: "in-progress",
   },
   {
     id: "3",
-    title: "Open Source Contributions",
+    title: "Hostman",
     description:
-      "Various contributions to open-source projects including bug fixes, feature implementations, and documentation improvements across different repositories.",
-    technologies: ["Various", "Git", "JavaScript", "Python", "Rust"],
-    githubUrl: "https://github.com/keircn",
-    status: "in-progress",
+      "Fast, customizable file upload tool with support for any image host you can think of",
+    githubUrl: "https://github.com/keircn/hostman",
   },
 ];
 
