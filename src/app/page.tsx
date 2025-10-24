@@ -30,7 +30,8 @@ const projects: Project[] = [
   {
     id: "1",
     title: "Personal Website",
-    description: "My personal site written in Typescript via NextJS (React meta-framework)",
+    description:
+      "My personal site written in Typescript via NextJS (React meta-framework)",
     githubUrl: "https://github.com/keircn/website",
     liveUrl: "https://keircn.com",
   },
