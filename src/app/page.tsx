@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import LastfmViewer from "~/components/LastfmViewer";
 import PageContainer from "~/components/PageContainer";
+import type { Project } from "~/components/ProjectCard";
+import Projects from "~/components/Projects";
 
 export const metadata: Metadata = {
   title: "keiran | home",
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
     title: "keiran | home",
     images: [
       {
-        url: "/avatar-roxy.jpg",
+        url: "/avatar.jpg",
         width: 736,
         height: 736,
         alt: "keiran avatar",
@@ -20,9 +22,40 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: "keiran | home",
-    images: ["/avatar-roxy.jpg"],
+    images: ["/avatar.jpg"],
   },
 };
+
+const projects: Project[] = [
+  {
+    id: "1",
+    title: "Personal Website",
+    description:
+      "A modern, responsive personal website built with Next.js and TypeScript. Features dark/light theme support, anime tracking integration, and music listening data.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
+    githubUrl: "https://github.com/keircn/website",
+    liveUrl: "https://keircn.com",
+    status: "completed",
+  },
+  {
+    id: "2",
+    title: "Linux Dotfiles",
+    description:
+      "My personal Linux configuration files and setup scripts for a complete desktop environment. Includes window manager configs, shell customizations, and system tweaks.",
+    technologies: ["Shell", "NiriWM", "Linux", "Git"],
+    githubUrl: "https://github.com/keircn/dotfiles",
+    status: "in-progress",
+  },
+  {
+    id: "3",
+    title: "Open Source Contributions",
+    description:
+      "Various contributions to open-source projects including bug fixes, feature implementations, and documentation improvements across different repositories.",
+    technologies: ["Various", "Git", "JavaScript", "Python", "Rust"],
+    githubUrl: "https://github.com/keircn",
+    status: "in-progress",
+  },
+];
 
 export default function Home() {
   return (
@@ -39,7 +72,7 @@ export default function Home() {
             <div className="hidden sm:block mt-6">
               <div className="relative w-fit">
                 <Image
-                  src="/avatar-roxy.webp"
+                  src="/avatar.jpg"
                   alt="avatar"
                   width={200}
                   height={200}
@@ -151,30 +184,7 @@ export default function Home() {
 
         {/* <CurrentlyReading /> */}
 
-        <section id="projects" className="scroll-mt-16">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-            My Projects
-          </h2>
-          <div className="space-y-4 mt-6 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-            <div className="border border-border rounded p-4 bg-muted/10">
-              <h3 className="text-lg font-medium text-foreground mb-2">
-                Coming Soon
-              </h3>
-              <p className="text-sm">
-                Projects showcase will be added here. Check back soon or visit
-                my{" "}
-                <Link
-                  href="https://github.com/keircn"
-                  target="_blank"
-                  className="text-foreground underline hover:text-foreground/80 transition-all"
-                >
-                  GitHub
-                </Link>{" "}
-                for now.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Projects projects={projects} />
       </div>
     </PageContainer>
   );
