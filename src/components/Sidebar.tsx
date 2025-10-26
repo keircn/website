@@ -1,9 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 
 export default function Sidebar() {
   const pathname = usePathname();

@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
-import RecentManga from "~/components/RecentManga";
+import Image from "next/image";
 import Projects from "~/components/Projects";
+import RecentManga from "~/components/RecentManga";
 
 export default function Home() {
   const projects: Project[] = [

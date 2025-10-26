@@ -1,9 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
 import ReadingCard from "~/components/ReadingCard";
 
 interface ActivityMediaTitle {
@@ -201,12 +201,10 @@ export default function RecentManga() {
           No recent manga found
         </div>
       ) : (
-        <div
+        <section
           ref={scrollRef}
           className="carousel-scroll overflow-x-auto cursor-grab select-none"
-          role="region"
           aria-label="Recent manga carousel"
-          tabIndex={0}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -299,7 +297,7 @@ export default function RecentManga() {
               );
             })}
           </div>
-        </div>
+        </section>
       )}
     </ReadingCard>
   );
