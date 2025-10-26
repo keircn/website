@@ -6,37 +6,16 @@ my personal website
 
 ## Prerequisites
 
-- Bun (recommended) or Node.js + npm/yarn
+- Bun (recommended) or Node.js + pnpm/npm
 
 ## Quick start
 
 ```bash
 # install dependencies
-bun i
-
-# copy example environment file and edit as needed
-cp .env.example .env
+bun i # or pnpm
 
 # start development server
 bun run dev
-```
-
-If you're a cuck:
-
-```bash
-npm install
-npm run dev
-```
-
-## Environment variables
-
-```
-# for lastfm viewer
-LASTFM_USERNAME=
-LASTFM_API_KEY=
-
-# for currently reading section
-NEXT_PUBLIC_ANILIST_READING_ID=
 ```
 
 ## Build & Production
