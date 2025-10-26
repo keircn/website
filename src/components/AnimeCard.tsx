@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 
 interface MediaTitle {
   english?: string;
@@ -27,9 +28,11 @@ interface Media {
 export default function AnimeCard({
   media,
   progress,
+  index = 0,
 }: {
   media: Media;
   progress?: number;
+  index?: number;
 }) {
   const title =
     media.title?.english ||
@@ -40,7 +43,12 @@ export default function AnimeCard({
     media.coverImage?.large || media.coverImage?.medium || "/code-xml.svg";
 
   return (
-    <article className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition">
+    <motion.article
+      className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+    >
       <div className="aspect-[2/3] w-full bg-muted/5 relative">
         <Image
           src={img}
@@ -104,6 +112,6 @@ export default function AnimeCard({
           </div>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

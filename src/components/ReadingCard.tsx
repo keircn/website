@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "motion/react";
+
 interface ReadingCardProps {
   title: string;
   isLoading?: boolean;
@@ -12,7 +16,12 @@ export default function ReadingCard({
   children,
 }: ReadingCardProps) {
   return (
-    <div className="border border-border bg-muted/10 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded">
+    <motion.div
+      className="border border-border bg-muted/10 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="py-3 border-b border-border flex items-center justify-between mx-4">
         <h3 className="text-lg font-medium text-foreground">{title}</h3>
         <div className="w-4 h-4 text-muted-foreground">
@@ -51,6 +60,6 @@ export default function ReadingCard({
           children
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

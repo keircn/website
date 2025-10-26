@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import ReadingCard from "~/components/ReadingCard";
 
 interface ActivityMediaTitle {
@@ -229,7 +230,7 @@ export default function RecentManga() {
           style={{ userSelect: "none" }}
         >
           <div className="flex gap-3 pb-2 scroll-smooth">
-            {items.map((item) => {
+            {items.map((item, index) => {
               const title =
                 item.media.title.english ||
                 item.media.title.romaji ||
@@ -243,46 +244,58 @@ export default function RecentManga() {
                 .filter(Boolean)
                 .join(" ");
               return (
-                <Link
+                <motion.div
                   key={`${item.media.id}-${item.id}`}
-                  href={
-                    item.media.siteUrl ||
-                    `https://anilist.co/manga/${item.media.id}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col flex-shrink-0 w-32 hover:scale-105"
-                  onClick={(e) => {
-                    if (hasDragged) {
-                      e.preventDefault();
-                    }
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.5 + index * 0.08,
+                    ease: "easeOut",
                   }}
                 >
-                  <div className="h-48 w-32 bg-muted/5 relative overflow-hidden">
-                    <Image
-                      src={img}
-                      alt={title}
-                      fill
-                      className="object-cover"
-                      draggable={false}
-                      unoptimized={img !== "/code-xml.svg"}
-                      onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                        e.currentTarget.src = "/code-xml.svg";
-                      }}
-                    />
-                  </div>
-                  <div className="p-2">
-                    <p className="text-[10px] text-muted-foreground truncate capitalize">
-                      {sub || ""}
-                    </p>
-                    <sub
-                      className="block text-xs text-foreground truncate"
-                      title={title}
-                    >
-                      {title}
-                    </sub>
-                  </div>
-                </Link>
+                  <Link
+                    href={
+                      item.media.siteUrl ||
+                      `https://anilist.co/manga/${item.media.id}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col flex-shrink-0 w-32 hover:scale-105"
+                    onClick={(e) => {
+                      if (hasDragged) {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    <div className="h-48 w-32 bg-muted/5 relative overflow-hidden">
+                      <Image
+                        src={img}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                        draggable={false}
+                        unoptimized={img !== "/code-xml.svg"}
+                        onError={(
+                          e: React.SyntheticEvent<HTMLImageElement>,
+                        ) => {
+                          e.currentTarget.src = "/code-xml.svg";
+                        }}
+                      />
+                    </div>
+                    <div className="p-2">
+                      <p className="text-[10px] text-muted-foreground truncate capitalize">
+                        {sub || ""}
+                      </p>
+                      <sub
+                        className="block text-xs text-foreground truncate"
+                        title={title}
+                      >
+                        {title}
+                      </sub>
+                    </div>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>

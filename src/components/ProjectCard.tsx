@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 
 export interface Project {
   id: string;
@@ -12,11 +13,17 @@ export interface Project {
 
 interface ProjectCardProps {
   project: Project;
+  index?: number;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   return (
-    <article className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group">
+    <motion.article
+      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group"
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.8 + index * 0.15, ease: "easeOut" }}
+    >
       <div className="flex items-start justify-between mb-3">
         <h3 className="text-lg font-medium text-foreground group-hover:text-foreground/90 transition-colors">
           {project.title}
@@ -82,6 +89,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </Link>
         )}
       </div>
-    </article>
+    </motion.article>
   );
 }
