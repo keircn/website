@@ -45,6 +45,8 @@ export default function RecentManga() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+  const DRAG_THRESHOLD = 3; // px
 
   const fetchRecent = useCallback(async () => {
     try {
@@ -67,9 +69,10 @@ export default function RecentManga() {
   }, [username]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (!scrollRef.current) return;
+    if (e.button !== 0 || !scrollRef.current) return;
     e.preventDefault();
     setIsDragging(true);
+    setHasDragged(false);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
     scrollRef.current.style.cursor = "grabbing";
@@ -78,9 +81,19 @@ export default function RecentManga() {
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       if (!isDragging || !scrollRef.current) return;
+      if (!(e.buttons & 1)) {
+        setIsDragging(false);
+        scrollRef.current.style.cursor = "grab";
+        return;
+      }
       e.preventDefault();
       const x = e.pageX - scrollRef.current.offsetLeft;
-      const walk = (x - startX); // potentially multiply this to increase scroll speed
+      const walk = x - startX * 1.5;
+
+      if (Math.abs(walk) > DRAG_THRESHOLD) {
+        setHasDragged(true);
+      }
+
       scrollRef.current.scrollLeft = scrollLeft - walk;
     },
     [isDragging, startX, scrollLeft],
@@ -91,6 +104,7 @@ export default function RecentManga() {
     if (scrollRef.current) {
       scrollRef.current.style.cursor = "grab";
     }
+    setTimeout(() => setHasDragged(false), 50);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -99,9 +113,50 @@ export default function RecentManga() {
     }
   }, [isDragging]);
 
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!isDragging || !scrollRef.current) return;
+      if (!(e.buttons & 1)) {
+        setIsDragging(false);
+        scrollRef.current.style.cursor = "grab";
+        return;
+      }
+      e.preventDefault();
+      const x = e.pageX - scrollRef.current.offsetLeft;
+      const walk = x - startX;
+
+      if (Math.abs(walk) > DRAG_THRESHOLD) {
+        setHasDragged(true);
+      }
+
+      scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        if (scrollRef.current) {
+          scrollRef.current.style.cursor = "grab";
+        }
+        setTimeout(() => setHasDragged(false), 50);
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener("mousemove", handleGlobalMouseMove);
+      document.addEventListener("mouseup", handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleGlobalMouseMove);
+      document.removeEventListener("mouseup", handleGlobalMouseUp);
+    };
+  }, [isDragging, startX, scrollLeft]);
+
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!scrollRef.current) return;
     setIsDragging(true);
+    setHasDragged(false);
     setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   }, []);
@@ -110,7 +165,12 @@ export default function RecentManga() {
     (e: React.TouchEvent) => {
       if (!isDragging || !scrollRef.current) return;
       const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-      const walk = (x - startX) * 2;
+      const walk = x - startX;
+
+      if (Math.abs(walk) > DRAG_THRESHOLD) {
+        setHasDragged(true);
+      }
+
       scrollRef.current.scrollLeft = scrollLeft - walk;
     },
     [isDragging, startX, scrollLeft],
@@ -118,6 +178,7 @@ export default function RecentManga() {
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
+    setTimeout(() => setHasDragged(false), 50);
   }, []);
 
   useEffect(() => {
@@ -175,6 +236,11 @@ export default function RecentManga() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col flex-shrink-0 w-32 hover:scale-105"
+                  onClick={(e) => {
+                    if (hasDragged) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   <div className="h-48 w-32 bg-muted/5 relative overflow-hidden">
                     <Image
@@ -182,6 +248,7 @@ export default function RecentManga() {
                       alt={title}
                       fill
                       className="object-cover"
+                      draggable={false}
                       unoptimized={img !== "/code-xml.svg"}
                       onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         e.currentTarget.src = "/code-xml.svg";
