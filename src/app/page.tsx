@@ -19,7 +19,7 @@ export default function Home() {
         <Image
           src="/avatar.jpg"
           alt="avatar"
-          className="rounded w-64"
+          className="rounded-2xl w-64"
           width={128}
           height={128}
         />
