@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import type { Project } from "~/components/ProjectCard";
 import Projects from "~/components/Projects";
 import RecentManga from "~/components/RecentManga";
 
