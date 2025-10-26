@@ -24,7 +24,7 @@ export default function Home() {
           height={128}
         />
       </div>
-      { /* <div className="flex flex-row space-x-4 mt-12"></div> */}
+      {/* <div className="flex flex-row space-x-4 mt-12"></div> */}
       <div className="w-full max-w-2xl mt-12">
         <RecentManga />
       </div>

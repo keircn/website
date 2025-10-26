@@ -203,6 +203,9 @@ export default function RecentManga() {
         <div
           ref={scrollRef}
           className="carousel-scroll overflow-x-auto cursor-grab select-none"
+          role="region"
+          aria-label="Recent manga carousel"
+          tabIndex={0}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -210,6 +213,19 @@ export default function RecentManga() {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              if (scrollRef.current) {
+                scrollRef.current.scrollLeft -= 150;
+              }
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              if (scrollRef.current) {
+                scrollRef.current.scrollLeft += 150;
+              }
+            }
+          }}
           style={{ userSelect: "none" }}
         >
           <div className="flex gap-3 pb-2 scroll-smooth">
