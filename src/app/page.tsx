@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold">
             hi, i&apos;m <span className="text-fuchsia-300">key</span>
           </h1>
-          <p className="text-lg font-medium text-neutral-400">dev · 16 · GB</p>
+          <p className="text-lg font-medium text-neutral-400">dev · 16 · UK</p>
           <p className="text-sm text-neutral-400 mt-4">
             I&apos;m a developer and weeb from the UK. I&apos;ve been using Arch
             for about 2 years and I code sometimes, not that I&apos;m very good
