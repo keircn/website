@@ -72,7 +72,6 @@ export default function Home() {
       </motion.div>
       <div className="flex flex-col space-y-4 mt-12">
         <motion.div
-          className="w-full max-w-2xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
@@ -80,7 +79,6 @@ export default function Home() {
           <RecentManga />
         </motion.div>
         <motion.div
-          className="w-full max-w-2xl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
