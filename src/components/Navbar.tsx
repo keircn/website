@@ -87,10 +87,11 @@ export default function Navbar() {
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
-                  className={`${linkBase} ${shouldUseActiveStyle
-                    ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
-                    }`}
+                  className={`${linkBase} ${
+                    shouldUseActiveStyle
+                      ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
+                  }`}
                 >
                   {item.label}
                 </Link>

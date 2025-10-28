@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import type { Project } from "~/components/ProjectCard";
 import Projects from "~/components/Projects";
-import RecentManga from "~/components/RecentManga";
 import RecentAnime from "~/components/RecentAnime";
+import RecentManga from "~/components/RecentManga";
 
 export default function Home() {
   const projects: Project[] = [
