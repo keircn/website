@@ -25,6 +25,9 @@ export default function Navbar() {
 
   const items = [
     { href: "/", label: "home" },
+    { href: "/discord", label: "Discord" },
+    { href: "/gh", label: "GitHub" },
+    { href: "/al", label: "AniList" },
     // { href: "/projects", label: "projects" },
     // { href: "/anilist", label: "anilist" },
     // { href: "/contact", label: "contact" },
@@ -75,11 +78,10 @@ export default function Navbar() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`${linkBase} ${
-                    active
+                  className={`${linkBase} ${active
                       ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </Link>
