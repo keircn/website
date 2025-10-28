@@ -49,7 +49,7 @@ export default function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="flex items-center justify-between px-4 py-3 pb-2 md:px-6 lg:px-6 xl:px-8">
+      <div className="flex items-center justify-between px-4 py-4 pb-3 md:px-4 md:pl-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -57,9 +57,9 @@ export default function Navbar() {
         >
           <Link
             href="/"
-            className="text-xl font-medium text-foreground hover:text-fuchsia-200 transition-all duration-200"
+            className="text-xl font-medium text-foreground hover:text-fuchsia-200 transition-all duration-200 font-mono"
           >
-            libkey
+            LIBKEY
           </Link>
         </motion.div>
         <motion.div
@@ -87,11 +87,10 @@ export default function Navbar() {
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
-                  className={`${linkBase} ${
-                    shouldUseActiveStyle
-                      ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
-                  }`}
+                  className={`${linkBase} ${shouldUseActiveStyle
+                    ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
+                    }`}
                 >
                   {item.label}
                 </Link>
