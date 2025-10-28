@@ -19,7 +19,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   return (
     <motion.article
-      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group"
+      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group flex flex-col h-full"
       initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.8 + index * 0.15, ease: "easeOut" }}
@@ -30,11 +30,13 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         </h3>
       </div>
 
-      <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-3">
-        {project.description}
-      </p>
+      <div className="flex-1">
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-4 h-12 mb-2 overflow-hidden">
+          {project.description}
+        </p>
+      </div>
 
-      <div className="flex items-center gap-3 text-sm">
+      <div className="flex items-center gap-3 text-xs mt-auto">
         {project.githubUrl && (
           <Link
             href={project.githubUrl}
