@@ -10,11 +10,10 @@ export default function Home() {
   const projects: Project[] = [
     {
       id: "1",
-      title: "Personal Website",
+      title: "Archium",
       description:
-        "My personal site written in Typescript via NextJS (React meta-framework)",
-      githubUrl: "https://github.com/keircn/website",
-      liveUrl: "https://keircn.com",
+        "Fast & Easy Package Management for Arch Linux",
+      githubUrl: "https://github.com/keircn/archium",
     },
     {
       id: "2",
