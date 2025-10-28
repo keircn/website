@@ -11,7 +11,7 @@ export default function Home() {
     {
       id: "1",
       title: "Archium",
-      description: "Fast & Easy Package Management for Arch Linux",
+      description: "Archium is a command-line tool for managing packages and more on Arch Linux.",
       githubUrl: "https://github.com/keircn/archium",
     },
     {
