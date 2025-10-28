@@ -11,8 +11,7 @@ export default function Home() {
     {
       id: "1",
       title: "Archium",
-      description:
-        "Fast & Easy Package Management for Arch Linux",
+      description: "Fast & Easy Package Management for Arch Linux",
       githubUrl: "https://github.com/keircn/archium",
     },
     {
@@ -34,7 +33,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)]">
       <motion.div
-        className="flex flex-row justify-between items-center w-full max-w-2xl space-x-24"
+        className="flex flex-row justify-between items-center w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl space-x-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -63,13 +62,13 @@ export default function Home() {
           <Image
             src="/avatar.jpg"
             alt="avatar"
-            className="rounded-2xl w-64"
+            className="rounded-2xl lg:w-40 sm:w-64"
             width={128}
             height={128}
           />
         </motion.div>
       </motion.div>
-      <div className="flex flex-col space-y-4 mt-12">
+      <div className="flex flex-col space-y-4 mt-12 w-full max-w-xl sm:max-w-lg lg:max-w-4xl xl:max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

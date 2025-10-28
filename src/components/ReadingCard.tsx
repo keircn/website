@@ -17,7 +17,7 @@ export default function ReadingCard({
 }: ReadingCardProps) {
   return (
     <motion.div
-      className="border border-border bg-muted/10 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded"
+      className="border border-border bg-muted/10 w-full max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-5xl rounded"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
