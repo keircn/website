@@ -5,6 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface NavItem {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const [hash, setHash] = useState("");
@@ -23,11 +29,11 @@ export default function Navbar() {
     return pathname === href;
   };
 
-  const items = [
+  const items: NavItem[] = [
     { href: "/", label: "home" },
-    { href: "/discord", label: "Discord" },
-    { href: "/gh", label: "GitHub" },
-    { href: "/al", label: "AniList" },
+    { href: "/discord", label: "Discord", external: true },
+    { href: "/gh", label: "GitHub", external: true },
+    { href: "/al", label: "AniList", external: true },
     // { href: "/projects", label: "projects" },
     // { href: "/anilist", label: "anilist" },
     // { href: "/contact", label: "contact" },
@@ -64,6 +70,7 @@ export default function Navbar() {
         >
           {items.map((item, index) => {
             const active = isActive(item.href);
+            const shouldUseActiveStyle = active || item.external;
             return (
               <motion.div
                 key={item.href}
@@ -77,11 +84,14 @@ export default function Navbar() {
               >
                 <Link
                   href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
-                  className={`${linkBase} ${active
+                  className={`${linkBase} ${
+                    shouldUseActiveStyle
                       ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
-                    }`}
+                  }`}
                 >
                   {item.label}
                 </Link>
