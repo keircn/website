@@ -5,9 +5,10 @@ import ProjectCard, { type Project } from "~/components/ProjectCard";
 
 interface ProjectsProps {
   projects: Project[];
+  parentDelay?: number;
 }
 
-export default function Projects({ projects }: ProjectsProps) {
+export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
   if (projects.length === 0) {
     return (
       <motion.section
@@ -46,7 +47,11 @@ export default function Projects({ projects }: ProjectsProps) {
               className="max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+              transition={{
+                duration: 0.5,
+                delay: parentDelay + 0.4,
+                ease: "easeOut",
+              }}
             >
               <h3 className="text-lg font-medium text-foreground mb-2">
                 Coming Soon
@@ -106,7 +111,12 @@ export default function Projects({ projects }: ProjectsProps) {
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                parentDelay={parentDelay}
+              />
             ))}
           </div>
         </div>

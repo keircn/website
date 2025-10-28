@@ -103,6 +103,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const userName = (searchParams.get("username") || "").trim();
     const perPage = parseInt(searchParams.get("perPage") || "10", 10);
+    const mediaType = (searchParams.get("type") || "MANGA").toUpperCase();
 
     if (!userName) {
       return NextResponse.json(
@@ -111,7 +112,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `recent::${userName.toLowerCase()}::${perPage}`;
+    const cacheKey = `recent::${userName.toLowerCase()}::${perPage}::${mediaType}`;
     const now = Date.now();
     const cached = cache.get(cacheKey);
     if (cached && now - cached.ts < CACHE_TTL) {
@@ -159,7 +160,7 @@ export async function GET(request: NextRequest) {
       if (!media) continue;
       const id = media.id ?? undefined;
       const type = media.type ?? null;
-      if (!id || type !== "MANGA") continue;
+      if (!id || type !== mediaType) continue;
 
       activities.push({
         id: id,

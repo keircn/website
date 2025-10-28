@@ -5,13 +5,15 @@ import Image from "next/image";
 import type { Project } from "~/components/ProjectCard";
 import Projects from "~/components/Projects";
 import RecentManga from "~/components/RecentManga";
+import RecentAnime from "~/components/RecentAnime";
 
 export default function Home() {
   const projects: Project[] = [
     {
       id: "1",
       title: "Archium",
-      description: "Archium is a command-line tool for managing packages and more on Arch Linux.",
+      description:
+        "Archium is a command-line tool for managing packages and more on Arch Linux.",
       githubUrl: "https://github.com/keircn/archium",
     },
     {
@@ -79,9 +81,16 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
         >
-          <Projects projects={projects} />
+          <RecentAnime />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
+        >
+          <Projects projects={projects} parentDelay={0.6} />
         </motion.div>
       </div>
     </div>
