@@ -15,30 +15,30 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://keircn.com"),
-  title: "keiran",
+  title: "Key",
   description: "meow",
   icons: {
-    icon: "/code-xml.svg",
+    icon: "/avatar.jpg",
   },
   openGraph: {
-    title: "keiran",
+    title: "Key",
     description: "meow",
     url: "https://keircn.com",
-    siteName: "keircn.com",
+    siteName: "LIBKEY",
     type: "website",
     images: [
       {
         url: "/avatar.jpg",
         width: 736,
         height: 736,
-        alt: "keiran avatar",
+        alt: "avatar",
         type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "keiran",
+    title: "Key",
     description: "meow",
     images: ["/avatar.jpg"],
   },
