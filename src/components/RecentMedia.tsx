@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import ReadingCard from "~/components/ReadingCard";
 import MediaCard from "~/components/MediaCard";
+import ReadingCard from "~/components/ReadingCard";
 
 interface ActivityMediaTitle {
   romaji?: string | null;
