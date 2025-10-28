@@ -243,7 +243,7 @@ export default function RecentManga() {
                 .join(" ");
               return (
                 <motion.div
-                  key={`${item.media.id}-${item.id}`}
+                  key={`${item.media.id}-${item.id}-${index}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
