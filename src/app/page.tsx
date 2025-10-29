@@ -54,7 +54,7 @@ export default function Home() {
           <p className="text-sm text-neutral-400 mt-4">
             I&apos;m a developer and weeb from the UK. I&apos;ve been using Arch
             for about 2 years and I code sometimes, not that I&apos;m very good
-            at it.
+            at it. You may also know me as Keiran.
           </p>
           <motion.div
             className="mt-6"
