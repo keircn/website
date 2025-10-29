@@ -31,9 +31,6 @@ export default function Navbar() {
 
   const items: NavItem[] = [
     { href: "/", label: "home" },
-    { href: "/discord", label: "Discord", external: true },
-    { href: "/gh", label: "GitHub", external: true },
-    { href: "/al", label: "AniList", external: true },
     // { href: "/projects", label: "projects" },
     // { href: "/anilist", label: "anilist" },
     // { href: "/contact", label: "contact" },

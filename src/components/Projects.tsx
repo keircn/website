@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { HiOutlineFolder } from "react-icons/hi";
 import ProjectCard, { type Project } from "~/components/ProjectCard";
 
 interface ProjectsProps {
@@ -27,19 +28,7 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
           <div className="py-3 border-b border-border flex items-center justify-between mx-4">
             <h3 className="text-lg font-medium text-foreground">My Projects</h3>
             <div className="w-4 h-4 text-muted-foreground">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                role="img"
-                aria-label="Projects icon"
-              >
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-              </svg>
+              <HiOutlineFolder className="w-4 h-4" aria-label="Projects icon" />
             </div>
           </div>
           <div className="p-4">
@@ -93,19 +82,7 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
         <div className="py-3 border-b border-border flex items-center justify-between mx-4">
           <h3 className="text-lg font-medium text-foreground">My Projects</h3>
           <div className="w-4 h-4 text-muted-foreground">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              role="img"
-              aria-label="Projects icon"
-            >
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-            </svg>
+            <HiOutlineFolder className="w-4 h-4" aria-label="Projects icon" />
           </div>
         </div>
         <div className="p-4">

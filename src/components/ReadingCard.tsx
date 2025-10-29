@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { HiOutlineBookOpen } from "react-icons/hi";
 
 interface ReadingCardProps {
   title: string;
@@ -28,18 +29,7 @@ export default function ReadingCard({
           {isLoading ? (
             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
           ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              role="img"
-              aria-label="Book icon"
-            >
-              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-            </svg>
+            <HiOutlineBookOpen className="w-4 h-4" aria-label="Book icon" />
           )}
         </div>
       </div>
