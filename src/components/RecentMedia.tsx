@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import MediaCard from "~/components/MediaCard";
+import MediaCardSkeleton from "~/components/MediaCardSkeleton";
 import ReadingCard from "~/components/ReadingCard";
 
 interface ActivityMediaTitle {
@@ -204,8 +205,19 @@ export default function RecentMedia({
   const items = data.slice(0, 10);
 
   return (
-    <ReadingCard title={title} isLoading={loading} error={error || undefined}>
-      {items.length === 0 ? (
+    <ReadingCard title={title} isLoading={false} error={error || undefined}>
+      {loading ? (
+        <section
+          className="carousel-scroll overflow-x-auto"
+          aria-label={`Recent ${mediaType.toLowerCase()} carousel loading`}
+        >
+          <div className="flex gap-3 pb-2">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <MediaCardSkeleton key={`skeleton-${index}`} />
+            ))}
+          </div>
+        </section>
+      ) : items.length === 0 ? (
         <div className="text-sm text-muted-foreground">
           No recent {mediaType.toLowerCase()} found
         </div>
