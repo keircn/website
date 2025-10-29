@@ -6,16 +6,17 @@ my personal website
 
 ## Prerequisites
 
-- Bun (recommended) or Node.js + pnpm/npm
+- Node.js
+- Package manager (pnpm/npm)
 
 ## Quick start
 
 ```bash
 # install dependencies
-bun i # or pnpm
+pnpm i
 
 # start development server
-bun run dev
+pnpm run dev
 ```
 
 ## Build & Production
@@ -23,8 +24,8 @@ bun run dev
 Build the optimized production bundle:
 
 ```bash
-bun run build
-bun run start
+pnpm run build
+pnpm run start
 ```
 
 ## Contributing
