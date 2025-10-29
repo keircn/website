@@ -6,6 +6,7 @@ import type { Project } from "~/components/ProjectCard";
 import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
+import SocialLinks from "~/components/SocialLinks";
 
 export default function Home() {
   const projects: Project[] = [
@@ -55,6 +56,14 @@ export default function Home() {
             for about 2 years and I code sometimes, not that I&apos;m very good
             at it.
           </p>
+          <motion.div
+            className="mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          >
+            <SocialLinks delay={0.6} />
+          </motion.div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -74,23 +83,23 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
         >
           <RecentManga />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.3, ease: "easeOut" }}
         >
           <RecentAnime />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.7, ease: "easeOut" }}
         >
-          <Projects projects={projects} parentDelay={0.6} />
+          <Projects projects={projects} parentDelay={0.9} />
         </motion.div>
       </div>
     </div>
