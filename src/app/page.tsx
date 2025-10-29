@@ -39,13 +39,13 @@ export default function Home() {
         className="flex flex-row justify-between items-center w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl space-x-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <motion.div
           className="flex flex-col items-start"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
         >
           <h1 className="text-3xl font-bold">
             hi, i&apos;m <span className="text-fuchsia-300">key</span>
@@ -60,9 +60,9 @@ export default function Home() {
             className="mt-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
           >
-            <SocialLinks delay={0.6} />
+            <SocialLinks delay={0.4} />
           </motion.div>
         </motion.div>
         <motion.div
@@ -83,23 +83,23 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
         >
           <RecentManga />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.3, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
         >
           <RecentAnime />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.7, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
         >
-          <Projects projects={projects} parentDelay={0.9} />
+          <Projects projects={projects} parentDelay={0.6} />
         </motion.div>
       </div>
     </div>
