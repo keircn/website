@@ -212,9 +212,11 @@ export default function RecentMedia({
           aria-label={`Recent ${mediaType.toLowerCase()} carousel loading`}
         >
           <div className="flex gap-3 pb-2">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <MediaCardSkeleton key={`skeleton-${index}`} />
-            ))}
+            <MediaCardSkeleton key={`skeleton-${mediaType}-1`} />
+            <MediaCardSkeleton key={`skeleton-${mediaType}-2`} />
+            <MediaCardSkeleton key={`skeleton-${mediaType}-3`} />
+            <MediaCardSkeleton key={`skeleton-${mediaType}-4`} />
+            <MediaCardSkeleton key={`skeleton-${mediaType}-5`} />
           </div>
         </section>
       ) : items.length === 0 ? (
