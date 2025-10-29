@@ -1,4 +1,4 @@
-import RecentMedia from "./RecentMedia";
+import RecentMedia from "~/components/RecentMedia";
 
 export default function RecentAnime() {
   return (
