@@ -40,7 +40,7 @@ export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
 
   return (
     <motion.div
-      className="flex items-center gap-4"
+      className="flex items-center gap-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
@@ -62,11 +62,10 @@ export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg bg-background/50 border border-border text-muted-foreground transition-all duration-300 hover:bg-accent/30 hover:border-accent/50 ${link.hoverColor} hover:scale-105 active:scale-95`}
+              className={`flex items-center gap-2 p-2 rounded-lg bg-background/50 border border-border text-muted-foreground transition-all duration-300 hover:bg-accent/30 hover:border-accent/50 ${link.hoverColor} hover:scale-105 active:scale-95`}
               aria-label={link.label}
             >
               <Icon className="w-4 h-4" />
-              <span className="text-sm font-medium">{link.label}</span>
             </Link>
           </motion.div>
         );
