@@ -172,7 +172,12 @@ export async function GET(request: NextRequest) {
     const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
     const cached = await cacheService.get(cacheKey);
     if (cached) {
-      return NextResponse.json(cached);
+      return NextResponse.json(cached, {
+        headers: {
+          "X-Cache-Status": "HIT",
+          "X-Data-Source": "PostgreSQL Cache",
+        },
+      });
     }
 
     const data = await makeAniListRequest(USER_ANIME_LIST_QUERY, {
@@ -239,7 +244,12 @@ export async function GET(request: NextRequest) {
     };
 
     await cacheService.set(cacheKey, result);
-    return NextResponse.json(result);
+    return NextResponse.json(result, {
+      headers: {
+        "X-Cache-Status": "MISS",
+        "X-Data-Source": "AniList API",
+      },
+    });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("/api/anilist error:", message);
