@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { CacheService } from "~/services/cache";
 
 const ANILIST_API = "https://graphql.anilist.co";
 
@@ -40,11 +41,6 @@ interface AniListData {
   };
 }
 
-interface CacheEntry<T> {
-  ts: number;
-  value: T;
-}
-
 const USER_ID_QUERY = `
 query ($userName: String) {
   User(name: $userName) {
@@ -80,9 +76,6 @@ query ($userId: Int, $perPage: Int) {
   }
 }`;
 
-const cache = new Map<string, CacheEntry<unknown>>();
-const CACHE_TTL = 60 * 1000;
-
 async function makeAniListRequest(query: string, variables: AniListVariables) {
   const res = await fetch(ANILIST_API, {
     method: "POST",
@@ -113,10 +106,10 @@ export async function GET(request: NextRequest) {
     }
 
     const cacheKey = `recent::${userName.toLowerCase()}::${perPage}::${mediaType}`;
-    const now = Date.now();
-    const cached = cache.get(cacheKey);
-    if (cached && now - cached.ts < CACHE_TTL) {
-      return NextResponse.json(cached.value);
+    const cacheService = CacheService.getInstance();
+    const cached = await cacheService.get(cacheKey);
+    if (cached) {
+      return NextResponse.json(cached);
     }
 
     const userData = (await makeAniListRequest(USER_ID_QUERY, {
@@ -183,7 +176,7 @@ export async function GET(request: NextRequest) {
     }
 
     const result = { activities };
-    cache.set(cacheKey, { ts: now, value: result });
+    await cacheService.set(cacheKey, result);
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
