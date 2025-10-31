@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { CacheService } from "~/services/cache";
 import type { Media as SharedMedia } from "~/types/anilist";
 
 const ANILIST_API = "https://graphql.anilist.co";
@@ -43,11 +44,6 @@ interface AniListData {
   };
 }
 
-interface CacheEntry {
-  ts: number;
-  value: unknown;
-}
-
 const USER_ANIME_LIST_QUERY = `
 query ($username: String, $type: MediaType, $perChunk: Int) {
   MediaListCollection(userName: $username, type: $type, perChunk: $perChunk) {
@@ -80,8 +76,7 @@ query ($username: String, $type: MediaType, $perChunk: Int) {
   }
 }`;
 
-const cache = new Map<string, CacheEntry>();
-const CACHE_TTL = 60 * 1000;
+const cacheService = CacheService.getInstance();
 
 async function makeAniListRequest(
   query: string,
@@ -175,10 +170,9 @@ export async function GET(request: NextRequest) {
     }
 
     const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
-    const now = Date.now();
-    const cached = cache.get(cacheKey);
-    if (cached && now - cached.ts < CACHE_TTL) {
-      return NextResponse.json(cached.value);
+    const cached = await cacheService.get(cacheKey);
+    if (cached) {
+      return NextResponse.json(cached);
     }
 
     const data = await makeAniListRequest(USER_ANIME_LIST_QUERY, {
@@ -244,7 +238,7 @@ export async function GET(request: NextRequest) {
       episodeCounts,
     };
 
-    cache.set(cacheKey, { ts: now, value: result });
+    await cacheService.set(cacheKey, result);
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
