@@ -5,6 +5,8 @@ import MediaCard from "~/components/MediaCard";
 import MediaCardSkeleton from "~/components/MediaCardSkeleton";
 import ReadingCard from "~/components/ReadingCard";
 
+const ANILIST_USERNAME = process.env.ANILIST_USERNAME || "keiran";
+
 interface ActivityMediaTitle {
   romaji?: string | null;
   english?: string | null;
@@ -46,7 +48,7 @@ interface RecentMediaProps {
 export default function RecentMedia({
   mediaType,
   title,
-  username = "keiran",
+  username = ANILIST_USERNAME,
   parentDelay = 0,
 }: RecentMediaProps) {
   const [data, setData] = useState<ActivityItem[]>([]);
@@ -57,7 +59,7 @@ export default function RecentMedia({
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
-  const DRAG_THRESHOLD = 3; // px
+  const DRAG_THRESHOLD = 3;
 
   const fetchRecent = useCallback(async () => {
     try {
