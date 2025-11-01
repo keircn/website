@@ -63,7 +63,6 @@ query ($userId: Int, $perPage: Int) {
           coverImage {
             extraLarge
             large
-            medium
           }
           type
           id
@@ -97,6 +96,7 @@ export async function GET(request: NextRequest) {
     const userName = (searchParams.get("username") || "").trim();
     const perPage = parseInt(searchParams.get("perPage") || "10", 10);
     const mediaType = (searchParams.get("type") || "MANGA").toUpperCase();
+    const includeSiteUrl = searchParams.get("includeSiteUrl") !== "false";
 
     if (!userName) {
       return NextResponse.json(
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `recent::${userName.toLowerCase()}::${perPage}::${mediaType}`;
+    const cacheKey = `recent::${userName.toLowerCase()}::${perPage}::${mediaType}::${includeSiteUrl}`;
     const cacheService = CacheService.getInstance();
     const cached = await cacheService.get(cacheKey);
     if (cached) {
@@ -168,7 +168,7 @@ export async function GET(request: NextRequest) {
         media: {
           id,
           type,
-          siteUrl: media.siteUrl ?? null,
+          siteUrl: includeSiteUrl ? (media.siteUrl ?? null) : null,
           title: media.title || {},
           coverImage: {
             large:

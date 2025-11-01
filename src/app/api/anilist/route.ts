@@ -161,6 +161,8 @@ export async function GET(request: NextRequest) {
     const username = (searchParams.get("username") || "").trim();
     const mediaType = searchParams.get("type") || "ANIME";
     const perChunk = parseInt(searchParams.get("perChunk") || "500", 10);
+    const includeUser = searchParams.get("includeUser") !== "false";
+    const statuses = searchParams.get("statuses")?.split(",") || [];
 
     if (!username) {
       return NextResponse.json(
@@ -169,7 +171,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}`;
+    const cacheKey = `${username.toLowerCase()}::${mediaType}::${perChunk}::${includeUser}::${statuses.join(",")}`;
     const cached = await cacheService.get(cacheKey);
     if (cached) {
       return NextResponse.json(cached, {
@@ -203,6 +205,11 @@ export async function GET(request: NextRequest) {
 
     for (const list of rawLists) {
       const key = list.status || list.name || "OTHER";
+
+      if (statuses.length > 0 && !statuses.includes(key)) {
+        continue;
+      }
+
       if (!listsByStatus[key])
         listsByStatus[key] = { name: list.name || key, entries: [] };
 
@@ -235,13 +242,16 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const result = {
-      user: data.MediaListCollection.user || null,
+    const result: any = {
       listsByStatus,
       totalEntries,
       perChunk,
       episodeCounts,
     };
+
+    if (includeUser) {
+      result.user = data.MediaListCollection.user || null;
+    }
 
     await cacheService.set(cacheKey, result);
     return NextResponse.json(result, {
