@@ -3,10 +3,12 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import type { Project } from "~/components/ProjectCard";
+
 import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
 import SocialLinks from "~/components/SocialLinks";
+import LastfmViewer from "~/components/LastfmViewer";
 
 export default function Home() {
   const projects: Project[] = [
@@ -80,6 +82,13 @@ export default function Home() {
         </motion.div>
       </motion.div>
       <div className="flex flex-col space-y-4 mt-12 w-full max-w-xl sm:max-w-lg lg:max-w-4xl xl:max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
+        >
+          <LastfmViewer />
+        </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

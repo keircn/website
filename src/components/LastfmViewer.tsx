@@ -76,9 +76,9 @@ export default function LastfmViewer() {
           <Image
             src={mainTrack.image}
             alt={`${mainTrack.name} cover`}
-            width={48}
-            height={48}
-            className="rounded object-cover flex-shrink-0"
+            width={60}
+            height={60}
+            className="rounded object-cover shrink-0"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = "none";
@@ -88,7 +88,7 @@ export default function LastfmViewer() {
           />
         ) : null}
         <div
-          className="w-12 h-12 bg-muted rounded flex items-center justify-center flex-shrink-0"
+          className="w-12 h-12 bg-muted rounded flex items-center justify-center shrink-0"
           style={{ display: mainTrack.image ? "none" : "flex" }}
         >
           <MusicIcon className="w-5 h-5 text-muted-foreground" />
@@ -101,7 +101,7 @@ export default function LastfmViewer() {
             {mainTrack.artist}
           </div>
           {mainTrack.album && (
-            <div className="text-xs text-muted-foreground truncate mt-1">
+            <div className="text-xs text-muted-foreground truncate">
               {mainTrack.album}
             </div>
           )}
