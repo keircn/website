@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { CacheService } from "~/services/cache";
-import type { Media as SharedMedia } from "~/types/anilist";
+import type { AniListResponse, Media, User } from "~/types/anilist";
 
 const ANILIST_API = "https://graphql.anilist.co";
 
@@ -104,7 +104,7 @@ interface ListEntry {
   score?: number;
   progress?: number;
   updatedAt?: number;
-  media: SharedMedia;
+  media: Media;
 }
 
 interface AniListMedia {
@@ -125,7 +125,7 @@ interface AniListMedia {
   };
 }
 
-function compactMedia(m: AniListMedia | null | undefined): SharedMedia {
+function compactMedia(m: AniListMedia | null | undefined): Media {
   if (!m) {
     return {
       id: 0,
@@ -242,7 +242,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const result: any = {
+    const result: AniListResponse = {
+      user: null,
       listsByStatus,
       totalEntries,
       perChunk,
@@ -250,7 +251,7 @@ export async function GET(request: NextRequest) {
     };
 
     if (includeUser) {
-      result.user = data.MediaListCollection.user || null;
+      result.user = (data.MediaListCollection.user as User) || null;
     }
 
     await cacheService.set(cacheKey, result);
