@@ -49,9 +49,7 @@
         "api_cache_key_unique": {
           "name": "api_cache_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "key"
-          ]
+          "columns": ["key"]
         }
       },
       "policies": {},
