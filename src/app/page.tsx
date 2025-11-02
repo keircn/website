@@ -2,13 +2,12 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import LastfmViewer from "~/components/LastfmViewer";
 import type { Project } from "~/components/ProjectCard";
-
 import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
 import SocialLinks from "~/components/SocialLinks";
-import LastfmViewer from "~/components/LastfmViewer";
 
 export default function Home() {
   const projects: Project[] = [
