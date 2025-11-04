@@ -31,7 +31,7 @@ export default function Navbar() {
 
   const items: NavItem[] = [
     { href: "/", label: "home" },
-    { href: "/blog", label: "blog", external: true },
+    { href: "https://blog.keircn.com", label: "blog", external: true },
     // { href: "/projects", label: "projects" },
     // { href: "/anilist", label: "anilist" },
     // { href: "/contact", label: "contact" },
