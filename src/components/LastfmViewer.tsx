@@ -37,7 +37,7 @@ export default function LastfmViewer() {
       setData(result);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to load Last.fm data",
+        err instanceof Error ? err.message : "Failed to load Last.fm data"
       );
     } finally {
       setLoading(false);
@@ -69,44 +69,65 @@ export default function LastfmViewer() {
     return <MusicCard title="Music" error="No recent tracks found" />;
   }
 
+  const trackUrl = mainTrack.isNowPlaying
+    ? `https://www.last.fm/music/${encodeURIComponent(mainTrack.artist)}/${
+        mainTrack.album ? encodeURIComponent(mainTrack.album) + "/" : ""
+      }${encodeURIComponent(mainTrack.name)}`
+    : null;
+
+  const trackContent = (
+    <div className="flex items-center gap-3">
+      {mainTrack.image ? (
+        <Image
+          src={mainTrack.image}
+          alt={`${mainTrack.name} cover`}
+          width={60}
+          height={60}
+          className="rounded object-cover shrink-0"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.style.display = "none";
+            const fallback = target.nextElementSibling as HTMLElement;
+            if (fallback) fallback.style.display = "flex";
+          }}
+        />
+      ) : null}
+      <div
+        className="w-12 h-12 bg-muted rounded flex items-center justify-center shrink-0"
+        style={{ display: mainTrack.image ? "none" : "flex" }}
+      >
+        <MusicIcon className="w-5 h-5 text-muted-foreground" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-sm font-medium text-foreground truncate">
+          {mainTrack.name}
+        </div>
+        <div className="text-sm text-muted-foreground truncate">
+          {mainTrack.artist}
+        </div>
+        {mainTrack.album && (
+          <div className="text-xs text-muted-foreground truncate">
+            {mainTrack.album}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <MusicCard title={mainTrack.isNowPlaying ? "Now Playing" : "Last Played"}>
-      <div className="flex items-center gap-3">
-        {mainTrack.image ? (
-          <Image
-            src={mainTrack.image}
-            alt={`${mainTrack.name} cover`}
-            width={60}
-            height={60}
-            className="rounded object-cover shrink-0"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = "none";
-              const fallback = target.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = "flex";
-            }}
-          />
-        ) : null}
-        <div
-          className="w-12 h-12 bg-muted rounded flex items-center justify-center shrink-0"
-          style={{ display: mainTrack.image ? "none" : "flex" }}
+      {mainTrack.isNowPlaying && trackUrl ? (
+        <a
+          href={trackUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block hover:underline focus:outline-none"
         >
-          <MusicIcon className="w-5 h-5 text-muted-foreground" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="text-sm font-medium text-foreground truncate">
-            {mainTrack.name}
-          </div>
-          <div className="text-sm text-muted-foreground truncate">
-            {mainTrack.artist}
-          </div>
-          {mainTrack.album && (
-            <div className="text-xs text-muted-foreground truncate">
-              {mainTrack.album}
-            </div>
-          )}
-        </div>
-      </div>
+          {trackContent}
+        </a>
+      ) : (
+        trackContent
+      )}
 
       {!mainTrack.isNowPlaying && recentTracks.length > 1 && (
         <div className="mt-3 pt-3 border-t border-border">

@@ -1,6 +1,6 @@
 export default function MediaCardSkeleton() {
   return (
-    <div className="bg-background border border-border rounded overflow-hidden flex flex-col flex-shrink-0 w-32 animate-pulse">
+    <div className="bg-background border border-border rounded overflow-hidden flex flex-col shrink-0 w-32 animate-pulse">
       <div className="h-48 w-32 bg-muted/20 relative">
         <div className="w-full h-full bg-muted/30" />
       </div>
