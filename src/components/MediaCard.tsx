@@ -3,24 +3,15 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { getPreferredTitle, getCoverImageUrl } from "../utils/anilist";
+import type { MediaTitle, CoverImage } from "../types/anilist";
 
-interface MediaTitle {
-  romaji?: string | null;
-  english?: string | null;
-  native?: string | null;
-}
-
-interface MediaCover {
-  large?: string | null;
-  medium?: string | null;
-}
-
-interface Media {
+interface ActivityMedia {
   id: number;
   type: string | null;
   siteUrl: string | null;
   title: MediaTitle;
-  coverImage: MediaCover | null;
+  coverImage: (CoverImage & { medium?: string }) | null;
 }
 
 interface ActivityItem {
@@ -28,7 +19,7 @@ interface ActivityItem {
   status: string | null;
   progress: string | null;
   createdAt: number | null;
-  media: Media;
+  media: ActivityMedia;
 }
 
 interface MediaCardProps {
@@ -46,15 +37,8 @@ export default function MediaCard({
   mediaType,
   parentDelay = 0,
 }: MediaCardProps) {
-  const title =
-    item.media.title.english ||
-    item.media.title.romaji ||
-    item.media.title.native ||
-    "Unknown";
-  const img =
-    item.media.coverImage?.large ||
-    item.media.coverImage?.medium ||
-    "/code-xml.svg";
+  const title = getPreferredTitle(item.media.title);
+  const img = getCoverImageUrl(item.media.coverImage);
   const sub = [item.status, item.progress].filter(Boolean).join(" ");
 
   const baseUrl =

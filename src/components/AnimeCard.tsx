@@ -2,28 +2,8 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-
-interface MediaTitle {
-  english?: string;
-  romaji?: string;
-  native?: string;
-}
-
-interface CoverImage {
-  large?: string;
-  medium?: string;
-}
-
-interface Media {
-  id: number;
-  title: MediaTitle;
-  format?: string;
-  status?: string;
-  episodes?: number;
-  averageScore?: number;
-  genres: string[];
-  coverImage: CoverImage | null;
-}
+import { getPreferredTitle, getCoverImageUrl } from "../utils/anilist";
+import type { Media } from "../types/anilist";
 
 export default function AnimeCard({
   media,
@@ -34,13 +14,8 @@ export default function AnimeCard({
   progress?: number;
   index?: number;
 }) {
-  const title =
-    media.title?.english ||
-    media.title?.romaji ||
-    media.title?.native ||
-    "Unknown";
-  const img =
-    media.coverImage?.large || media.coverImage?.medium || "/code-xml.svg";
+  const title = getPreferredTitle(media.title);
+  const img = getCoverImageUrl(media.coverImage);
 
   return (
     <motion.article

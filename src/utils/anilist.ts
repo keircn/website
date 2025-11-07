@@ -22,3 +22,24 @@ export function getStatusLabel(status: string, name?: string): string {
 export function isStatusMuted(status: string): boolean {
   return status === "PAUSED" || status === "DROPPED";
 }
+
+export function getPreferredTitle(
+  title?: {
+    english?: string | null;
+    romaji?: string | null;
+    native?: string | null;
+  } | null
+): string {
+  if (!title) return "Unknown";
+  return title.english || title.romaji || title.native || "Unknown";
+}
+
+export function getCoverImageUrl(
+  cover?: {
+    large?: string | null;
+    medium?: string | null;
+  } | null,
+  fallback = "/code-xml.svg"
+): string {
+  return cover?.large || cover?.medium || fallback;
+}
