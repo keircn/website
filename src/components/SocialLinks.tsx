@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { FaDiscord, FaGithub } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaGamepad } from "react-icons/fa";
 import { SiAnilist } from "react-icons/si";
 
 interface SocialLinksProps {
@@ -35,6 +35,12 @@ export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
       label: "AniList",
       icon: SiAnilist,
       hoverColor: "hover:text-blue-400",
+    },
+    {
+      href: "https://howlongtobeat.com/user/keiran",
+      label: "HowLongToBeat",
+      icon: FaGamepad,
+      hoverColor: "hover:text-foreground",
     },
   ];
 
