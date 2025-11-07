@@ -2,8 +2,8 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-import { getPreferredTitle, getCoverImageUrl } from "../utils/anilist";
 import type { Media } from "../types/anilist";
+import { getCoverImageUrl, getPreferredTitle } from "../utils/anilist";
 
 export default function AnimeCard({
   media,

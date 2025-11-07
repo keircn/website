@@ -3,8 +3,8 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { getPreferredTitle, getCoverImageUrl } from "../utils/anilist";
-import type { MediaTitle, CoverImage } from "../types/anilist";
+import type { CoverImage, MediaTitle } from "../types/anilist";
+import { getCoverImageUrl, getPreferredTitle } from "../utils/anilist";
 
 interface ActivityMedia {
   id: number;
