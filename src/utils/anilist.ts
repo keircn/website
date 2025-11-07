@@ -28,7 +28,7 @@ export function getPreferredTitle(
     english?: string | null;
     romaji?: string | null;
     native?: string | null;
-  } | null
+  } | null,
 ): string {
   if (!title) return "Unknown";
   return title.english || title.romaji || title.native || "Unknown";
@@ -39,7 +39,7 @@ export function getCoverImageUrl(
     large?: string | null;
     medium?: string | null;
   } | null,
-  fallback = "/code-xml.svg"
+  fallback = "/code-xml.svg",
 ): string {
   return cover?.large || cover?.medium || fallback;
 }
