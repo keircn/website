@@ -37,7 +37,7 @@ export default function LastfmViewer() {
       setData(result);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to load Last.fm data"
+        err instanceof Error ? err.message : "Failed to load Last.fm data",
       );
     } finally {
       setLoading(false);
