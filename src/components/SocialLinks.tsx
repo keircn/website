@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { FaDiscord, FaGithub, FaGamepad } from "react-icons/fa";
+import { FaDiscord, FaGamepad, FaGithub } from "react-icons/fa";
 import { SiAnilist } from "react-icons/si";
 
 interface SocialLinksProps {

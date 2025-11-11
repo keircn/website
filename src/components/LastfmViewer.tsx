@@ -71,7 +71,7 @@ export default function LastfmViewer() {
 
   const trackUrl = mainTrack.isNowPlaying
     ? `https://www.last.fm/music/${encodeURIComponent(mainTrack.artist)}/${
-        mainTrack.album ? encodeURIComponent(mainTrack.album) + "/" : ""
+        mainTrack.album ? `${encodeURIComponent(mainTrack.album)}/` : ""
       }${encodeURIComponent(mainTrack.name)}`
     : null;
 
