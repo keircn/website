@@ -37,8 +37,8 @@ export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
       hoverColor: "hover:text-blue-400",
     },
     {
-      href: "https://howlongtobeat.com/user/keiran",
-      label: "HowLongToBeat",
+      href: "https://vndb.org/u320922",
+      label: "VNDB",
       icon: FaGamepad,
       hoverColor: "hover:text-foreground",
     },
