@@ -3,37 +3,13 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import LastfmViewer from "~/components/LastfmViewer";
-import type { Project } from "~/components/ProjectCard";
 import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
 import SocialLinks from "~/components/SocialLinks";
+import { projects } from "~/data/projects";
 
 export default function Home() {
-  const projects: Project[] = [
-    {
-      id: "1",
-      title: "Archium",
-      description:
-        "Archium is a command-line tool for managing packages and more on Arch Linux.",
-      githubUrl: "https://github.com/keircn/archium",
-    },
-    {
-      id: "2",
-      title: "Linux Dotfiles",
-      description:
-        "My personal dotfiles managed by GNU stow. Includes Niri, Waybar, Helix, etc.",
-      githubUrl: "https://github.com/keircn/dotfiles",
-    },
-    {
-      id: "3",
-      title: "Hostman",
-      description:
-        "Fast, customizable file upload tool with support for any image host you can think of",
-      githubUrl: "https://github.com/keircn/hostman",
-    },
-  ];
-
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)]">
       <motion.div
