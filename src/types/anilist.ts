@@ -1,12 +1,12 @@
 export interface MediaTitle {
-  english?: string;
-  romaji?: string;
-  native?: string;
+  english?: string | null;
+  romaji?: string | null;
+  native?: string | null;
 }
 
 export interface CoverImage {
-  large?: string;
-  medium?: string;
+  large?: string | null;
+  medium?: string | null;
 }
 
 export interface Media {

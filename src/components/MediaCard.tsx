@@ -11,7 +11,7 @@ interface ActivityMedia {
   type: string | null;
   siteUrl: string | null;
   title: MediaTitle;
-  coverImage: (CoverImage & { medium?: string }) | null;
+  coverImage: CoverImage | null;
 }
 
 interface ActivityItem {
