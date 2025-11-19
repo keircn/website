@@ -69,7 +69,6 @@ export default function Navbar() {
         >
           {items.map((item, index) => {
             const active = isActive(item.href);
-            const shouldUseActiveStyle = active || item.external;
             return (
               <motion.div
                 key={item.href}
@@ -87,7 +86,7 @@ export default function Navbar() {
                   rel={item.external ? "noopener noreferrer" : undefined}
                   aria-current={active ? "page" : undefined}
                   className={`${linkBase} ${
-                    shouldUseActiveStyle
+                    active
                       ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
                   }`}
