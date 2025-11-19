@@ -7,6 +7,7 @@ import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
 import SocialLinks from "~/components/SocialLinks";
+import TechStack from "~/components/TechStack";
 import { projects } from "~/data/projects";
 
 export default function Home() {
@@ -61,6 +62,13 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
+        >
+          <TechStack />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.45, ease: "easeOut" }}
         >
           <LastfmViewer />
         </motion.div>
