@@ -4,7 +4,7 @@ import Guestbook from "~/components/Guestbook";
 export const dynamic = "force-dynamic";
 
 export default async function GuestbookPage() {
-  const entries = await getGuestbookEntries();
+  const data = await getGuestbookEntries(1);
 
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)] py-8 sm:py-12">
@@ -15,7 +15,7 @@ export default async function GuestbookPage() {
             Leave a message for me and other visitors!
           </p>
         </div>
-        <Guestbook initialEntries={entries} />
+        <Guestbook initialData={data} />
       </div>
     </div>
   );
