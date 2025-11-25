@@ -27,12 +27,12 @@ export default function ProjectCard({
   return (
     <motion.article
       className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group flex flex-col h-full"
-      initial={{ opacity: 0, y: 5 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.2,
-        delay: parentDelay + 0.8 + index * 0.15,
-        ease: "easeIn",
+        duration: 0.4,
+        delay: parentDelay + index * 0.1,
+        ease: "easeOut",
       }}
     >
       <div className="flex items-start justify-between mb-3">

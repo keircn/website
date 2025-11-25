@@ -12,19 +12,8 @@ interface ProjectsProps {
 export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
   if (projects.length === 0) {
     return (
-      <motion.section
-        id="projects"
-        className="scroll-mt-16"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <motion.div
-          className="border border-border bg-muted/10 rounded"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
+      <section id="projects" className="scroll-mt-16">
+        <div className="border border-border bg-muted/10 rounded">
           <div className="py-3 border-b border-border flex items-center justify-between mx-4">
             <h3 className="text-lg font-medium text-foreground">My Projects</h3>
             <div className="w-4 h-4 text-muted-foreground">
@@ -60,25 +49,14 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
               </p>
             </motion.div>
           </div>
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
     );
   }
 
   return (
-    <motion.section
-      id="projects"
-      className="scroll-mt-16"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <motion.div
-        className="border border-border bg-muted/10 w-full max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-5xl rounded"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+    <section id="projects" className="scroll-mt-16">
+      <div className="border border-border bg-muted/10 w-full max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-5xl rounded">
         <div className="py-3 border-b border-border flex items-center justify-between mx-4">
           <h3 className="text-lg font-medium text-foreground">My Projects</h3>
           <div className="w-4 h-4 text-muted-foreground">
@@ -97,7 +75,7 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
             ))}
           </div>
         </div>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

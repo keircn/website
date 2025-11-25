@@ -21,9 +21,11 @@ const technologies = [
 
 export default function TechStack() {
   return (
-    <section className="w-full py-8">
-      <h2 className="text-xl font-semibold mb-6">Tech Stack</h2>
-      <div className="flex flex-wrap gap-4">
+    <section className="w-full py-6 sm:py-8">
+      <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
+        Tech Stack
+      </h2>
+      <div className="flex flex-wrap gap-3 sm:gap-4">
         {technologies.map((tech, index) => (
           <motion.div
             key={tech.name}
@@ -31,10 +33,10 @@ export default function TechStack() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             whileHover={{ scale: 1.05 }}
-            className={`flex items-center gap-2 px-4 py-2 bg-accent/10 border border-border rounded-lg text-muted-foreground transition-colors duration-300 ${tech.color}`}
+            className={`flex items-center gap-2 px-3 py-2 sm:px-4 bg-accent/10 border border-border rounded-lg text-muted-foreground transition-colors duration-300 ${tech.color}`}
           >
-            <tech.icon className="w-5 h-5" />
-            <span className="text-sm font-medium">{tech.name}</span>
+            <tech.icon className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="text-xs sm:text-sm font-medium">{tech.name}</span>
           </motion.div>
         ))}
       </div>
