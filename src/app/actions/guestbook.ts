@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, gt, lt } from "drizzle-orm";
+import { and, desc, gt } from "drizzle-orm";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { db } from "~/db";
