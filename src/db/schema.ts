@@ -15,6 +15,7 @@ export const guestbookEntries = pgTable("guestbook_entries", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   message: text("message").notNull(),
+  ipAddress: text("ip_address"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
