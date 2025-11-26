@@ -70,7 +70,7 @@ export default function Guestbook({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-card border border-border rounded-xl p-4 sm:p-6 shadow-sm"
+        className="bg-background border border-border rounded-xl p-4 sm:p-6 shadow-sm"
       >
         <h2 className="text-lg sm:text-xl font-semibold mb-4">
           Sign the Guestbook
