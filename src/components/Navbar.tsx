@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTheme } from "~/components/ThemeProvider";
 
 interface NavItem {
   href: string;
@@ -15,6 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [hash, setHash] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
     setHash(window.location.hash);
@@ -55,6 +57,62 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
+  const cycleTheme = () => {
+    if (theme === "system") {
+      setTheme("light");
+    } else if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("system");
+    }
+  };
+
+  const getThemeIcon = () => {
+    if (theme === "system") {
+      return (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      );
+    } else if (theme === "light") {
+      return (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      );
+    } else {
+      return (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      );
+    }
+  };
+
   return (
     <>
       <motion.nav
@@ -77,67 +135,87 @@ export default function Navbar() {
             </Link>
           </motion.div>
 
-          <motion.div
-            className="hidden md:flex items-center gap-2"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
-          >
-            {items.map((item, index) => {
-              const active = isActive(item.href);
-              return (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: 0.4 + index * 0.05,
-                    ease: "easeOut",
-                  }}
-                >
-                  <Link
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                    aria-current={active ? "page" : undefined}
-                    className={`${linkBase} ${
-                      active
-                        ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-
-          <motion.button
-            className="md:hidden p-2 text-foreground hover:text-fuchsia-200 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="flex items-center gap-2">
+            <motion.div
+              className="hidden md:flex items-center gap-2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
             >
-              {mobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </motion.button>
+              {items.map((item, index) => {
+                const active = isActive(item.href);
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: 0.4 + index * 0.05,
+                      ease: "easeOut",
+                    }}
+                  >
+                    <Link
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                      aria-current={active ? "page" : undefined}
+                      className={`${linkBase} ${
+                        active
+                          ? "text-foreground bg-accent/30 border border-accent/30 hover:bg-accent/10"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent/20 bg-accent/10 border-muted/80 border hover:border-accent/30"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            <motion.button
+              onClick={cycleTheme}
+              className="p-2 text-foreground hover:text-fuchsia-200 transition-colors rounded-md hover:bg-accent/20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              aria-label={`Switch to ${
+                theme === "system"
+                  ? "light"
+                  : theme === "light"
+                    ? "dark"
+                    : "system"
+              } theme`}
+              title={`Current: ${theme} (${resolvedTheme})`}
+            >
+              {getThemeIcon()}
+            </motion.button>
+
+            <motion.button
+              className="md:hidden p-2 text-foreground hover:text-fuchsia-200 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </motion.button>
+          </div>
         </div>
       </motion.nav>
 
