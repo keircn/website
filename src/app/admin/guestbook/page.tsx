@@ -1,7 +1,7 @@
-import { db } from "~/db";
-import { guestbookEntries } from "~/db/schema";
 import { desc } from "drizzle-orm";
 import GuestbookAdmin from "~/components/GuestbookAdmin";
+import { db } from "~/db";
+import { guestbookEntries } from "~/db/schema";
 
 export const dynamic = "force-dynamic";
 

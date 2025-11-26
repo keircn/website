@@ -153,8 +153,14 @@ export default function RecommendationsAdmin({
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Type</label>
+                <label
+                  htmlFor="type"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Type
+                </label>
                 <select
+                  id="type"
                   value={formData.type}
                   onChange={(e) =>
                     setFormData({ ...formData, type: e.target.value })
@@ -170,10 +176,14 @@ export default function RecommendationsAdmin({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="externalId"
+                  className="block text-sm font-medium mb-2"
+                >
                   External ID
                 </label>
                 <input
+                  id="externalId"
                   type="text"
                   value={formData.externalId}
                   onChange={(e) =>
@@ -186,8 +196,14 @@ export default function RecommendationsAdmin({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Title</label>
+                <label
+                  htmlFor="title"
+                  className="block text-sm font-medium mb-2"
+                >
+                  Title
+                </label>
                 <input
+                  id="title"
                   type="text"
                   value={formData.title}
                   onChange={(e) =>
@@ -199,10 +215,14 @@ export default function RecommendationsAdmin({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="coverImage"
+                  className="block text-sm font-medium mb-2"
+                >
                   Cover Image URL
                 </label>
                 <input
+                  id="coverImage"
                   type="text"
                   value={formData.coverImage}
                   onChange={(e) =>
@@ -214,10 +234,14 @@ export default function RecommendationsAdmin({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="recommendation"
+                  className="block text-sm font-medium mb-2"
+                >
                   Recommendation
                 </label>
                 <textarea
+                  id="recommendation"
                   value={formData.recommendation}
                   onChange={(e) =>
                     setFormData({ ...formData, recommendation: e.target.value })
@@ -229,16 +253,20 @@ export default function RecommendationsAdmin({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="sortOrder"
+                  className="block text-sm font-medium mb-2"
+                >
                   Sort Order
                 </label>
                 <input
+                  id="sortOrder"
                   type="number"
                   value={formData.sortOrder}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      sortOrder: Number.parseInt(e.target.value),
+                      sortOrder: Number.parseInt(e.target.value, 10),
                     })
                   }
                   className="w-full px-4 py-2 rounded-lg bg-background border border-border focus:border-fuchsia-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-300/20"
