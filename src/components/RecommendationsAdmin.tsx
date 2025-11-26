@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   addRecommendation,
   deleteRecommendation,
+  updateRecommendation,
 } from "~/app/actions/recommendations";
 import type { Recommendation } from "~/db/schema";
 
@@ -19,6 +20,7 @@ export default function RecommendationsAdmin({
     initialRecommendations,
   );
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -29,6 +31,31 @@ export default function RecommendationsAdmin({
     coverImage: "",
     sortOrder: 0,
   });
+
+  const handleEdit = (rec: Recommendation) => {
+    setEditingId(rec.id);
+    setFormData({
+      type: rec.type,
+      externalId: rec.externalId,
+      title: rec.title,
+      recommendation: rec.recommendation,
+      coverImage: rec.coverImage || "",
+      sortOrder: rec.sortOrder,
+    });
+    setShowAddForm(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setFormData({
+      type: "anime",
+      externalId: "",
+      title: "",
+      recommendation: "",
+      coverImage: "",
+      sortOrder: 0,
+    });
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this recommendation?"))
@@ -49,20 +76,37 @@ export default function RecommendationsAdmin({
     e.preventDefault();
     setLoading(true);
 
-    const result = await addRecommendation({
-      type: formData.type,
-      externalId: formData.externalId,
-      title: formData.title,
-      recommendation: formData.recommendation,
-      coverImage: formData.coverImage || null,
-      sortOrder: formData.sortOrder,
-      metadata: {},
-    });
+    if (editingId) {
+      const result = await updateRecommendation(editingId, {
+        type: formData.type,
+        externalId: formData.externalId,
+        title: formData.title,
+        recommendation: formData.recommendation,
+        coverImage: formData.coverImage || null,
+        sortOrder: formData.sortOrder,
+      });
 
-    if (result.success) {
-      window.location.reload();
+      if (result.success) {
+        window.location.reload();
+      } else {
+        alert(result.error || "Failed to update recommendation");
+      }
     } else {
-      alert(result.error || "Failed to add recommendation");
+      const result = await addRecommendation({
+        type: formData.type,
+        externalId: formData.externalId,
+        title: formData.title,
+        recommendation: formData.recommendation,
+        coverImage: formData.coverImage || null,
+        sortOrder: formData.sortOrder,
+        metadata: {},
+      });
+
+      if (result.success) {
+        window.location.reload();
+      } else {
+        alert(result.error || "Failed to add recommendation");
+      }
     }
     setLoading(false);
   };
@@ -84,16 +128,29 @@ export default function RecommendationsAdmin({
           </div>
           <button
             type="button"
-            onClick={() => setShowAddForm(!showAddForm)}
+            onClick={() => {
+              setShowAddForm(!showAddForm);
+              setEditingId(null);
+              setFormData({
+                type: "anime",
+                externalId: "",
+                title: "",
+                recommendation: "",
+                coverImage: "",
+                sortOrder: 0,
+              });
+            }}
             className="px-4 py-2 rounded-lg bg-fuchsia-300/20 text-fuchsia-300 border border-fuchsia-300/40 hover:bg-fuchsia-300/30 transition-colors text-sm font-medium"
           >
             {showAddForm ? "Cancel" : "Add New"}
           </button>
         </div>
 
-        {showAddForm && (
+        {(showAddForm || editingId) && (
           <div className="mb-8 p-6 rounded-xl bg-accent/20 border border-border/40">
-            <h2 className="text-xl font-semibold mb-4">Add Recommendation</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              {editingId ? "Edit Recommendation" : "Add Recommendation"}
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Type</label>
@@ -193,8 +250,23 @@ export default function RecommendationsAdmin({
                 disabled={loading}
                 className="w-full px-4 py-2 rounded-lg bg-fuchsia-300/20 text-fuchsia-300 border border-fuchsia-300/40 hover:bg-fuchsia-300/30 transition-colors disabled:opacity-50 font-medium"
               >
-                {loading ? "Adding..." : "Add Recommendation"}
+                {loading
+                  ? editingId
+                    ? "Updating..."
+                    : "Adding..."
+                  : editingId
+                    ? "Update Recommendation"
+                    : "Add Recommendation"}
               </button>
+              {editingId && (
+                <button
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="w-full px-4 py-2 rounded-lg bg-accent/20 text-muted-foreground border border-border/40 hover:border-red-400/40 hover:text-red-400 transition-colors text-sm"
+                >
+                  Cancel
+                </button>
+              )}
             </form>
           </div>
         )}
@@ -216,14 +288,24 @@ export default function RecommendationsAdmin({
                   {rec.recommendation}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => handleDelete(rec.id)}
-                disabled={loading}
-                className="px-4 py-2 rounded-lg bg-red-400/10 text-red-400 border border-red-400/20 hover:bg-red-400/20 transition-colors disabled:opacity-50 text-sm"
-              >
-                Delete
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleEdit(rec)}
+                  disabled={loading}
+                  className="px-4 py-2 rounded-lg bg-fuchsia-300/10 text-fuchsia-300 border border-fuchsia-300/20 hover:bg-fuchsia-300/20 transition-colors disabled:opacity-50 text-sm"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(rec.id)}
+                  disabled={loading}
+                  className="px-4 py-2 rounded-lg bg-red-400/10 text-red-400 border border-red-400/20 hover:bg-red-400/20 transition-colors disabled:opacity-50 text-sm"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

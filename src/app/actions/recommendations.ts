@@ -64,3 +64,19 @@ export async function deleteRecommendation(
     return { success: false, error: "Failed to delete recommendation" };
   }
 }
+
+export async function updateRecommendation(
+  id: string,
+  data: Partial<NewRecommendation>,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    await db
+      .update(recommendations)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(recommendations.id, id));
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating recommendation:", error);
+    return { success: false, error: "Failed to update recommendation" };
+  }
+}
