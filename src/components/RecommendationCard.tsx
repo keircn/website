@@ -1,11 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { Recommendation } from "~/db/schema";
 
 export type RecommendationCardProps = {
   recommendation: Recommendation;
 };
+
+function getExternalUrl(type: string, externalId: string): string {
+  switch (type) {
+    case "anime":
+      return `https://anilist.co/anime/${externalId}`;
+    case "manga":
+      return `https://anilist.co/manga/${externalId}`;
+    case "novel":
+      return `https://anilist.co/manga/${externalId}`;
+    case "vn":
+      return `https://vndb.org/${externalId}`;
+    default:
+      return "#";
+  }
+}
 
 export default function RecommendationCard({
   recommendation,
@@ -16,8 +32,18 @@ export default function RecommendationCard({
   const format = metadata?.format;
   const status = metadata?.status;
 
+  const externalUrl = getExternalUrl(
+    recommendation.type,
+    recommendation.externalId,
+  );
+
   return (
-    <div className="group relative overflow-hidden rounded-xl bg-accent/20 border border-border/40 hover:border-fuchsia-300/40 transition-all duration-300 hover:shadow-lg hover:shadow-fuchsia-300/10">
+    <Link
+      href={externalUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative overflow-hidden rounded-xl bg-accent/20 border border-border/40 hover:border-fuchsia-300/40 transition-all duration-300 hover:shadow-lg hover:shadow-fuchsia-300/10 block"
+    >
       <div className="flex flex-col sm:flex-row gap-4 p-4">
         <div className="shrink-0">
           <div className="relative w-full sm:w-32 h-48 sm:h-44 rounded-lg overflow-hidden bg-accent/40">
@@ -67,6 +93,6 @@ export default function RecommendationCard({
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
