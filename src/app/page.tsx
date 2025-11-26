@@ -7,7 +7,6 @@ import Projects from "~/components/Projects";
 import RecentAnime from "~/components/RecentAnime";
 import RecentManga from "~/components/RecentManga";
 import SocialLinks from "~/components/SocialLinks";
-import TechStack from "~/components/TechStack";
 import { projects } from "~/data/projects";
 
 export default function Home() {

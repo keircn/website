@@ -1,8 +1,8 @@
 "use server";
 
 import { and, desc, gt } from "drizzle-orm";
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { db } from "~/db";
 import { guestbookEntries } from "~/db/schema";
 import { validateContent } from "~/utils/spam";

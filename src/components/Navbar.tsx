@@ -31,6 +31,7 @@ export default function Navbar() {
 
   const items: NavItem[] = [
     { href: "/", label: "home" },
+    { href: "/recommendations", label: "recs" },
     { href: "/guestbook", label: "guestbook" },
     { href: "https://blog.keircn.com", label: "blog", external: true },
   ];

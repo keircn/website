@@ -5,7 +5,7 @@ import { useActionState, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { getGuestbookEntries, signGuestbook } from "~/app/actions/guestbook";
 import type { GuestbookEntry } from "~/db/schema";
-import { formatRelativeTime, formatFullDate } from "~/utils/date";
+import { formatFullDate, formatRelativeTime } from "~/utils/date";
 
 function SubmitButton() {
   const { pending } = useFormStatus();

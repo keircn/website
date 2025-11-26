@@ -1,4 +1,11 @@
-import { jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 export const apiCache = pgTable("api_cache", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -21,3 +28,19 @@ export const guestbookEntries = pgTable("guestbook_entries", {
 
 export type GuestbookEntry = typeof guestbookEntries.$inferSelect;
 export type NewGuestbookEntry = typeof guestbookEntries.$inferInsert;
+
+export const recommendations = pgTable("recommendations", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  type: text("type").notNull(),
+  externalId: text("external_id").notNull(),
+  title: text("title").notNull(),
+  recommendation: text("recommendation").notNull(),
+  coverImage: text("cover_image"),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  sortOrder: integer("sort_order").default(0).notNull(),
+});
+
+export type Recommendation = typeof recommendations.$inferSelect;
+export type NewRecommendation = typeof recommendations.$inferInsert;
