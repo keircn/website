@@ -44,12 +44,12 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 md:top-4 md:left-1/2 md:-translate-x-1/2 bg-background/80 backdrop-blur-sm border-b border-border md:border md:rounded-xl md:w-auto lg:w-[900px] xl:w-[1200px]"
+      className="fixed top-0 left-0 right-0 z-50 md:top-4 md:left-1/2 md:-translate-x-1/2 bg-background/80 backdrop-blur-sm border-b border-border md:border md:rounded-xl w-full md:max-w-2xl lg:max-w-4xl xl:max-w-5xl"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="flex items-center justify-between px-4 py-4 pb-3 md:px-4 md:pl-6">
+      <div className="flex items-center justify-between px-4 py-4 pb-3 md:px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -63,7 +63,7 @@ export default function Navbar() {
           </Link>
         </motion.div>
         <motion.div
-          className="flex items-center gap-2 -mt-1.5"
+          className="flex items-center gap-2"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
