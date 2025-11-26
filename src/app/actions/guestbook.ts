@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, gt } from "drizzle-orm";
+import { and, desc, eq, gt } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { db } from "~/db";
@@ -139,5 +139,19 @@ export async function signGuestbook(formData: FormData) {
   } catch (error) {
     console.error("Failed to sign guestbook:", error);
     return { success: false, error: "Failed to sign guestbook" };
+  }
+}
+
+export async function deleteGuestbookEntry(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    await db.delete(guestbookEntries).where(eq(guestbookEntries.id, id));
+    revalidatePath("/guestbook");
+    revalidatePath("/admin/guestbook");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete guestbook entry:", error);
+    return { success: false, error: "Failed to delete entry" };
   }
 }
