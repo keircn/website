@@ -31,7 +31,7 @@ async function checkRateLimit(ipAddress: string): Promise<string | null> {
     const recentEntries = await db
       .select()
       .from(guestbookEntries)
-      .where(and(gt(guestbookEntries.createdAt, timeThreshold)));
+      .where(gt(guestbookEntries.createdAt, timeThreshold));
 
     const ipEntries = recentEntries.filter(
       (entry) => entry.ipAddress === ipAddress,
@@ -146,6 +146,11 @@ export async function signGuestbook(formData: FormData) {
 export async function deleteGuestbookEntry(
   id: string,
 ): Promise<{ success: boolean; error?: string }> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.success) {
+    return authCheck;
+  }
+
   try {
     await db.delete(guestbookEntries).where(eq(guestbookEntries.id, id));
     revalidatePath("/guestbook");
