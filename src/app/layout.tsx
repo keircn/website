@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Key",
   description: "meow",
   icons: {
-    icon: "/avatar.jpg",
+    icon: "/avatar-roxy.jpg",
   },
   openGraph: {
     title: "Key",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/avatar.jpg",
+        url: "/avatar-roxy.jpg",
         width: 736,
         height: 736,
         alt: "avatar",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Key",
     description: "meow",
-    images: ["/avatar.jpg"],
+    images: ["/avatar-roxy.jpg"],
   },
 };
 
