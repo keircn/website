@@ -53,9 +53,9 @@ export default function Home() {
           <Image
             src="/avatar-roxy.jpg"
             alt="avatar"
-            className="rounded-2xl w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-cover"
-            width={192}
-            height={192}
+            className="rounded-2xl w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 object-cover"
+            width={160}
+            height={160}
             priority
           />
         </motion.div>
