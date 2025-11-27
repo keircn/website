@@ -1,11 +1,12 @@
 "use server";
 
-import { and, desc, eq, gt } from "drizzle-orm";
+import { desc, eq, gt } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { db } from "~/db";
 import { guestbookEntries } from "~/db/schema";
 import { validateContent } from "~/utils/spam";
+import { requireAdmin } from "./admin";
 
 const ENTRIES_PER_PAGE = 20;
 const RATE_LIMIT_MINUTES = 15;

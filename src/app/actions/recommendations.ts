@@ -7,6 +7,7 @@ import {
   type Recommendation,
   recommendations,
 } from "~/db/schema";
+import { requireAdmin } from "./admin";
 
 export async function getRecommendations(): Promise<Recommendation[]> {
   try {
@@ -44,6 +45,11 @@ export async function getRecommendationsByType(
 export async function addRecommendation(
   data: NewRecommendation,
 ): Promise<{ success: boolean; error?: string }> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.success) {
+    return authCheck;
+  }
+
   try {
     await db.insert(recommendations).values(data);
     return { success: true };
@@ -56,6 +62,11 @@ export async function addRecommendation(
 export async function deleteRecommendation(
   id: string,
 ): Promise<{ success: boolean; error?: string }> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.success) {
+    return authCheck;
+  }
+
   try {
     await db.delete(recommendations).where(eq(recommendations.id, id));
     return { success: true };
@@ -69,6 +80,11 @@ export async function updateRecommendation(
   id: string,
   data: Partial<NewRecommendation>,
 ): Promise<{ success: boolean; error?: string }> {
+  const authCheck = await requireAdmin();
+  if (!authCheck.success) {
+    return authCheck;
+  }
+
   try {
     await db
       .update(recommendations)
