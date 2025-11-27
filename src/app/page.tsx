@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)] w-full">
       <motion.div
-        className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-8 lg:gap-12 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl"
+        className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6 sm:gap-8 lg:gap-12 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -30,7 +30,7 @@ export default function Home() {
           <p className="text-base sm:text-lg font-medium text-neutral-400">
             dev · 16 · UK
           </p>
-          <p className="text-sm text-neutral-400 mt-4">
+          <p className="text-sm text-neutral-400 mt-4 max-w-md">
             I&apos;m a developer and weeb from the UK. I&apos;ve been using Arch
             for about 2 years and I code sometimes, not that I&apos;m very good
             at it. You may also know me as Keiran.
