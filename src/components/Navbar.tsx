@@ -121,7 +121,7 @@ export default function Navbar() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="flex items-center justify-between px-4 py-4 pb-3 md:px-4">
+        <div className="flex items-center justify-between px-4 py-4 md:px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -137,7 +137,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             <motion.div
-              className="hidden md:flex items-center gap-2"
+              className="hidden md:flex items-center gap-3"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
