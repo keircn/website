@@ -42,7 +42,7 @@ export default function ProjectCard({
       </div>
 
       <div className="flex-1">
-        <p className="text-xs text-muted-foreground leading-relaxed h-16 lg:h-12 mb-2 overflow-hidden">
+        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 mb-2">
           {project.description}
         </p>
       </div>
