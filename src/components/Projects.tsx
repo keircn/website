@@ -56,7 +56,7 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
 
   return (
     <section id="projects" className="scroll-mt-16">
-      <div className="border border-border bg-muted/10 w-full max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-5xl rounded">
+      <div className="border border-border bg-muted/10 w-full rounded">
         <div className="py-3 border-b border-border flex items-center justify-between mx-4">
           <h3 className="text-lg font-medium text-foreground">My Projects</h3>
           <div className="w-4 h-4 text-muted-foreground">

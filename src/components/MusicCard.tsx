@@ -14,7 +14,7 @@ export default function MusicCard({
   children,
 }: MusicCardProps) {
   return (
-    <div className="border border-border rounded bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group flex flex-col h-full w-full max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-5xl">
+    <div className="border border-border rounded bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group flex flex-col h-full w-full">
       <div className="py-3 border-b border-border flex items-center justify-between mx-4">
         <h3 className="text-lg font-medium text-foreground">{title}</h3>
         <MusicIcon animate={isLoading} />
