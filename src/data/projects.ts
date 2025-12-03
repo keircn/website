@@ -10,13 +10,20 @@ export const projects: Project[] = [
   },
   {
     id: "2",
-    title: "Linux Dotfiles",
+    title: "ktc",
     description:
-      "My personal dotfiles managed by GNU stow. Includes Hyprland, Waybar, Ghostty, etc.",
-    githubUrl: "https://github.com/keircn/dotfiles",
+      "Keiran's Tiling Compositor, a minimal yet ambitious wayland compositor written in rust with minimal dependencies.",
+    githubUrl: "https://github.com/keircn/ktc",
   },
   {
     id: "3",
+    title: "ktcbar",
+    description:
+      "A fast and opinionated status bar for wayland written in Rust. Originally designed for the ktc compositor.",
+    githubUrl: "https://github.com/keircn/ktc/tree/main/crates/ktcbar",
+  },
+  {
+    id: "4",
     title: "Hostman",
     description:
       "Fast, customizable file upload tool with support for any image host you can think of",
