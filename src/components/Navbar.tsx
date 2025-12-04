@@ -119,7 +119,7 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 md:top-4 md:left-1/2 md:-translate-x-1/2 bg-background/80 backdrop-blur-sm border-b border-border md:border md:rounded-xl w-full md:max-w-2xl lg:max-w-4xl xl:max-w-5xl"
+        className="fixed top-0 left-0 right-0 z-50 md:top-4 md:left-1/2 md:-translate-x-1/2 bg-background/80 backdrop-blur-sm border-b border-border md:border md:rounded-xl w-full md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-[1800px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}

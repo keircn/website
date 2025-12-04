@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)] w-full">
       <motion.div
-        className="flex flex-col w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl px-4"
+        className="flex flex-col w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-[1800px] px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -77,7 +77,7 @@ export default function Home() {
           </div>
         </motion.div>
       </motion.div>
-      <div className="flex flex-col space-y-4 sm:space-y-6 mt-8 sm:mt-12 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl px-4">
+      <div className="flex flex-col space-y-4 sm:space-y-6 mt-8 sm:mt-12 w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-[1800px] px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

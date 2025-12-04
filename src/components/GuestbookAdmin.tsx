@@ -48,7 +48,7 @@ export default function GuestbookAdmin({
 
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)] py-8 sm:py-12">
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-4xl 2xl:max-w-5xl 3xl:max-w-6xl px-4">
         <div className="mb-8">
           <Link
             href="/admin"

@@ -57,7 +57,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Navbar />
-          <main className="pt-20 sm:pt-24 md:pt-28 px-4 sm:px-6">
+          <main className="pt-20 sm:pt-24 md:pt-28 px-4 sm:px-6 2xl:px-8 3xl:px-12 4xl:px-16">
             {children}
           </main>
         </ThemeProvider>
