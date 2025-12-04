@@ -52,7 +52,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           >
             <Image
-              src="/avatar-roxy.jpg"
+              src="/avatar.gif"
               alt="avatar"
               className="rounded-2xl w-20 h-20 sm:w-32 sm:h-32 lg:w-40 lg:h-40 object-cover"
               width={160}
