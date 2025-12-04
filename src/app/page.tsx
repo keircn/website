@@ -58,6 +58,7 @@ export default function Home() {
               width={160}
               height={160}
               priority
+	      unoptimized
             />
           </motion.div>
         </div>
