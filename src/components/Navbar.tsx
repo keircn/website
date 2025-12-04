@@ -132,7 +132,7 @@ export default function Navbar() {
           >
             <Link
               href="/"
-              className="text-xl font-medium text-foreground hover:text-fuchsia-200 transition-all duration-200 font-mono"
+              className="text-xl font-medium text-foreground hover:text-fuchsia-200 transition-all duration-200"
             >
               LIBKEY
             </Link>
