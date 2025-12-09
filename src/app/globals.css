@@ -117,7 +117,6 @@
 }
 
 @theme inline {
-  /* Custom breakpoints for large displays */
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
 
