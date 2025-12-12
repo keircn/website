@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { FaDiscord, FaGamepad, FaGithub } from "react-icons/fa";
-import { SiAnilist } from "react-icons/si";
+import { SiAnilist, SiCodeberg } from "react-icons/si";
 
 interface SocialLinksProps {
   delay?: number;
@@ -29,6 +29,12 @@ export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
       label: "GitHub",
       icon: FaGithub,
       hoverColor: "hover:text-gray-300",
+    },
+    {
+      href: "https://codeberg.org/keys",
+      label: "Codeberg",
+      icon: SiCodeberg,
+      hoverColor: "hover:text-blue-500",
     },
     {
       href: "/al",
