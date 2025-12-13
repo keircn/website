@@ -17,32 +17,55 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://keircn.com"),
-  title: "Key",
-  description: "meow",
+  title: {
+    default: "Key | Developer & Anime Enthusiast",
+    template: "%s | Key",
+  },
+  description:
+    "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK. Explore my projects, anime recommendations, and more.",
+  keywords: [
+    "developer",
+    "portfolio",
+    "anime",
+    "manga",
+    "web development",
+    "typescript",
+    "react",
+    "nextjs",
+  ],
+  authors: [{ name: "Key", url: "https://keircn.com" }],
+  creator: "Key",
   icons: {
     icon: "/avatar.jpg",
   },
   openGraph: {
-    title: "Key",
-    description: "meow",
+    title: "Key | Developer & Anime Enthusiast",
+    description:
+      "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK.",
     url: "https://keircn.com",
     siteName: "LIBKEY",
     type: "website",
+    locale: "en_GB",
     images: [
       {
         url: "/avatar.jpg",
         width: 736,
         height: 736,
-        alt: "avatar",
+        alt: "Key's avatar",
         type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Key",
-    description: "meow",
+    title: "Key | Developer & Anime Enthusiast",
+    description:
+      "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK.",
     images: ["/avatar.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
