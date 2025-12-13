@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { HiOutlineFolder } from "react-icons/hi";
 import ProjectCard, { type Project } from "~/components/ProjectCard";
+import { socialLinks } from "~/data/config";
 
 interface ProjectsProps {
   projects: Project[];
@@ -38,7 +39,7 @@ export default function Projects({ projects, parentDelay = 0 }: ProjectsProps) {
                 Projects showcase will be added here. Check back soon or visit
                 my{" "}
                 <a
-                  href="https://github.com/keircn"
+                  href={socialLinks.githubDirect}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground underline hover:text-foreground/80 transition-all"

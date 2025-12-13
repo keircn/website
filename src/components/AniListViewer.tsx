@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import AnimeCard from "~/components/AnimeCard";
 import AnimeCardSkeleton from "~/components/AnimeCardSkeleton";
+import { defaultUsernames } from "~/data/config";
 import type { ListEntry, ListGroup, User } from "~/types/anilist";
 import {
   getStatusLabel,
@@ -11,7 +12,7 @@ import {
 } from "~/utils/anilist";
 
 export default function AniListViewer() {
-  const [username] = useState("keiran");
+  const [username] = useState(defaultUsernames.anilist);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [grouped, setGrouped] = useState<Record<string, ListGroup> | null>(

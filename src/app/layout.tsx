@@ -4,6 +4,7 @@ import "~/app/globals.css";
 import ErrorBoundary from "~/components/ErrorBoundary";
 import Navbar from "~/components/Navbar";
 import { ThemeProvider } from "~/components/ThemeProvider";
+import { seoKeywords, siteConfig } from "~/data/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,51 +17,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://keircn.com"),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Key | Developer & Anime Enthusiast",
-    template: "%s | Key",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK. Explore my projects, anime recommendations, and more.",
-  keywords: [
-    "developer",
-    "portfolio",
-    "anime",
-    "manga",
-    "web development",
-    "typescript",
-    "react",
-    "nextjs",
-  ],
-  authors: [{ name: "Key", url: "https://keircn.com" }],
-  creator: "Key",
+  description: siteConfig.description,
+  keywords: [...seoKeywords],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
   icons: {
     icon: "/avatar.jpg",
   },
   openGraph: {
-    title: "Key | Developer & Anime Enthusiast",
-    description:
-      "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK.",
-    url: "https://keircn.com",
-    siteName: "LIBKEY",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.siteName,
     type: "website",
-    locale: "en_GB",
+    locale: siteConfig.locale,
     images: [
       {
         url: "/avatar.jpg",
         width: 736,
         height: 736,
-        alt: "Key's avatar",
+        alt: `${siteConfig.name}'s avatar`,
         type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Key | Developer & Anime Enthusiast",
-    description:
-      "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: ["/avatar.jpg"],
   },
   robots: {

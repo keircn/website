@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "~/components/ThemeProvider";
+import { siteConfig } from "~/data/config";
 
 interface NavItem {
   href: string;
@@ -47,7 +48,7 @@ export default function Navbar() {
     { href: "/", label: "home" },
     { href: "/guestbook", label: "guestbook" },
     { href: "/recommendations", label: "recommendations" },
-    { href: "https://blog.keircn.com", label: "blog", external: true },
+    { href: siteConfig.blogUrl, label: "blog", external: true },
   ];
 
   const linkBase =

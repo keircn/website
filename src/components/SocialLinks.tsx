@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { FaDiscord, FaGamepad, FaGithub } from "react-icons/fa";
 import { SiAnilist, SiCodeberg } from "react-icons/si";
+import { socialLinks as socialConfig } from "~/data/config";
 
 interface SocialLinksProps {
   delay?: number;
@@ -19,31 +20,31 @@ interface SocialLink {
 export default function SocialLinks({ delay = 0 }: SocialLinksProps) {
   const socialLinks: SocialLink[] = [
     {
-      href: "/discord",
+      href: socialConfig.discord,
       label: "Discord",
       icon: FaDiscord,
       hoverColor: "hover:text-indigo-400",
     },
     {
-      href: "/gh",
+      href: socialConfig.github,
       label: "GitHub",
       icon: FaGithub,
       hoverColor: "hover:text-gray-300",
     },
     {
-      href: "https://codeberg.org/keys",
+      href: socialConfig.codeberg,
       label: "Codeberg",
       icon: SiCodeberg,
       hoverColor: "hover:text-blue-500",
     },
     {
-      href: "/al",
+      href: socialConfig.anilist,
       label: "AniList",
       icon: SiAnilist,
       hoverColor: "hover:text-blue-400",
     },
     {
-      href: "https://vndb.org/u320922",
+      href: socialConfig.vndb,
       label: "VNDB",
       icon: FaGamepad,
       hoverColor: "hover:text-foreground",

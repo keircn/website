@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import MediaCard from "~/components/MediaCard";
 import MediaCardSkeleton from "~/components/MediaCardSkeleton";
 import ReadingCard from "~/components/ReadingCard";
+import { defaultUsernames } from "~/data/config";
 
-const ANILIST_USERNAME = process.env.NEXT_PUBLIC_ANILIST_USERNAME || "keiran";
-
+const ANILIST_USERNAME =
+  process.env.NEXT_PUBLIC_ANILIST_USERNAME || defaultUsernames.anilist;
 interface ActivityMediaTitle {
   romaji?: string | null;
   english?: string | null;
