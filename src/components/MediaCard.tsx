@@ -61,7 +61,7 @@ export default function MediaCard({
         href={item.media.siteUrl || baseUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col shrink-0 w-32 hover:scale-105"
+        className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-[background-color,box-shadow,transform] duration-200 flex flex-col shrink-0 w-32 hover:scale-105"
         onClick={(e) => {
           if (hasDragged) {
             e.preventDefault();

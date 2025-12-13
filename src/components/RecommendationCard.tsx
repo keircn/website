@@ -42,7 +42,7 @@ export default function RecommendationCard({
       href={externalUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative overflow-hidden rounded-xl bg-accent/20 border border-border/40 hover:border-fuchsia-300/40 transition-all duration-300 hover:shadow-lg hover:shadow-fuchsia-300/10 block"
+      className="group relative overflow-hidden rounded-xl bg-accent/20 border border-border/40 hover:border-fuchsia-300/40 transition-[background-color,border-color,box-shadow] duration-300 hover:shadow-lg hover:shadow-fuchsia-300/10 block"
     >
       <div className="flex flex-col sm:flex-row gap-4 p-4">
         <div className="shrink-0">

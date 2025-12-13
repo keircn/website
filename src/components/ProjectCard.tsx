@@ -26,7 +26,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <motion.article
-      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-all duration-200 hover:shadow-lg group flex flex-col h-full"
+      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-[background-color,box-shadow] duration-200 hover:shadow-lg group flex flex-col h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

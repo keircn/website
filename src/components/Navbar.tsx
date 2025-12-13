@@ -135,7 +135,7 @@ export default function Navbar() {
               href="/"
               className="text-xl font-medium text-foreground hover:text-fuchsia-200 transition-all duration-200"
             >
-              LIBKEY
+              {siteConfig.siteName}
             </Link>
           </motion.div>
 

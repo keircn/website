@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/src",
+        destination: "https://codeberg.org/keys/website",
+        permanent: true,
+      },
+      {
         source: "/al",
         destination: "https://anilist.co/user/keiran",
         permanent: true,

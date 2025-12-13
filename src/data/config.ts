@@ -1,17 +1,11 @@
-/**
- * Site-wide configuration values
- * Centralized to avoid hardcoding across components
- */
-
 export const siteConfig = {
   name: "Key",
   fullName: "Keiran",
-  title: "Key | Developer & Anime Enthusiast",
-  description:
-    "Personal portfolio of Key (Keiran) - a developer and anime enthusiast from the UK. Explore my projects, anime recommendations, and more.",
+  title: "Key's Website",
+  description: "meow",
   url: "https://keircn.com",
   blogUrl: "https://blog.keircn.com",
-  siteName: "LIBKEY",
+  siteName: "keircn.com",
   locale: "en_GB",
 } as const;
 
