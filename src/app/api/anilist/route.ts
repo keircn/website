@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { CacheService } from "~/services/cache";
-import type { AniListResponse, Media, User } from "~/types/anilist";
+import type { AniListResponse, ListEntry, Media, User } from "~/types/anilist";
 
 const ANILIST_API = "https://graphql.anilist.co";
 
@@ -96,15 +96,6 @@ async function makeAniListRequest(
   const data = await res.json();
   if (data.errors) throw new Error(JSON.stringify(data.errors));
   return data.data;
-}
-
-interface ListEntry {
-  id: number;
-  status?: string;
-  score?: number;
-  progress?: number;
-  updatedAt?: number;
-  media: Media;
 }
 
 interface AniListMedia {
