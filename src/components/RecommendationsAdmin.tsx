@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   addRecommendation,
@@ -16,6 +17,7 @@ type RecommendationsAdminProps = {
 export default function RecommendationsAdmin({
   initialRecommendations,
 }: RecommendationsAdminProps) {
+  const router = useRouter();
   const [recommendations, setRecommendations] = useState(
     initialRecommendations,
   );
@@ -87,7 +89,7 @@ export default function RecommendationsAdmin({
       });
 
       if (result.success) {
-        window.location.reload();
+        router.refresh();
       } else {
         alert(result.error || "Failed to update recommendation");
       }
@@ -103,7 +105,7 @@ export default function RecommendationsAdmin({
       });
 
       if (result.success) {
-        window.location.reload();
+        router.refresh();
       } else {
         alert(result.error || "Failed to add recommendation");
       }
