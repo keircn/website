@@ -8,10 +8,9 @@ import { adminSessions } from "~/db/schema";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "";
 const ADMIN_SESSION_COOKIE = "admin_session";
-const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days in seconds
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
 
-// Rate limiting for login attempts
-const LOGIN_RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const LOGIN_RATE_LIMIT_WINDOW = 15 * 60 * 1000;
 const MAX_LOGIN_ATTEMPTS = 5;
 const loginAttempts = new Map<
   string,
@@ -46,7 +45,6 @@ function checkLoginRateLimit(ip: string): string | null {
     return null;
   }
 
-  // Reset if outside the window
   if (now - attempt.firstAttempt > LOGIN_RATE_LIMIT_WINDOW) {
     loginAttempts.delete(ip);
     return null;
@@ -81,7 +79,6 @@ export async function loginAdmin(
 ): Promise<{ success: boolean; error?: string }> {
   const ip = await getClientIp();
 
-  // Check rate limit before processing
   const rateLimitError = checkLoginRateLimit(ip);
   if (rateLimitError) {
     return { success: false, error: rateLimitError };
@@ -98,7 +95,6 @@ export async function loginAdmin(
     passwordBuffer.length === adminPasswordBuffer.length &&
     timingSafeEqual(passwordBuffer, adminPasswordBuffer)
   ) {
-    // Clear attempts on successful login
     clearLoginAttempts(ip);
 
     const token = generateSessionToken();
@@ -109,7 +105,6 @@ export async function loginAdmin(
       expiresAt,
     });
 
-    // Clean up expired sessions periodically
     await cleanupExpiredSessions();
 
     const cookieStore = await cookies();
@@ -123,7 +118,6 @@ export async function loginAdmin(
     return { success: true };
   }
 
-  // Record failed attempt
   recordLoginAttempt(ip);
 
   return { success: false, error: "Invalid password" };
@@ -161,7 +155,6 @@ export async function isAdminAuthenticated(): Promise<boolean> {
     return false;
   }
 
-  // Check if session is expired
   if (dbSession.expiresAt < new Date()) {
     await db
       .delete(adminSessions)

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { CacheService } from "~/services/cache";
 
 const LASTFM_API = "https://ws.audioscrobbler.com/2.0/";
-const CACHE_TTL = 30 * 1000; // 30 seconds for music (changes frequently)
+const CACHE_TTL = 30 * 1000;
 
 interface LastfmTrack {
   name: string;
