@@ -1,6 +1,6 @@
 "use server";
 
-import { desc, eq, gt } from "drizzle-orm";
+import { and, desc, eq, gt } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { db } from "~/db";
@@ -28,16 +28,17 @@ async function checkRateLimit(ipAddress: string): Promise<string | null> {
   const timeThreshold = new Date(Date.now() - RATE_LIMIT_MINUTES * 60 * 1000);
 
   try {
-    const recentEntries = await db
+    const recentEntriesFromIp = await db
       .select()
       .from(guestbookEntries)
-      .where(gt(guestbookEntries.createdAt, timeThreshold));
+      .where(
+        and(
+          gt(guestbookEntries.createdAt, timeThreshold),
+          eq(guestbookEntries.ipAddress, ipAddress),
+        ),
+      );
 
-    const ipEntries = recentEntries.filter(
-      (entry) => entry.ipAddress === ipAddress,
-    );
-
-    if (ipEntries.length >= MAX_ENTRIES_PER_IP) {
+    if (recentEntriesFromIp.length >= MAX_ENTRIES_PER_IP) {
       return `Please wait ${RATE_LIMIT_MINUTES} minutes between submissions`;
     }
 
