@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { CacheService } from "~/services/cache";
 
 const LASTFM_API = "https://ws.audioscrobbler.com/2.0/";
+const CACHE_TTL = 30 * 1000; // 30 seconds for music (changes frequently)
 
 interface LastfmTrack {
   name: string;
@@ -38,11 +40,6 @@ interface LastfmResponse {
   message?: string;
 }
 
-interface CacheEntry {
-  ts: number;
-  value: unknown;
-}
-
 interface ProcessedTrack {
   name: string;
   artist: string;
@@ -52,13 +49,15 @@ interface ProcessedTrack {
   timestamp?: number;
 }
 
-const cache = new Map<string, CacheEntry>();
-const CACHE_TTL = 30 * 1000;
+interface LastfmResult {
+  tracks: ProcessedTrack[];
+  user: string;
+}
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get("limit") || "10", 10);
+    const limit = Number.parseInt(searchParams.get("limit") || "10", 10);
 
     const username = process.env.LASTFM_USERNAME;
     const apiKey = process.env.LASTFM_API_KEY;
@@ -71,10 +70,11 @@ export async function GET(request: NextRequest) {
     }
 
     const cacheKey = `lastfm:${username}:${limit}`;
-    const now = Date.now();
-    const cached = cache.get(cacheKey);
-    if (cached && now - cached.ts < CACHE_TTL) {
-      return NextResponse.json(cached.value);
+    const cache = CacheService.getInstance();
+    const cached = await cache.get(cacheKey, CACHE_TTL);
+
+    if (cached) {
+      return NextResponse.json(cached as LastfmResult);
     }
 
     const url = new URL(LASTFM_API);
@@ -107,16 +107,18 @@ export async function GET(request: NextRequest) {
         album: track.album?.["#text"],
         image: largeImage,
         isNowPlaying: !!track["@attr"]?.nowplaying,
-        timestamp: track.date ? parseInt(track.date.uts, 10) * 1000 : undefined,
+        timestamp: track.date
+          ? Number.parseInt(track.date.uts, 10) * 1000
+          : undefined,
       };
     });
 
-    const result = {
+    const result: LastfmResult = {
       tracks: processedTracks,
       user: data.recenttracks?.["@attr"]?.user || username,
     };
 
-    cache.set(cacheKey, { ts: now, value: result });
+    await cache.set(cacheKey, result);
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);

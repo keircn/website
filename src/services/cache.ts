@@ -42,7 +42,7 @@ export class CacheService {
     }
   }
 
-  async get(key: string): Promise<unknown | null> {
+  async get(key: string, ttlMs?: number): Promise<unknown | null> {
     this.performCleanupIfNeeded().catch(console.error);
 
     try {
@@ -59,8 +59,9 @@ export class CacheService {
       const cached = result[0];
       const now = Date.now();
       const cacheAge = now - cached.updatedAt.getTime();
+      const effectiveTtl = ttlMs ?? this.CACHE_TTL;
 
-      if (cacheAge > this.CACHE_TTL) {
+      if (cacheAge > effectiveTtl) {
         await this.delete(key);
         return null;
       }
