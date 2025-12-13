@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "~/app/globals.css";
+import ErrorBoundary from "~/components/ErrorBoundary";
 import Navbar from "~/components/Navbar";
 import { ThemeProvider } from "~/components/ThemeProvider";
 
@@ -58,7 +59,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           <main className="pt-20 sm:pt-24 md:pt-28 px-4 sm:px-6 2xl:px-8 3xl:px-12 4xl:px-16">
-            {children}
+            <ErrorBoundary>{children}</ErrorBoundary>
           </main>
         </ThemeProvider>
       </body>
