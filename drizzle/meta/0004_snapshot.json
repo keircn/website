@@ -1,6 +1,6 @@
 {
-  "id": "f1071959-8fb9-477f-b2f8-5d3595c67b30",
-  "prevId": "38a830c4-409f-48ce-b120-dc66076c4721",
+  "id": "36aa8cc4-1881-416e-829b-77dff7813450",
+  "prevId": "f1071959-8fb9-477f-b2f8-5d3595c67b30",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -219,6 +219,65 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.visitors": {
+      "name": "visitors",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "ip_address": {
+          "name": "ip_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_visit": {
+          "name": "first_visit",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_visit": {
+          "name": "last_visit",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "visit_count": {
+          "name": "visit_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "visitors_ip_address_unique": {
+          "name": "visitors_ip_address_unique",
+          "nullsNotDistinct": false,
+          "columns": ["ip_address"]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

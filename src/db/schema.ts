@@ -54,3 +54,15 @@ export const adminSessions = pgTable("admin_sessions", {
 
 export type AdminSession = typeof adminSessions.$inferSelect;
 export type NewAdminSession = typeof adminSessions.$inferInsert;
+
+export const visitors = pgTable("visitors", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  ipAddress: text("ip_address").notNull().unique(),
+  userAgent: text("user_agent"),
+  firstVisit: timestamp("first_visit").defaultNow().notNull(),
+  lastVisit: timestamp("last_visit").defaultNow().notNull(),
+  visitCount: integer("visit_count").default(1).notNull(),
+});
+
+export type Visitor = typeof visitors.$inferSelect;
+export type NewVisitor = typeof visitors.$inferInsert;

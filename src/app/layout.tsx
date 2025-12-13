@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "~/app/globals.css";
 import ErrorBoundary from "~/components/ErrorBoundary";
+import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 import { ThemeProvider } from "~/components/ThemeProvider";
 import { seoKeywords, siteConfig } from "~/data/config";
@@ -66,13 +67,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-screen text-foreground bg-background`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans min-h-screen flex flex-col text-foreground bg-background`}
       >
         <ThemeProvider>
           <Navbar />
-          <main className="pt-20 sm:pt-24 md:pt-28 px-4 sm:px-6 2xl:px-8 3xl:px-12 4xl:px-16">
+          <main className="flex-1 pt-20 sm:pt-24 md:pt-28 px-4 sm:px-6 2xl:px-8 3xl:px-12 4xl:px-16">
             <ErrorBoundary>{children}</ErrorBoundary>
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
