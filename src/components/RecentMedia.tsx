@@ -5,7 +5,7 @@ import MediaCard from "~/components/MediaCard";
 import MediaCardSkeleton from "~/components/MediaCardSkeleton";
 import ReadingCard from "~/components/ReadingCard";
 
-const ANILIST_USERNAME = process.env.ANILIST_USERNAME || "keiran";
+const ANILIST_USERNAME = process.env.NEXT_PUBLIC_ANILIST_USERNAME || "keiran";
 
 interface ActivityMediaTitle {
   romaji?: string | null;
