@@ -51,17 +51,24 @@ export default function MediaCard({
       key={`${item.media.id}-${item.id}-${index}`}
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
+      whileHover={{
+        scale: 1.05,
+        y: -4,
+      }}
       transition={{
         duration: 0.4,
         delay: parentDelay + 0.5 + index * 0.08,
         ease: "easeOut",
+        scale: { type: "tween", duration: 0.15, ease: "easeOut" },
+        y: { type: "tween", duration: 0.15, ease: "easeOut" },
       }}
+      className="will-change-transform relative z-0 hover:z-10"
     >
       <Link
         href={item.media.siteUrl || baseUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-background border border-border rounded overflow-hidden hover:shadow-md transition-[background-color,box-shadow,transform] duration-200 flex flex-col shrink-0 w-32 hover:scale-105"
+        className="bg-background border border-border rounded overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-out flex flex-col shrink-0 w-32"
         onClick={(e) => {
           if (hasDragged) {
             e.preventDefault();
@@ -73,7 +80,7 @@ export default function MediaCard({
             src={img}
             alt={title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
             draggable={false}
             unoptimized={img !== "/code-xml.svg"}
             onError={(e: React.SyntheticEvent<HTMLImageElement>) => {

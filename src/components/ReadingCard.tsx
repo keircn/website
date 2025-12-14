@@ -18,7 +18,7 @@ export default function ReadingCard({
 }: ReadingCardProps) {
   return (
     <motion.div
-      className="border border-border bg-muted/10 w-full rounded"
+      className="border border-border bg-muted/10 w-full rounded overflow-visible"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -33,7 +33,7 @@ export default function ReadingCard({
           )}
         </div>
       </div>
-      <div className="p-4">
+      <div className="p-4 overflow-visible">
         {isLoading ? (
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-muted rounded animate-pulse flex-shrink-0" />

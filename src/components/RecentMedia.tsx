@@ -229,7 +229,7 @@ export default function RecentMedia({
       ) : (
         <section
           ref={scrollRef}
-          className="carousel-scroll overflow-x-auto cursor-grab select-none"
+          className="carousel-scroll overflow-x-auto overflow-y-visible cursor-grab select-none -my-2"
           aria-label={`Recent ${mediaType.toLowerCase()} carousel`}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -253,7 +253,7 @@ export default function RecentMedia({
           }}
           style={{ userSelect: "none" }}
         >
-          <div className="flex gap-3 pb-2 scroll-smooth">
+          <div className="flex gap-3 py-2 scroll-smooth">
             {items.map((item, index) => (
               <MediaCard
                 key={`${item.media.id}-${item.id}-${index}`}

@@ -26,13 +26,21 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <motion.article
-      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-[background-color,box-shadow] duration-200 hover:shadow-lg group flex flex-col h-full"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-[background-color,box-shadow] duration-300 hover:shadow-lg group flex flex-col h-full will-change-transform"
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{
+        y: -4,
+        transition: {
+          type: "spring",
+          stiffness: 400,
+          damping: 25,
+        },
+      }}
       transition={{
-        duration: 0.4,
-        delay: parentDelay + index * 0.1,
-        ease: "easeOut",
+        duration: 0.5,
+        delay: parentDelay + index * 0.12,
+        ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
       <div className="flex items-start justify-between mb-3">
