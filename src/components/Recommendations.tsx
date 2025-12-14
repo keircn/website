@@ -46,38 +46,38 @@ export default function Recommendations({
         ))}
       </div>
 
-      <motion.div layout className="space-y-4">
-        <AnimatePresence mode="popLayout">
-          {filteredRecommendations.length > 0 ? (
-            filteredRecommendations.map((rec) => (
-              <motion.div
-                key={rec.id}
-                layout
-                initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: 10 }}
-                transition={{
-                  duration: 0.2,
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                }}
-              >
-                <RecommendationCard recommendation={rec} />
-              </motion.div>
-            ))
-          ) : (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center text-muted-foreground py-12"
-            >
-              No recommendations yet for this category.
-            </motion.p>
-          )}
+      <div className="space-y-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filter}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-4"
+          >
+            {filteredRecommendations.length > 0 ? (
+              filteredRecommendations.map((rec, index) => (
+                <motion.div
+                  key={rec.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.2,
+                    delay: index * 0.05,
+                  }}
+                >
+                  <RecommendationCard recommendation={rec} />
+                </motion.div>
+              ))
+            ) : (
+              <p className="text-center text-muted-foreground py-12">
+                No recommendations yet for this category.
+              </p>
+            )}
+          </motion.div>
         </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 }
