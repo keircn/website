@@ -26,17 +26,9 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <motion.article
-      className="border border-border rounded-lg p-4 bg-muted/10 hover:bg-muted/20 transition-[background-color,box-shadow] duration-300 hover:shadow-lg group flex flex-col h-full will-change-transform"
+      className="border border-border rounded-lg p-4 bg-muted/10 group flex flex-col h-full"
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{
-        y: -4,
-        transition: {
-          type: "spring",
-          stiffness: 400,
-          damping: 25,
-        },
-      }}
       transition={{
         duration: 0.5,
         delay: parentDelay + index * 0.12,
