@@ -9,6 +9,7 @@ import {
   updateRecommendation,
 } from "~/app/actions/recommendations";
 import type { Recommendation } from "~/db/schema";
+import type { MediaLookupResult } from "~/app/api/media-lookup/route";
 
 type RecommendationsAdminProps = {
   initialRecommendations: Recommendation[];
@@ -24,6 +25,8 @@ export default function RecommendationsAdmin({
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupError, setLookupError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     type: "anime",
@@ -49,6 +52,7 @@ export default function RecommendationsAdmin({
 
   const handleCancelEdit = () => {
     setEditingId(null);
+    setLookupError(null);
     setFormData({
       type: "anime",
       externalId: "",
@@ -57,6 +61,44 @@ export default function RecommendationsAdmin({
       coverImage: "",
       sortOrder: 0,
     });
+  };
+
+  const handleLookup = async () => {
+    if (!formData.externalId.trim()) {
+      setLookupError("Please enter an external ID first");
+      return;
+    }
+
+    setLookupLoading(true);
+    setLookupError(null);
+
+    try {
+      const res = await fetch(
+        `/api/media-lookup?id=${encodeURIComponent(formData.externalId)}&type=${formData.type}`,
+      );
+      const result: MediaLookupResult = await res.json();
+
+      if (!result.success) {
+        setLookupError(result.error || "Failed to fetch media data");
+        return;
+      }
+
+      if (result.data) {
+        setFormData({
+          ...formData,
+          externalId: result.data.externalId,
+          title: result.data.title,
+          coverImage: result.data.coverImage || "",
+          recommendation: "",
+        });
+      }
+    } catch (error) {
+      setLookupError(
+        error instanceof Error ? error.message : "Failed to fetch media data",
+      );
+    } finally {
+      setLookupLoading(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -133,6 +175,7 @@ export default function RecommendationsAdmin({
             onClick={() => {
               setShowAddForm(!showAddForm);
               setEditingId(null);
+              setLookupError(null);
               setFormData({
                 type: "anime",
                 externalId: "",
@@ -184,17 +227,30 @@ export default function RecommendationsAdmin({
                 >
                   External ID
                 </label>
-                <input
-                  id="externalId"
-                  type="text"
-                  value={formData.externalId}
-                  onChange={(e) =>
-                    setFormData({ ...formData, externalId: e.target.value })
-                  }
-                  placeholder="e.g. 21 for AniList or v2002 for VNDB"
-                  className="w-full px-4 py-2 rounded-lg bg-background border border-border focus:border-fuchsia-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-300/20"
-                  required
-                />
+                <div className="flex gap-2">
+                  <input
+                    id="externalId"
+                    type="text"
+                    value={formData.externalId}
+                    onChange={(e) =>
+                      setFormData({ ...formData, externalId: e.target.value })
+                    }
+                    placeholder="e.g. 21 for AniList or v2002 for VNDB"
+                    className="flex-1 px-4 py-2 rounded-lg bg-background border border-border focus:border-fuchsia-300 focus:outline-none focus:ring-2 focus:ring-fuchsia-300/20"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={handleLookup}
+                    disabled={lookupLoading || !formData.externalId.trim()}
+                    className="px-4 py-2 rounded-lg bg-cyan-400/20 text-cyan-400 border border-cyan-400/40 hover:bg-cyan-400/30 transition-colors disabled:opacity-50 text-sm font-medium whitespace-nowrap"
+                  >
+                    {lookupLoading ? "Looking up..." : "Lookup"}
+                  </button>
+                </div>
+                {lookupError && (
+                  <p className="text-red-400 text-sm mt-2">{lookupError}</p>
+                )}
               </div>
 
               <div>
