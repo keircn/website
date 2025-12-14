@@ -131,6 +131,16 @@ export default function RecommendationsAdmin({
       });
 
       if (result.success) {
+        setEditingId(null);
+        setLookupError(null);
+        setFormData({
+          type: "anime",
+          externalId: "",
+          title: "",
+          recommendation: "",
+          coverImage: "",
+          sortOrder: 0,
+        });
         router.refresh();
       } else {
         alert(result.error || "Failed to update recommendation");
@@ -147,6 +157,16 @@ export default function RecommendationsAdmin({
       });
 
       if (result.success) {
+        setShowAddForm(false);
+        setLookupError(null);
+        setFormData({
+          type: "anime",
+          externalId: "",
+          title: "",
+          recommendation: "",
+          coverImage: "",
+          sortOrder: 0,
+        });
         router.refresh();
       } else {
         alert(result.error || "Failed to add recommendation");
