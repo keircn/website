@@ -8,8 +8,8 @@ import {
   deleteRecommendation,
   updateRecommendation,
 } from "~/app/actions/recommendations";
-import type { Recommendation } from "~/db/schema";
 import type { MediaLookupResult } from "~/app/api/media-lookup/route";
+import type { Recommendation } from "~/db/schema";
 
 type RecommendationsAdminProps = {
   initialRecommendations: Recommendation[];
