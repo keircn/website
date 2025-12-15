@@ -10,7 +10,7 @@ export default async function Footer() {
   const visitorCount = await getVisitorCount();
 
   return (
-    <footer className="mt-auto border-t border-border bg-muted/5">
+    <footer className="md:mt-4 lg:mt-auto border-t border-border bg-muted/5">
       <div className="flex flex-col items-center w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-450 mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">

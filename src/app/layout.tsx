@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "~/app/globals.css";
 import ErrorBoundary from "~/components/ErrorBoundary";
 import Footer from "~/components/Footer";
+import Mascot from "~/components/Mascot";
 import Navbar from "~/components/Navbar";
 import { ThemeProvider } from "~/components/ThemeProvider";
 import { seoKeywords, siteConfig } from "~/data/config";
@@ -75,6 +76,7 @@ export default function RootLayout({
             <ErrorBoundary>{children}</ErrorBoundary>
           </main>
           <Footer />
+          <Mascot />
         </ThemeProvider>
       </body>
     </html>
