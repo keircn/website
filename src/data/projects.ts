@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: "Archium",
     description:
       "Archium is a command-line tool for managing packages and more on Arch Linux.",
-    githubUrl: "https://github.com/keircn/archium",
+    githubUrl: "https://github.com/Bestire/archium",
   },
   {
     id: "2",
@@ -27,6 +27,6 @@ export const projects: Project[] = [
     title: "Hostman",
     description:
       "Fast, customizable file upload tool with support for any image host you can think of",
-    githubUrl: "https://github.com/keircn/hostman",
+    githubUrl: "https://github.com/Bestire/hostman",
   },
 ];
