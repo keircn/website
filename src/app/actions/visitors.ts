@@ -7,14 +7,18 @@ import { visitors } from "~/db/schema";
 
 async function getClientIp(): Promise<string | null> {
   const headersList = await headers();
-  const forwardedFor = headersList.get("x-forwarded-for");
-  const realIp = headersList.get("x-real-ip");
 
+  const cfConnectingIp = headersList.get("cf-connecting-ip");
+  if (cfConnectingIp) {
+    return cfConnectingIp;
+  }
+
+  const forwardedFor = headersList.get("x-forwarded-for");
   if (forwardedFor) {
     return forwardedFor.split(",")[0].trim();
   }
 
-  return realIp;
+  return headersList.get("x-real-ip");
 }
 
 async function getClientUserAgent(): Promise<string | null> {
