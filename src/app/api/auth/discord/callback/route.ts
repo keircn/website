@@ -6,6 +6,7 @@ const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || "";
 const DISCORD_REDIRECT_URI =
   process.env.DISCORD_REDIRECT_URI ||
   "http://localhost:3000/api/auth/discord/callback";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 interface DiscordTokenResponse {
   access_token: string;
@@ -33,19 +34,17 @@ export async function GET(request: NextRequest) {
   cookieStore.delete("discord_oauth_state");
 
   if (error) {
-    return NextResponse.redirect(new URL("/guestbook", request.url));
+    return NextResponse.redirect(new URL("/guestbook", BASE_URL));
   }
 
   if (!state || state !== storedState) {
     return NextResponse.redirect(
-      new URL("/guestbook?error=invalid_state", request.url),
+      new URL("/guestbook?error=invalid_state", BASE_URL),
     );
   }
 
   if (!code) {
-    return NextResponse.redirect(
-      new URL("/guestbook?error=no_code", request.url),
-    );
+    return NextResponse.redirect(new URL("/guestbook?error=no_code", BASE_URL));
   }
 
   try {
@@ -69,7 +68,7 @@ export async function GET(request: NextRequest) {
         await tokenResponse.text(),
       );
       return NextResponse.redirect(
-        new URL("/guestbook?error=token_exchange_failed", request.url),
+        new URL("/guestbook?error=token_exchange_failed", BASE_URL),
       );
     }
 
@@ -84,7 +83,7 @@ export async function GET(request: NextRequest) {
     if (!userResponse.ok) {
       console.error("Failed to fetch user info:", await userResponse.text());
       return NextResponse.redirect(
-        new URL("/guestbook?error=user_fetch_failed", request.url),
+        new URL("/guestbook?error=user_fetch_failed", BASE_URL),
       );
     }
 
@@ -103,11 +102,11 @@ export async function GET(request: NextRequest) {
       path: "/",
     });
 
-    return NextResponse.redirect(new URL("/guestbook", request.url));
+    return NextResponse.redirect(new URL("/guestbook", BASE_URL));
   } catch (err) {
     console.error("Discord OAuth error:", err);
     return NextResponse.redirect(
-      new URL("/guestbook?error=oauth_failed", request.url),
+      new URL("/guestbook?error=oauth_failed", BASE_URL),
     );
   }
 }

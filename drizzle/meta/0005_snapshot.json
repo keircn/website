@@ -42,9 +42,7 @@
         "admin_sessions_token_unique": {
           "name": "admin_sessions_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -96,9 +94,7 @@
         "api_cache_key_unique": {
           "name": "api_cache_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "key"
-          ]
+          "columns": ["key"]
         }
       },
       "policies": {},
@@ -297,9 +293,7 @@
         "visitors_ip_address_unique": {
           "name": "visitors_ip_address_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "ip_address"
-          ]
+          "columns": ["ip_address"]
         }
       },
       "policies": {},
