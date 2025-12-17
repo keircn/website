@@ -36,6 +36,13 @@
       "when": 1765631468700,
       "tag": "0004_lucky_raider",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1765931169386,
+      "tag": "0005_cute_leopardon",
+      "breakpoints": true
     }
   ]
 }

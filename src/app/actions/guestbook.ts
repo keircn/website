@@ -7,6 +7,7 @@ import { db } from "~/db";
 import { guestbookEntries } from "~/db/schema";
 import { validateContent } from "~/utils/spam";
 import { requireAdmin } from "./admin";
+import { getDiscordUser } from "./discord";
 
 const ENTRIES_PER_PAGE = 20;
 const RATE_LIMIT_MINUTES = 15;
@@ -59,6 +60,9 @@ export async function getGuestbookEntries(page: number = 1) {
         name: guestbookEntries.name,
         message: guestbookEntries.message,
         createdAt: guestbookEntries.createdAt,
+        discordId: guestbookEntries.discordId,
+        discordUsername: guestbookEntries.discordUsername,
+        discordAvatar: guestbookEntries.discordAvatar,
       })
       .from(guestbookEntries)
       .orderBy(desc(guestbookEntries.createdAt))
@@ -86,22 +90,35 @@ export async function getGuestbookEntries(page: number = 1) {
 }
 
 export async function signGuestbook(formData: FormData) {
-  const name = formData.get("name") as string;
   const message = formData.get("message") as string;
+  const useDiscord = formData.get("useDiscord") === "true";
+  const discordUser = useDiscord ? await getDiscordUser() : null;
+  const name = useDiscord
+    ? discordUser?.username || "Discord User"
+    : (formData.get("name") as string);
 
-  if (!name || !message) {
-    return { success: false, error: "Name and message are required" };
+  if (!useDiscord && !name) {
+    return {
+      success: false,
+      error: "Name is required for anonymous submissions",
+    };
+  }
+
+  if (!message) {
+    return { success: false, error: "Message is required" };
   }
 
   const trimmedName = name.trim();
   const trimmedMessage = message.trim();
 
-  if (trimmedName.length < 2) {
-    return { success: false, error: "Name must be at least 2 characters" };
-  }
+  if (!useDiscord) {
+    if (trimmedName.length < 2) {
+      return { success: false, error: "Name must be at least 2 characters" };
+    }
 
-  if (trimmedName.length > 50) {
-    return { success: false, error: "Name must be less than 50 characters" };
+    if (trimmedName.length > 50) {
+      return { success: false, error: "Name must be less than 50 characters" };
+    }
   }
 
   if (trimmedMessage.length < 3) {
@@ -134,6 +151,9 @@ export async function signGuestbook(formData: FormData) {
       name: trimmedName,
       message: trimmedMessage,
       ipAddress,
+      discordId: discordUser?.id || null,
+      discordUsername: discordUser?.username || null,
+      discordAvatar: discordUser?.avatar || null,
     });
 
     revalidatePath("/guestbook");

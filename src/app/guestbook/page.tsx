@@ -1,10 +1,14 @@
+import { getDiscordUser } from "~/app/actions/discord";
 import { getGuestbookEntries } from "~/app/actions/guestbook";
 import Guestbook from "~/components/Guestbook";
 
 export const dynamic = "force-dynamic";
 
 export default async function GuestbookPage() {
-  const data = await getGuestbookEntries(1);
+  const [data, discordUser] = await Promise.all([
+    getGuestbookEntries(1),
+    getDiscordUser(),
+  ]);
 
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-4rem)] py-8 sm:py-12">
@@ -15,7 +19,7 @@ export default async function GuestbookPage() {
             Leave a message for me and other visitors!
           </p>
         </div>
-        <Guestbook initialData={data} />
+        <Guestbook initialData={data} discordUser={discordUser} />
       </div>
     </div>
   );
