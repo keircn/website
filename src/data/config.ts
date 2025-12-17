@@ -5,7 +5,7 @@ export const siteConfig = {
   description: "meow",
   url: "https://keircn.com",
   blogUrl: "https://blog.keircn.com",
-  siteName: "keircn.com",
+  siteName: "Key",
   locale: "en_GB",
 } as const;
 
