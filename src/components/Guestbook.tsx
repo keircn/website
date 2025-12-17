@@ -65,7 +65,7 @@ export default function Guestbook({
   };
 
   return (
-    <div className="w-full max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl mx-auto space-y-6 sm:space-y-8">
+    <div className="w-full mx-auto space-y-6 sm:space-y-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
