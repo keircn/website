@@ -24,6 +24,9 @@ export const guestbookEntries = pgTable("guestbook_entries", {
   message: text("message").notNull(),
   ipAddress: text("ip_address"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  discordId: text("discord_id"),
+  discordUsername: text("discord_username"),
+  discordAvatar: text("discord_avatar"),
 });
 
 export type GuestbookEntry = typeof guestbookEntries.$inferSelect;
