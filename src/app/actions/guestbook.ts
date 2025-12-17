@@ -15,14 +15,18 @@ const MAX_ENTRIES_PER_IP = 3;
 
 async function getClientIp(): Promise<string | null> {
   const headersList = await headers();
-  const forwardedFor = headersList.get("x-forwarded-for");
-  const realIp = headersList.get("x-real-ip");
 
+  const cfConnectingIp = headersList.get("cf-connecting-ip");
+  if (cfConnectingIp) {
+    return cfConnectingIp;
+  }
+
+  const forwardedFor = headersList.get("x-forwarded-for");
   if (forwardedFor) {
     return forwardedFor.split(",")[0].trim();
   }
 
-  return realIp;
+  return headersList.get("x-real-ip");
 }
 
 async function checkRateLimit(ipAddress: string): Promise<string | null> {
@@ -139,11 +143,13 @@ export async function signGuestbook(formData: FormData) {
 
   const ipAddress = await getClientIp();
 
-  if (ipAddress) {
-    const rateLimitError = await checkRateLimit(ipAddress);
-    if (rateLimitError) {
-      return { success: false, error: rateLimitError };
-    }
+  if (!ipAddress) {
+    return { success: false, error: "Could not verify your identity" };
+  }
+
+  const rateLimitError = await checkRateLimit(ipAddress);
+  if (rateLimitError) {
+    return { success: false, error: rateLimitError };
   }
 
   try {
